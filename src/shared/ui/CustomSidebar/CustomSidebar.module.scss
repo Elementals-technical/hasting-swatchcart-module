@@ -1,0 +1,65 @@
+/* components/Sidebar/Sidebar.module.scss */
+:root {
+  --sidebar-bg: #fff;
+  --sidebar-overlay: rgba(0, 0, 0, 0.45);
+  --sidebar-transition: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --sidebar-width: 360px;
+  --sidebar-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--sidebar-overlay);
+  display: flex;
+  z-index: 999;
+  transition: opacity var(--sidebar-transition);
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: var(--sidebar-bg);
+  width: var(--sidebar-width);
+  box-shadow: var(--sidebar-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--sidebar-transition);
+  transform: translateX(100%);
+}
+
+.enter {
+  transform: translateX(0);
+}
+
+.exit {
+  transform: translateX(100%);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.content {
+  padding: 16px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
