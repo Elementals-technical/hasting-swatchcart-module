@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { swatchesReducer } from '../../entities/swatches/model/swatchesSlice';
+import { swatchesReducer } from '../../features/swatches/model/swatchesSlice';
 
 const rootReducer = combineReducers({
   swatches: swatchesReducer,

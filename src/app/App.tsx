@@ -1,5 +1,5 @@
-import { getIsOpenSidebar } from '../entities/swatches/model/selectors';
-import { toggleSidebar } from '../entities/swatches/model/swatchesSlice';
+import { getIsOpenSidebar } from '../features/swatches/model/selectors';
+import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
 import { useAppDispatch, useAppSelector } from './store/store';
 import './styles/App.css';
 
