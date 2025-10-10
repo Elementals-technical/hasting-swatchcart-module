@@ -6,9 +6,14 @@ import s from './CustomSidebar.module.scss';
 type SidebarProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  children: React.ReactNode;
 };
 
-const CustomSidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+const CustomSidebar: React.FC<SidebarProps> = ({
+  isOpen,
+  children,
+  setIsOpen,
+}) => {
   const panelRef = useRef<HTMLDivElement | null>(null);
   const lastActiveRef = useRef<HTMLElement | null>(null);
 
@@ -67,14 +72,12 @@ const CustomSidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         onTouchStart={(e) => e.stopPropagation()}
       >
         <header className={s.header}>
-          <h2 className={s.title}>Sidebar</h2>
+          <h2 className={s.title}>Order free swatches</h2>
           <button className={s.closeBtn} onClick={closeSidebar}>
             ×
           </button>
         </header>
-        <div className={s.content}>
-          <p>This is a sidebar content area.</p>
-        </div>
+        {children}
       </div>
     </div>,
     document.body,
