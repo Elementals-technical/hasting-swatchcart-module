@@ -1,4 +1,4 @@
-import CustomSidebar from '../../../shared/ui/CustomSidebar/CustomSidebar';
+import CustomSidebar from '../../src/shared/ui/CustomSidebar/CustomSidebar';
 
 interface ISwatchesProps {
   isOpen: boolean;
@@ -6,7 +6,7 @@ interface ISwatchesProps {
   onSendData: (data: unknown) => void;
 }
 
-export const Swatches = ({
+export const SwatchesModule = ({
   isOpen,
   onToggleSidebar,
   onSendData,
@@ -14,11 +14,10 @@ export const Swatches = ({
   const handleSetData = () => {
     onSendData([1, 2, 3]);
   };
-
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
       <div>
-        <p>This is a sidebar content area.</p>
+        <p>This is sidebar content area.</p>
         <button type='button' onClick={handleSetData}>
           sendData
         </button>
