@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import s from './CustomSidebar.module.scss';
+import { CloseIconSVG } from '../../../app/assets/svg/CloseIconSVG';
 
 type SidebarProps = {
   isOpen: boolean;
@@ -10,8 +11,8 @@ type SidebarProps = {
 };
 
 const CustomSidebar: React.FC<SidebarProps> = ({
-  isOpen,
   children,
+  isOpen,
   setIsOpen,
 }) => {
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -74,7 +75,7 @@ const CustomSidebar: React.FC<SidebarProps> = ({
         <header className={s.header}>
           <h2 className={s.title}>Order free swatches</h2>
           <button className={s.closeBtn} onClick={closeSidebar}>
-            ×
+            <CloseIconSVG width={10} height={10} />
           </button>
         </header>
         {children}

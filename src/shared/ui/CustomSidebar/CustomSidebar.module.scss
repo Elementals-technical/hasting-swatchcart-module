@@ -39,18 +39,31 @@
 
 .title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 500;
 }
 
 .closeBtn {
-  background: none;
+  width: 30px;
+  height: 30px;
+  background: var(--background-grey);
   border: none;
-  font-size: 1.5rem;
   cursor: pointer;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  -ms-border-radius: 100px;
+  -o-border-radius: 100px;
+
+  & svg {
+    & path {
+      stroke: var(--svg-dark);
+    }
+  }
 }
 
 .content {
-  padding: 16px;
   flex: 1 1 auto;
   overflow-y: auto;
 }
