@@ -1,0 +1,8 @@
+@use './normalize.scss';
+@use './fonts';
+@use './root';
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}

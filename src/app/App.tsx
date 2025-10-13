@@ -2,7 +2,6 @@ import { getIsOpenSidebar } from '../features/swatches/model/selectors';
 import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
 import CustomSidebar from '../shared/ui/CustomSidebar/CustomSidebar';
 import { useAppDispatch, useAppSelector } from './store/store';
-import './styles/App.css';
 
 function App() {
   const dispatch = useAppDispatch();
