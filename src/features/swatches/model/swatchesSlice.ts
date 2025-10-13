@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { ISwatchesSlice } from './types';
 
 const initialState: ISwatchesSlice = {
-  isOpenSidebar: false,
+  isOpenSidebar: true,
 };
 
 export const swatchesSlice = createSlice({

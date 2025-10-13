@@ -17,7 +17,7 @@ function App() {
       <button type='button' onClick={handleOpenSidebar}>
         Is open sidebar {isOpenSidebar ? 'open' : 'close'}
       </button>
-      <CustomSidebar isOpen={isOpenSidebar} setIsOpen={handleOpenSidebar}>
+      <CustomSidebar setIsOpen={handleOpenSidebar}>
         <div>
           <p>This is a sidebar content area.</p>
         </div>

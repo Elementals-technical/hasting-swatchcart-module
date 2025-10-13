@@ -14,9 +14,9 @@ export const CloseIconSVG: FC<SvgIconProps> = (props) => {
       <path
         d='M11 1L1 11M1 1L11 11'
         stroke='current'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );

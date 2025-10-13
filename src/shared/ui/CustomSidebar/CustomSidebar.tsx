@@ -3,21 +3,23 @@ import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import s from './CustomSidebar.module.scss';
 import { CloseIconSVG } from '../../../app/assets/svg/CloseIconSVG';
+import { getIsOpenSidebar } from '../../../features/swatches/model/selectors';
+import { useAppSelector } from '../../../app/store/store';
 
 type SidebarProps = {
-  isOpen: boolean;
+  // isOpen?: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
 };
 
 const CustomSidebar: React.FC<SidebarProps> = ({
   children,
-  isOpen,
+  // isOpen,
   setIsOpen,
 }) => {
   const panelRef = useRef<HTMLDivElement | null>(null);
   const lastActiveRef = useRef<HTMLElement | null>(null);
-
+  const isOpen = useAppSelector(getIsOpenSidebar);
   const closeSidebar = () => setIsOpen(false);
 
   useLayoutEffect(() => {
