@@ -1,0 +1,29 @@
+name: Publish to NPM
+on:
+  push: main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          # Put here your current node version. In this project we are working with node: 16.x
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies and build 🔧
+        run: npm ci npm run build
+        # This scripts needs only for Change version(minor) script. If you don't need this script you can skip it
+      - name: Git config
+        run: |
+          git config --global user.email "${{ secrets.GH_ORG_EMAIL }}"
+          git config --global user.name "${{ secrets.GH_ORG_NAME }}"
+      # This is a temporary solution
+      - name: Change version(minor)
+        run: npm version minor
+      - name: Publish package on NPM 📦
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ELEMENTALS_AUTH_TOKEN }}
