@@ -1,6 +1,7 @@
 import { getIsOpenSidebar } from '../features/swatches/model/selectors';
 import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
-import CustomSidebar from '../shared/ui/CustomSidebar/CustomSidebar';
+// import { Swatches } from '../features/swatches/ui/Swatches';
+// import {SwatchesModule} from '../../dist/components/SwatchesModule'
 import { useAppDispatch, useAppSelector } from './store/store';
 
 function App() {
@@ -11,17 +12,18 @@ function App() {
     dispatch(toggleSidebar());
   };
 
+  // const handleSetData= (data: unknown) => {
+  //   console.log("handleSetData", data);
+  // }
+
   return (
     <>
       APP
       <button type='button' onClick={handleOpenSidebar}>
         Is open sidebar {isOpenSidebar ? 'open' : 'close'}
       </button>
-      <CustomSidebar setIsOpen={handleOpenSidebar}>
-        <div>
-          <p>This is a sidebar content area.</p>
-        </div>
-      </CustomSidebar>
+      {/* <Swatches isOpen={isOpenSidebar} onToggleSidebar={handleOpenSidebar} onSendData={handleSetData}/> */}
+      {/* <SwatchesModule isOpen={isOpenSidebar} onToggleSidebar={handleOpenSidebar} onSendData={handleSetData}/>  */}
     </>
   );
 }

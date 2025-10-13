@@ -30,7 +30,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "lib"],
+  "include": ["src", "lib", "src/features/swatches/ui/Swatches.tsx"],
   // "references": [{ "path": "./tsconfig.node.json" }]
   "references": [
     { "path": "./tsconfig.app.json" },
