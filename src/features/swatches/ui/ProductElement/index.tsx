@@ -7,7 +7,7 @@ export const ProductElement = () => {
   };
 
   return (
-    <div className='flex justify-between items-center p-[var(--padding)] border-b border-solid border-[var(--border)]'>
+    <div className='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)]'>
       <span>Product element</span>
       <MultiSelect
         options={MOCK_SELECT_DATA}

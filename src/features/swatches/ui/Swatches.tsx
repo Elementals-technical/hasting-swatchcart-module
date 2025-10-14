@@ -1,7 +1,6 @@
-import { MOCK_SELECT_DATA } from '../../../shared/constants/select';
 import CustomSidebar from '../../../shared/ui/CustomSidebar/CustomSidebar';
-import { MultiSelect } from '../../../shared/ui/MultiSelect/MultiSelect';
 import { Filters } from './Filters';
+import { MaterialList } from './MaterialList';
 import { ProductElement } from './ProductElement';
 
 interface ISwatchesProps {
@@ -19,28 +18,34 @@ export const Swatches = ({
   //   onSendData([1, 2, 3]);
   // };
 
-  const handleFilterChange = (filterName: string, value: string[]) => {
-    console.log('handleFilterChange', { filterName, value });
-  };
+  // const handleFilterChange = (filterName: string, value: string[]) => {
+  //   console.log('handleFilterChange', { filterName, value });
+  // };
 
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
-      <div>
+      <div className='flex flex-col h-full min-h-0'>
         <ProductElement />
         <Filters />
-
-        <br />
-        <MultiSelect
-          options={MOCK_SELECT_DATA}
-          // values={filters.Finish}
-          values={[]}
-          onValueChange={(values) => handleFilterChange('Finish', values)}
-          placeholder='Material'
-          // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
-          // sectionName={sectionName}
-          className='max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]'
-          dropdownWidth='w-80'
-        />
+        <MaterialList />
+        <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
+          <div className='flex justify-between items-center mb-3'>
+            <div className=''>Swatches list</div>
+            <div className=''>0/5 Selected</div>
+          </div>
+          <div className='flex row gap-[8px]'>
+            <div className='w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm'></div>
+            <div className='w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm'></div>
+            <div className='w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm'></div>
+            <div className='w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm'></div>
+            <div className='w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm'></div>
+          </div>
+        </div>
+        <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
+          <button className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full'>
+            ADD SWATCHES TO CART
+          </button>
+        </div>
       </div>
     </CustomSidebar>
   );
