@@ -77,7 +77,7 @@ const CustomSidebar: React.FC<SidebarProps> = ({
         onMouseDown={(e) => e.stopPropagation()}
         onTouchStart={(e) => e.stopPropagation()}
       >
-        <header className='flex p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--padding)]'>
+        <header className='flex p-[var(--padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
           <h2 className={s.title}>Order free swatches</h2>
           <button
             className={cn(s.closeBtn, 'flex', 'justify-center', 'items-center')}
