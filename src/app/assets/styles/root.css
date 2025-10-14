@@ -59,7 +59,11 @@
   --svg-dark: #282828;
   --background-grey: #e5e6ea;
   --main-font-family: 'Poppins';
+  /* padding */
   --padding: 20px;
+  --sm-padding: 8px;
+  /* padding */
+
   --sidebar-bg: #fff;
   --sidebar-overlay: rgba(0, 0, 0, 0.45);
   --sidebar-transition: 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);

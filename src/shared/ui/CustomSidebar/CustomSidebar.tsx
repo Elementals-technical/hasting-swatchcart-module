@@ -68,11 +68,16 @@ const CustomSidebar: React.FC<SidebarProps> = ({
       <div
         ref={panelRef}
         tabIndex={-1}
-        className={clsx(s.panel, s.right, isOpen ? s.enter : s.exit)}
+        className={cn(
+          s.panel,
+          s.right,
+          isOpen ? s.enter : s.exit,
+          'bg-[var(--sidebar-bg)]',
+        )}
         onMouseDown={(e) => e.stopPropagation()}
         onTouchStart={(e) => e.stopPropagation()}
       >
-        <header className={s.header}>
+        <header className='flex p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--padding)]'>
           <h2 className={s.title}>Order free swatches</h2>
           <button
             className={cn(s.closeBtn, 'flex', 'justify-center', 'items-center')}
