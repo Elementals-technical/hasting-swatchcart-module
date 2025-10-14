@@ -14,10 +14,11 @@ import { extname, relative, resolve } from 'path';
 import { fileURLToPath } from 'node:url';
 import { glob } from 'glob';
 import dts from 'vite-plugin-dts';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), dts({ include: ['lib'] }), libInjectCss()],
+  plugins: [react(), tailwindcss(), dts({ include: ['lib'] }), libInjectCss()],
   build: {
     copyPublicDir: false,
     cssCodeSplit: true,

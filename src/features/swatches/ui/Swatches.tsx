@@ -1,4 +1,6 @@
+import { MOCK_SELECT_DATA } from '../../../shared/constants/select';
 import CustomSidebar from '../../../shared/ui/CustomSidebar/CustomSidebar';
+import { MultiSelect } from '../../../shared/ui/MultiSelect/MultiSelect';
 
 interface ISwatchesProps {
   isOpen: boolean;
@@ -15,6 +17,10 @@ export const Swatches = ({
     onSendData([1, 2, 3]);
   };
 
+  const handleFilterChange = (filterName: string, value: string[]) => {
+    console.log('handleFilterChange', { filterName, value });
+  };
+
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
       <div>
@@ -22,6 +28,19 @@ export const Swatches = ({
         <button type='button' onClick={handleSetData}>
           sendData
         </button>
+
+        <br />
+        <MultiSelect
+          options={MOCK_SELECT_DATA}
+          // values={filters.Finish}
+          values={['']}
+          onValueChange={(values) => handleFilterChange('Finish', values)}
+          placeholder='Material'
+          // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
+          // sectionName={sectionName}
+          className='max-w-[100px] sm:max-w-[auto] sm:min-w-[120px]'
+          dropdownWidth='w-80'
+        />
       </div>
     </CustomSidebar>
   );
