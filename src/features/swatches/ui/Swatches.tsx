@@ -42,7 +42,7 @@ export const Swatches = ({
           </div>
         </div>
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
-          <button className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full'>
+          <button className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold'>
             ADD SWATCHES TO CART
           </button>
         </div>
