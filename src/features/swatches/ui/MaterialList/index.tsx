@@ -41,14 +41,35 @@ const MOCK_LIST_ARRAY = [
 
 export const MaterialList = () => {
   return (
-    <div className='flex-1 min-h-0 overflow-y-auto p-[var(--padding)]'>
-      <ul className='grid grid-cols-3 gap-[20px] '>
+    <div
+      className='
+    flex-1 min-h-0 overflow-y-auto p-[var(--padding)] 
+    sm:p-[var(--sm-padding)]
+    '
+    >
+      <ul
+        className='
+      grid grid-cols-1 gap-[8px] 
+      sm:grid-cols-3
+      
+      '
+      >
         {MOCK_LIST_ARRAY.map((item: string, index: number) => {
           return (
-            <li key={item + index} className='w-40 rounded-sm'>
-              <div className='w-40 h-40 rounded bg-red-500'></div>
+            <li
+              key={item + index}
+              className='
+            w-76 rounded-sm
+            sm:w-40
+            '
+            >
+              <div
+                className='
+              w-76 h-40 rounded bg-blue-500
+              sm:w-40 sm:h-40'
+              ></div>
               <div className='mt-3'>
-                <span className='font-medium'>Name</span>
+                <span className='font-medium'>Name {index}</span>
                 <p className='font-semibold'>{item}</p>
               </div>
             </li>
