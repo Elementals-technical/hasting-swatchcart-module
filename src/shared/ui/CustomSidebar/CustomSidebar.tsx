@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import s from './CustomSidebar.module.scss';
 import { CloseIconSVG } from '../../../app/assets/svg/CloseIconSVG';
+import { cn } from '../../utils/cn';
 
 type SidebarProps = {
   isOpen?: boolean;
@@ -73,7 +74,10 @@ const CustomSidebar: React.FC<SidebarProps> = ({
       >
         <header className={s.header}>
           <h2 className={s.title}>Order free swatches</h2>
-          <button className={s.closeBtn} onClick={closeSidebar}>
+          <button
+            className={cn(s.closeBtn, 'flex', 'justify-center', 'items-center')}
+            onClick={closeSidebar}
+          >
             <CloseIconSVG width={10} height={10} />
           </button>
         </header>
