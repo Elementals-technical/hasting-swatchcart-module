@@ -1,0 +1,65 @@
+.prose {
+  color: #e5e5e5;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem 0;
+  }
+}
+
+.mdAccordion {
+  border-radius: 0.8rem;
+  margin: 0.8rem 0;
+  background: transparent;
+  color: #fff;
+
+  > summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.6rem 1rem;
+    border-radius: 0.8rem;
+    background: #1f1f1f;
+    color: #f5f5f5;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #2d2d2d;
+    }
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  &[open] {
+    > summary {
+      border-radius: 0.8rem 0.8rem 0 0;
+      background: #2b2b2b;
+    }
+
+    > *:not(summary) {
+      border-radius: 0 0 0.8rem 0.8rem;
+      background: #2b2b2b;
+      color: #e5e5e5;
+      line-height: 1.45;
+    }
+  }
+}
+
+.prose a {
+  color: #4ea1f3;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    color: #76c0ff;
+    text-decoration: underline;
+  }
+}
