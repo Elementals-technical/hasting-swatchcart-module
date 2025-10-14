@@ -1,7 +1,8 @@
 import { MOCK_SELECT_DATA } from '../../../shared/constants/select';
 import CustomSidebar from '../../../shared/ui/CustomSidebar/CustomSidebar';
 import { MultiSelect } from '../../../shared/ui/MultiSelect/MultiSelect';
-import { ProductElement } from './ProductElement/ProductElement';
+import { Filters } from './Filters';
+import { ProductElement } from './ProductElement';
 
 interface ISwatchesProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ export const Swatches = ({
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
       <div>
         <ProductElement />
+        <Filters />
 
         <br />
         <MultiSelect
