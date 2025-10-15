@@ -22,7 +22,7 @@ export const ColorsFilter = () => {
       const colorOptions = [
         ...new Set(
           allMaterialsValues
-            .map((value) => value?.metadata?.Look)
+            .map((value) => value?.metadata?.Color)
             .filter(Boolean)
             .map((c) => c.split(',').map((s: string) => s.trim()))
             .flat(),
@@ -30,8 +30,8 @@ export const ColorsFilter = () => {
       ].map((color) => {
         const count = allMaterialsValues.filter(
           (item) =>
-            item.metadata?.Look &&
-            item.metadata?.Look.split(',')
+            item.metadata?.Color &&
+            item.metadata?.Color.split(',')
               .map((s: string) => s.trim())
               .includes(color),
         ).length;

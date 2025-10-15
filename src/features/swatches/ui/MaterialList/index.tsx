@@ -1,3 +1,6 @@
+// import { useAppSelector } from "../../../../app/store/store";
+// import { getAllMaterialValues } from "../../model/selectors";
+
 const MOCK_LIST_ARRAY = [
   'Alice Johnson',
   'Ethan Miller',
@@ -40,6 +43,8 @@ const MOCK_LIST_ARRAY = [
 ];
 
 export const MaterialList = () => {
+  // const allMaterialsValues = useAppSelector(getAllMaterialValues)
+
   return (
     <div
       className='

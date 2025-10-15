@@ -34,44 +34,44 @@ export class SwatchesServices {
     );
   }
 
+  static getMaterialsValuesFromOptions(
+    options: IAttributeAsset[],
+  ): IAttributeAsset[] | undefined {
+    if (!options.length) return;
+    return (
+      options
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .reduce<any[]>((acc, item) => {
+          if (Array.isArray(item.values)) {
+            return acc.concat(item.values);
+          }
+          return acc;
+        }, [])
+        .sort((a, b) => {
+          const nameA = a.name?.toLowerCase() ?? '';
+          const nameB = b.name?.toLowerCase() ?? '';
+          return nameA.localeCompare(nameB);
+        })
+    );
+  }
+
   static getAllMaterialOptions(
     attributes: IAttributeAsset[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ): any[] | undefined {
+  ): { allValues: any[]; materialOptions: any[] } | undefined {
     const groupingValues = JSON.parse(this.getGroupingValue(attributes).value);
 
     if (groupingValues) {
-      console.log('Swatches attributes', attributes);
-      console.log('Swatches groupingValue', groupingValues);
       const materialKeys = this.getAllMaterialValuesKeys(groupingValues);
       if (materialKeys?.length) {
         const materialOptions = attributes.filter((item) =>
           materialKeys.includes(item.name),
         );
-
-        console.log('materialOptions - materialOptions', materialOptions);
-        console.log('materialOptions - attributes', attributes);
-
         if (materialOptions?.length) {
-          const allValues = materialOptions
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .reduce<any[]>((acc, item) => {
-              if (Array.isArray(item.values)) {
-                return acc.concat(item.values);
-              }
-              return acc;
-            }, [])
-            .sort((a, b) => {
-              const nameA = a.name?.toLowerCase() ?? '';
-              const nameB = b.name?.toLowerCase() ?? '';
-              return nameA.localeCompare(nameB);
-            });
+          const allValues = this.getMaterialsValuesFromOptions(materialOptions);
 
           if (allValues?.length) {
-            console.log('ALL OPTIONS');
-            return allValues;
-          } else {
-            return [];
+            return { allValues, materialOptions };
           }
         }
       }

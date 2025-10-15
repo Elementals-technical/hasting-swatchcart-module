@@ -1,19 +1,56 @@
-import { MOCK_SELECT_DATA } from '../../../../shared/constants/select';
-import { MultiSelect } from '../../../../shared/ui/MultiSelect/MultiSelect';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
+import {
+  MultiSelect,
+  type IMultiSelectOption,
+} from '../../../../shared/ui/MultiSelect/MultiSelect';
+import { getProductElementOptions } from '../../model/selectors';
+import { uniqueList } from '../../../../shared/utils/uniqueList';
+import { setPanelFilter } from '../../model/swatchesSlice';
 
 export const ProductElement = () => {
-  const handleFilterChange = (filterName: string, value: string[]) => {
-    console.log('handleFilterChange', { filterName, value });
+  const dispatch = useAppDispatch();
+  const allProductElementOptions = useAppSelector(getProductElementOptions);
+  const [productOptions, setProductOptions] = useState<IMultiSelectOption[]>(
+    [],
+  );
+  const [productValues, setProductValues] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!allProductElementOptions?.length) return;
+    const formatProductData = allProductElementOptions.map((item) => {
+      const { Name, Label } = item.metadata || {};
+      return { value: Name, label: Label, id: Name };
+    });
+
+    setProductOptions(formatProductData);
+  }, [allProductElementOptions]);
+
+  const handleFilterChange = (_: string, values: string[]) => {
+    if (values.length) {
+      const uniqueListValue = uniqueList(values);
+
+      if (uniqueListValue.length) {
+        const filteredMaterialByProduct = allProductElementOptions.filter(
+          (item) => uniqueListValue.includes(item.metadata?.Label),
+        );
+        setProductValues(uniqueListValue);
+        dispatch(setPanelFilter({ attributes: filteredMaterialByProduct }));
+      } else {
+        dispatch(setPanelFilter({ attributes: allProductElementOptions }));
+      }
+    } else {
+      setProductValues([]);
+    }
   };
 
   return (
     <div className='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
       <span>Product element</span>
       <MultiSelect
-        options={MOCK_SELECT_DATA}
-        // values={filters.Finish}
-        values={[]}
-        onValueChange={(values) => handleFilterChange('Finish', values)}
+        options={productOptions}
+        values={productValues}
+        onValueChange={(values) => handleFilterChange('PanelElement', values)}
         placeholder='All product elements'
         // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
         // sectionName={sectionName}

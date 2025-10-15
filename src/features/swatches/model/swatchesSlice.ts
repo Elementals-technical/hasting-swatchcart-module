@@ -6,14 +6,16 @@ import type {
   ISwatchesSlice,
 } from './types';
 import { SwatchesServices } from '../lib/SwatchesServices';
+import { uniqueList } from '../../../shared/utils/uniqueList';
 
 const initialState: ISwatchesSlice = {
   isOpenSidebar: true,
   listAttributes: [],
+  productElementOptions: [],
   materialSelectState: { Finish: [], Color: [], Look: [] },
   allMaterialsValues: [],
 };
-const uniq = (arr: string[]) => Array.from(new Set(arr));
+
 export const swatchesSlice = createSlice({
   name: 'swatches',
   initialState,
@@ -35,7 +37,21 @@ export const swatchesSlice = createSlice({
         return;
       }
 
-      state.materialSelectState[filterName] = uniq(values);
+      state.materialSelectState[filterName] = uniqueList(values);
+    },
+    setPanelFilter(
+      state,
+      action: PayloadAction<{ attributes: IAttributeAsset[] }>,
+    ) {
+      const attributeList = action.payload.attributes;
+
+      if (attributeList.length) {
+        const filteredAttributeList =
+          SwatchesServices.getMaterialsValuesFromOptions(attributeList);
+        if (filteredAttributeList?.length) {
+          state.allMaterialsValues = filteredAttributeList;
+        }
+      }
     },
 
     clearMaterialFilter: (
@@ -52,12 +68,16 @@ export const swatchesSlice = createSlice({
       state,
       action: PayloadAction<IAttributeAsset[]>,
     ) => {
-      const allMaterialsValues = SwatchesServices.getAllMaterialOptions(
-        action.payload,
-      );
+      const results = SwatchesServices.getAllMaterialOptions(action.payload);
+      const allValues = results?.allValues;
+      const materialOptions = results?.materialOptions;
 
-      if (allMaterialsValues?.length) {
-        state.allMaterialsValues = allMaterialsValues;
+      if (allValues?.length) {
+        state.allMaterialsValues = allValues;
+      }
+
+      if (materialOptions?.length) {
+        state.productElementOptions = materialOptions;
       }
     },
   },
@@ -72,4 +92,5 @@ export const {
   clearMaterialFilter,
   clearAllMaterialFilters,
   setAllMaterialsOptions,
+  setPanelFilter,
 } = swatchesSlice.actions;

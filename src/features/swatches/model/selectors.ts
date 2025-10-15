@@ -14,3 +14,5 @@ export const getAllMaterialValues = (state: RootState) =>
   state.swatches.allMaterialsValues;
 export const getMaterialSelectStateFilters = (state: RootState) =>
   state.swatches.materialSelectState;
+export const getProductElementOptions = (state: RootState) =>
+  state.swatches.productElementOptions;
