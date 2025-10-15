@@ -1,26 +1,38 @@
+import { useEffect } from 'react';
 import CustomSidebar from '../../../shared/ui/CustomSidebar/CustomSidebar';
 import { Filters } from './Filters';
 import { MaterialList } from './MaterialList';
 import { ProductElement } from './ProductElement';
+import { useAppDispatch } from '../../../app/store/store';
+import {
+  setAllMaterialsOptions,
+  setListAttributes,
+} from '../model/swatchesSlice';
+import type { IAttributeAsset } from '../model/types';
 
 interface ISwatchesProps {
   isOpen: boolean;
+  attributes: IAttributeAsset[];
   onToggleSidebar: () => void;
   onSendData: (data: unknown) => void;
 }
 
 export const Swatches = ({
   isOpen,
+  attributes,
   onToggleSidebar,
   // onSendData,
 }: ISwatchesProps) => {
-  // const handleSetData = () => {
-  //   onSendData([1, 2, 3]);
-  // };
+  const dispatch = useAppDispatch();
 
-  // const handleFilterChange = (filterName: string, value: string[]) => {
-  //   console.log('handleFilterChange', { filterName, value });
-  // };
+  useEffect(() => {
+    if (!attributes) {
+      throw new Error(`SwatchCart-module: Attributes are important`);
+    } else {
+      dispatch(setListAttributes(attributes));
+      dispatch(setAllMaterialsOptions(attributes));
+    }
+  }, [attributes]);
 
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>

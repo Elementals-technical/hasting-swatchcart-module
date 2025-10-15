@@ -5,14 +5,14 @@ import { PopoverTooltip } from '../PopoverTooltip/PopoverTooltip';
 import { cn } from '../../utils/cn';
 import { Checkbox } from '../Checkbox/Checkbox';
 
-interface MultiSelectOption {
+export interface IMultiSelectOption {
   value: string;
   label: string;
   count?: number;
 }
 
 interface MultiSelectProps {
-  options: MultiSelectOption[];
+  options: IMultiSelectOption[];
   values: string[];
   onValueChange: (values: string[]) => void;
   placeholder?: string;
@@ -105,7 +105,7 @@ const MultiSelect = React.forwardRef<
       ) : (
         <div className='flex flex-row items-center justify-between w-full'>
           <span className='truncate'>{placeholder}</span>
-          <span className='text-[1rem] text-gray-800 bg-gray-100 px-2 py-0.5 ml-2 rounded-full whitespace-nowrap'>
+          <span className='text-[0.8rem] text-white bg-[var(--main-accent-color)] px-1.5 py-0.5 ml-2 rounded-full whitespace-nowrap'>
             {selectedCount}
           </span>
         </div>
@@ -220,4 +220,4 @@ const MultiSelect = React.forwardRef<
 MultiSelect.displayName = 'MultiSelect';
 
 export { MultiSelect };
-export type { MultiSelectOption, MultiSelectProps };
+export type { MultiSelectProps };

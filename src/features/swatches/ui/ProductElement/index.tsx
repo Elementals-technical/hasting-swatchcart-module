@@ -17,7 +17,7 @@ export const ProductElement = () => {
         placeholder='All product elements'
         // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
         // sectionName={sectionName}
-        className='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[160px]'
+        className='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[250px]'
         dropdownWidth='w-80'
       />
     </div>

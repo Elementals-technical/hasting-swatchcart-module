@@ -1,6 +1,7 @@
 import { getIsOpenSidebar } from '../features/swatches/model/selectors';
 import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
 import { Swatches } from '../features/swatches/ui/Swatches';
+import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import {SwatchesModule} from '../../dist/components/SwatchesModule'
 import { useAppDispatch, useAppSelector } from './store/store';
 
@@ -24,6 +25,8 @@ function App() {
       </button>
       <Swatches
         isOpen={isOpenSidebar}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        attributes={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
       />
