@@ -77,4 +77,13 @@ export class SwatchesServices {
       }
     }
   }
+
+  static getUniqueByAssetId<T extends { assetId: string }>(array: T[]): T[] {
+    const seen = new Set<string>();
+    return array.filter((item) => {
+      if (seen.has(item.assetId)) return false;
+      seen.add(item.assetId);
+      return true;
+    });
+  }
 }

@@ -5,6 +5,7 @@ export interface ISwatchesSlice {
   productElementOptions: any[];
   materialSelectState: IMaterialSelectState;
   allMaterialsValues: AttributeValue[];
+  selectedMaterials: AttributeValue[];
 }
 
 export interface IMaterialSelectState {
@@ -113,7 +114,7 @@ export type ETypeComponent =
 
 export interface AttributeValue {
   name?: string;
-  assetId?: string;
+  assetId: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
