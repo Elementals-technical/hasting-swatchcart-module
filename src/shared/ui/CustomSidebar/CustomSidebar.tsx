@@ -2,7 +2,6 @@ import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import s from './CustomSidebar.module.scss';
-import { CloseIconSVG } from '../../../app/assets/svg/CloseIconSVG';
 import { cn } from '../../utils/cn';
 
 type SidebarProps = {
@@ -77,15 +76,6 @@ const CustomSidebar: React.FC<SidebarProps> = ({
         onMouseDown={(e) => e.stopPropagation()}
         onTouchStart={(e) => e.stopPropagation()}
       >
-        <header className='flex p-[var(--padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
-          <h2 className={s.title}>Order free swatches</h2>
-          <button
-            className={cn(s.closeBtn, 'flex', 'justify-center', 'items-center')}
-            onClick={closeSidebar}
-          >
-            <CloseIconSVG width={10} height={10} />
-          </button>
-        </header>
         {children}
       </div>
     </div>,
