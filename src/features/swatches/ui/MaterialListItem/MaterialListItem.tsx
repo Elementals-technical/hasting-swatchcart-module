@@ -10,7 +10,6 @@ import { CheckMarkIconSVG } from '../../../../app/assets/svg/CheckMarkIconSVG';
 export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
   const dispatch = useAppDispatch();
   const selected = useAppSelector(getSelectedMaterials);
-  console.log('MaterialListItem', val);
 
   const handleSelect = (item: AttributeValue) => {
     dispatch(setSelectedMaterials({ selectedMaterial: item }));
