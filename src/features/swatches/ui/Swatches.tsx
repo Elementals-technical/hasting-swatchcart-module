@@ -6,7 +6,7 @@ import { ProductElement } from './ProductElement';
 import { useAppDispatch, useAppSelector } from '../../../app/store/store';
 import {
   setAllMaterialsOptions,
-  setListAttributes,
+  // setListAttributes,
 } from '../model/swatchesSlice';
 import type { IAttributeAsset } from '../model/types';
 import { getSelectedMaterials } from '../model/selectors';
@@ -30,7 +30,6 @@ export const Swatches = ({
     if (!attributes) {
       throw new Error(`SwatchCart-module: Attributes are important`);
     } else {
-      dispatch(setListAttributes(attributes));
       dispatch(setAllMaterialsOptions(attributes));
     }
   }, [attributes]);

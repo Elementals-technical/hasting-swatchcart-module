@@ -10,10 +10,6 @@ export class SwatchesServices {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static getGroupingValue(attributes: any[]) {
     if (!attributes) return;
-    console.log(
-      'SwatchesServices',
-      attributes.find((item) => item.name === GROUPING_KEY),
-    );
 
     return attributes.find((item) => item.name === GROUPING_KEY);
   }

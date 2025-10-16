@@ -26,12 +26,12 @@ export const swatchesSlice = createSlice({
     toggleSidebar: (state) => {
       state.isOpenSidebar = !state.isOpenSidebar;
     },
-    setListAttributes: (
-      state: ISwatchesSlice,
-      action: PayloadAction<IAttributeAsset[]>,
-    ) => {
-      state.listAttributes = action.payload;
-    },
+    // setListAttributes: (
+    //   state: ISwatchesSlice,
+    //   action: PayloadAction<IAttributeAsset[]>,
+    // ) => {
+    //   state.listAttributes = action.payload;
+    // },
     setMaterialSelect(state, action: PayloadAction<ISetFiltersPayload>) {
       const { filterName, values } = action.payload;
 
@@ -76,15 +76,15 @@ export const swatchesSlice = createSlice({
     ) => {
       const results = SwatchesServices.getAllMaterialOptions(action.payload);
       const allValues = results?.allValues;
-      const materialOptions = results?.materialOptions;
+      const productElementOptions = results?.materialOptions;
 
       if (allValues?.length) {
         state.allMaterialsValues =
           SwatchesServices.getUniqueByAssetId(allValues);
       }
 
-      if (materialOptions?.length) {
-        state.productElementOptions = materialOptions;
+      if (productElementOptions?.length) {
+        state.productElementOptions = productElementOptions;
       }
     },
 
@@ -118,7 +118,7 @@ export const swatchesSlice = createSlice({
 
 export const swatchesReducer = swatchesSlice.reducer;
 export const {
-  setListAttributes,
+  // setListAttributes,
   setMaterialSelect,
   setAllMaterialsOptions,
   setPanelFilter,
