@@ -6,9 +6,9 @@ import type { AttributeValue } from '../../../features/swatches/model/types';
 
 export interface IMaterialItemProps {
   val: AttributeValue;
-  className: string;
-  isShowDeleteIcon: boolean;
-  handleSelect: (arg: AttributeValue) => void;
+  className?: string;
+  isShowDeleteIcon?: boolean;
+  handleSelect?: (arg: AttributeValue) => void;
 }
 
 const DEFAULT_STYLES =
@@ -23,7 +23,11 @@ export const MaterialItem = ({
   return (
     <button
       key={val.assetId}
-      onClick={() => handleSelect(val)}
+      onClick={() => {
+        if (handleSelect) {
+          handleSelect(val);
+        }
+      }}
       className={`relative ${className ? className : DEFAULT_STYLES}`}
       aria-label={`Selected swatch ${val.name ?? val.assetId}`}
       title='Click to remove'

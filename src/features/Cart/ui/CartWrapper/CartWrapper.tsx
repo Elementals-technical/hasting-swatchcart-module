@@ -1,8 +1,10 @@
 import { EActiveTab } from '../../../../shared/types/activeTab';
 import CustomSidebar from '../../../../shared/ui/CustomSidebar/CustomSidebar';
 import { useAppSelector } from '../../../../app/store/store';
-import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import { CartHeader } from '../CartHeader/CartHeader';
+import { CartPrice } from '../CartPrice/CartPrice';
+import { CartList } from '../CartList/CartList';
+import { getCartItems } from '../../model/selectors';
 
 interface ICartWrapperProps {
   isOpen: boolean;
@@ -15,7 +17,7 @@ export const CartWrapper = ({
   onToggleSidebar,
   onSetActiveTab,
 }: ICartWrapperProps) => {
-  const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
+  const cartItems = useAppSelector(getCartItems);
 
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
@@ -24,16 +26,12 @@ export const CartWrapper = ({
         onToggleSidebar={onToggleSidebar}
       />
       <div className='flex flex-col h-full min-h-0'>
-        <div className='flex-1 min-h-0 overflow-y-auto py-[var(--padding)]  sm:py-[var(--sm-padding)]'>
-          cart list
-        </div>
-        <div className='p-[var(--padding)]  sm:p-[var(--sm-padding)] border-t border-solid border-[var(--border)]'>
-          total
-        </div>
+        <CartList />
+        <CartPrice />
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
-            className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold'
-            onClick={() => console.log(selectedMaterials)}
+            className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold cursor-pointer'
+            onClick={() => console.log(cartItems)}
           >
             GO TO SHIPPING
           </button>

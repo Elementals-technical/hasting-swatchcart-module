@@ -113,8 +113,25 @@ export type ETypeComponent =
   (typeof ETypeComponent)[keyof typeof ETypeComponent];
 
 export interface AttributeValue {
-  name?: string;
   assetId: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
+  name: string;
+  tags: string[];
+  metadata: IMaterialMetadata;
+  fileSize: number;
+  tagids: string[];
+  type: 'item' | string;
+  label: string;
+  visible: boolean;
+  enabled: boolean;
+}
+
+export interface IMaterialMetadata {
+  Look?: string;
+  Color?: string;
+  image?: string;
+  label?: string;
+  value?: string;
+  Material?: string;
+  zoomIconColor?: string;
+  [key: string]: string | undefined;
 }

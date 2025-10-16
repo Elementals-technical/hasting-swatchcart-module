@@ -5,6 +5,10 @@ import { SwatchesList } from '../SwatchesList/SwatchesList';
 import { EActiveTab } from '../../../../shared/types/activeTab';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import CustomSidebar from '../../../../shared/ui/CustomSidebar/CustomSidebar';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
+import { getSelectedMaterials } from '../../model/selectors';
+import { CartCervices } from '../../../Cart/lib/CartCervices';
+import { setCartItems } from '../../../Cart/model/cartSlice';
 
 interface ISidebarWrapperProps {
   isOpen: boolean;
@@ -17,6 +21,18 @@ export const SwatchWrapper = ({
   onToggleSidebar,
   onSetActiveTab,
 }: ISidebarWrapperProps) => {
+  const dispatch = useAppDispatch();
+  const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
+
+  const handleOpenCart = () => {
+    const cartData = CartCervices.getCartPreparedOption(selectedMaterials);
+
+    if (cartData) {
+      dispatch(setCartItems(cartData));
+      onSetActiveTab(EActiveTab.CART);
+    }
+  };
+
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
       <header className='flex p-[var(--padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
@@ -39,8 +55,8 @@ export const SwatchWrapper = ({
         <SwatchesList />
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
-            className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold'
-            onClick={() => onSetActiveTab(EActiveTab.CART)}
+            className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold cursor-pointer'
+            onClick={handleOpenCart}
           >
             ADD SWATCHES TO CART
           </button>

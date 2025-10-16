@@ -1,10 +1,9 @@
-import React from 'react';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { useAppSelector } from '../../../../app/store/store';
-import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import { EActiveTab } from '../../../../shared/types/activeTab';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
+import { getCartTotalCount } from '../../model/selectors';
 
 interface ICartHeaderProps {
   onSetActiveTab: (arg: EActiveTab) => void;
@@ -15,7 +14,7 @@ export const CartHeader = ({
   onSetActiveTab,
   onToggleSidebar,
 }: ICartHeaderProps) => {
-  const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
+  const totalCount = useAppSelector(getCartTotalCount);
 
   return (
     <header className='flex p-[var(--padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
@@ -31,7 +30,7 @@ export const CartHeader = ({
             Your cart
           </h2>
         </div>
-        {selectedMaterials.length >= MAX_SLOTS ? (
+        {totalCount >= MAX_SLOTS ? (
           <>
             <span className='text-[var(--main-accent-color)] hidden text-xs sm:block'>
               ({MAX_SLOTS}) You reached maximum amount of swatches
