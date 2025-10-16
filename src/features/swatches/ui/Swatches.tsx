@@ -1,12 +1,10 @@
-import { useEffect } from 'react';
-import CustomSidebar from '../../../shared/ui/CustomSidebar/CustomSidebar';
-import { Filters } from './Filters';
-import { MaterialList } from './MaterialList';
-import { ProductElement } from './ProductElement';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../app/store/store';
 import { setAllMaterialsOptions } from '../model/swatchesSlice';
 import type { IAttributeAsset } from '../model/types';
-import { SwatchesList } from './SwatchesList/SwatchesList';
+import { SwatchWrapper } from './SwatchWrapper/SwatchWrapper';
+import { CartWrapper } from '../../Cart/ui/CartWrapper/CartWrapper';
+import { EActiveTab } from '../../../shared/types/activeTab';
 
 interface ISwatchesProps {
   isOpen: boolean;
@@ -22,6 +20,8 @@ export const Swatches = ({
   // onSendData,
 }: ISwatchesProps) => {
   const dispatch = useAppDispatch();
+  const [activeTab, setActiveTab] = useState<EActiveTab>(EActiveTab.SWATCH);
+
   useEffect(() => {
     if (!attributes) {
       throw new Error(`SwatchCart-module: Attributes are important`);
@@ -30,19 +30,25 @@ export const Swatches = ({
     }
   }, [attributes]);
 
+  const handleSetActiveTab = (activeTab: EActiveTab) => {
+    setActiveTab(activeTab);
+  };
+
   return (
-    <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
-      <div className='flex flex-col h-full min-h-0'>
-        <ProductElement />
-        <Filters />
-        <MaterialList />
-        <SwatchesList />
-        <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
-          <button className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold'>
-            ADD SWATCHES TO CART
-          </button>
-        </div>
-      </div>
-    </CustomSidebar>
+    <>
+      {activeTab === EActiveTab.SWATCH ? (
+        <SwatchWrapper
+          isOpen={isOpen}
+          onToggleSidebar={onToggleSidebar}
+          onSetActiveTab={handleSetActiveTab}
+        />
+      ) : (
+        <CartWrapper
+          isOpen={isOpen}
+          onToggleSidebar={onToggleSidebar}
+          onSetActiveTab={handleSetActiveTab}
+        />
+      )}
+    </>
   );
 };
