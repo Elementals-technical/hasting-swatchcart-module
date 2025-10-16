@@ -29,8 +29,8 @@ export const SwatchWrapper = ({
 
     if (cartData) {
       dispatch(setCartItems(cartData));
-      onSetActiveTab(EActiveTab.CART);
     }
+    onSetActiveTab(EActiveTab.CART);
   };
 
   return (
