@@ -44,9 +44,9 @@ export const SwatchesList = () => {
       </div>
 
       <div className='flex flex-wrap gap-2'>
-        {selectedMaterials.map((val) => (
+        {selectedMaterials.map((val, index) => (
           <button
-            key={val.assetId}
+            key={`${val.metadata.label || index}/${val.parentName}`}
             onClick={() => handleSelect(val)}
             className='relative w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition'
             aria-label={`Selected swatch ${val.name ?? val.assetId}`}

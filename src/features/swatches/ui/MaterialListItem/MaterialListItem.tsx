@@ -16,7 +16,9 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
   };
 
   const assetId = val && val.assetId ? val.assetId : 'false';
-  const isSelected = selected.find((elem) => elem.assetId === assetId);
+  const isSelected = selected.find(
+    (elem) => elem.assetId === assetId && elem.parentName === val.parentName,
+  );
 
   return (
     <div className='w-76 rounded mb-[20px] sm:w-40'>
@@ -41,8 +43,9 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
           <CheckMarkIconSVG />
         </div>
       </button>
-      <div className='mt-3'>
-        <span className='font-medium'>{val.metadata.label} </span>
+      <div className='flex flex-col mt-3'>
+        <span className='font-normal mb-1'>{val.metadata.label} </span>
+        <span className='font-medium'>{val.parentName} </span>
       </div>
     </div>
   );

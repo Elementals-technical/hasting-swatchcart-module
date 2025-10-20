@@ -1,5 +1,4 @@
 export class AttributeHelper {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static getImage(value: any) {
     const Image = value?.metadata?.Image || value?.metadata?.image;
     if (!Image) return undefined;
@@ -9,7 +8,6 @@ export class AttributeHelper {
     return url;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static getValueLabel(attribute: any) {
     return (
       attribute?.metadata?.label ||
@@ -19,19 +17,16 @@ export class AttributeHelper {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static getZoomIconColor(value: any) {
     return (
       value?.metadata?.zoomIconColor || value?.metadata?.zoomIconColor || null
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static getHexColor(value: any) {
     return value?.metadata?.hex || value?.metadata?.Hex || null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static getAttributeLabel(attribute: any) {
     return (
       attribute?.metadata?.label ||

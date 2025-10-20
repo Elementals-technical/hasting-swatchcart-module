@@ -1,7 +1,6 @@
 export interface ISwatchesSlice {
   isOpenSidebar: boolean;
   listAttributes: IAttributeAsset[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   productElementOptions: any[];
   materialSelectState: IMaterialSelectState;
   allMaterialsValues: AttributeValue[];
@@ -117,6 +116,7 @@ export interface AttributeValue {
   name: string;
   tags: string[];
   metadata: IMaterialMetadata;
+  parentName: string;
   fileSize: number;
   tagids: string[];
   type: 'item' | string;

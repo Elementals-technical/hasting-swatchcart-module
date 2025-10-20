@@ -47,8 +47,8 @@ export const swatchesSlice = createSlice({
         const filteredAttributeList =
           SwatchesServices.getMaterialsValuesFromOptions(attributeList);
         if (filteredAttributeList?.length) {
+          // console.log('filteredAttributeList', filteredAttributeList);
           state.allMaterialsValues = SwatchesServices.getUniqueByAssetId(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             filteredAttributeList as any[],
           );
         }
@@ -74,29 +74,24 @@ export const swatchesSlice = createSlice({
         state.productElementOptions = productElementOptions;
       }
     },
-
     setSelectedMaterials(
       state,
       action: PayloadAction<{ selectedMaterial: AttributeValue }>,
     ) {
       const { selectedMaterial } = action.payload;
+      if (!selectedMaterial) return;
       const selected = current(state.selectedMaterials);
 
-      if (selectedMaterial) {
-        const isClicked = selected.find(
-          (elem) => elem.assetId === selectedMaterial.assetId,
-        );
-        // console.log('isClicked', isClicked);
-        // console.log('isClicked selected', selected);
-        // console.log('isClicked selectedMaterial', selectedMaterial);
+      const isSame = (i: AttributeValue) =>
+        i.metadata?.label === selectedMaterial.metadata?.label &&
+        i.parentName === selectedMaterial.parentName;
 
-        if (isClicked) {
-          state.selectedMaterials = selected.filter(
-            (item) => item.assetId !== selectedMaterial.assetId,
-          );
-        } else if (selected.length < 5) {
-          state.selectedMaterials = [...selected, selectedMaterial];
-        }
+      const exists = selected.some(isSame);
+
+      if (exists) {
+        state.selectedMaterials = selected.filter((i) => !isSame(i));
+      } else if (selected.length < 5) {
+        state.selectedMaterials = [...selected, selectedMaterial];
       }
     },
   },

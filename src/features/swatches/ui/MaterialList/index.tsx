@@ -24,7 +24,7 @@ export const MaterialList = () => {
         filters.Color.length === 0 ||
         (item.metadata?.Color &&
           filters.Color.some((selectedColor) =>
-            item.metadata?.Color.split(',')
+            item.metadata?.Color?.split(',')
               .map((s: string) => s.trim())
               .includes(selectedColor),
           ));
@@ -45,8 +45,9 @@ export const MaterialList = () => {
   return (
     <div className='flex-1 min-h-0 overflow-y-auto p-[var(--padding)]  sm:p-[var(--sm-padding)]'>
       <div className='grid grid-cols-1 gap-[8px]  sm:grid-cols-3'>
-        {filteredItems.map((val) => {
-          return <MaterialListItem key={val.assetId} val={val} />;
+        {filteredItems.map((val, index) => {
+          const key = `${val.metadata.label || index}/${val.parentName}`;
+          return <MaterialListItem key={key} val={val} />;
         })}
       </div>
     </div>

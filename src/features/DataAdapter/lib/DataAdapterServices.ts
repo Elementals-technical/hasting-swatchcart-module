@@ -1,6 +1,6 @@
+import { SwatchesServices } from '../../swatches/lib/SwatchesServices';
 import {
   ETypeComponent,
-  type AttributeValue,
   type IAttributeAsset,
   type ISection,
 } from '../../swatches/model/types';
@@ -51,23 +51,51 @@ export class DataAdapterServices {
     );
   }
 
-  static getMaterialsValuesFromOptions(
-    options: IAttributeAsset[],
-  ): AttributeValue[] | undefined {
-    if (!options.length) return;
-    return options
-      .reduce<any[]>((acc, item) => {
-        if (Array.isArray(item.values)) {
-          return acc.concat(item.values);
-        }
-        return acc;
-      }, [])
-      .sort((a, b) => {
-        const nameA = a.name?.toLowerCase() ?? '';
-        const nameB = b.name?.toLowerCase() ?? '';
-        return nameA.localeCompare(nameB);
-      });
-  }
+  // static getMaterialsValuesFromOptions(
+  //   options: IAttributeAsset[],
+  // ): AttributeValue[] | undefined {
+  //   if (!options.length) return;
+  //   console.log('getMaterialsValuesFromOptions', options);
+
+  //   return options
+  //     .reduce<any[]>((acc, item) => {
+  //       if (Array.isArray(item.values)) {
+  //         return acc.concat(item.values);
+  //       }
+  //       return acc;
+  //     }, [])
+  //     .sort((a, b) => {
+  //       const nameA = a.name?.toLowerCase() ?? '';
+  //       const nameB = b.name?.toLowerCase() ?? '';
+  //       return nameA.localeCompare(nameB);
+  //     });
+  // }
+  // static getMaterialsValuesFromOptions(
+  //   options: IAttributeAsset[],
+  // ): AttributeValue[] | undefined {
+  //   if (!options.length) return;
+
+  //   return options
+  //     .reduce<AttributeValue[]>((acc, item) => {
+  //       if (Array.isArray(item.values) && item.values.length) {
+  //         const nameFromMeta =
+  //           item.metadata?.Name ?? item.metadata?.Label ?? 'without_name';
+
+  //         const valuesWithMeta = item.values.map((v) => ({
+  //           ...v,
+  //           parentName: nameFromMeta, // attach parent metadata.Name
+  //         }));
+
+  //         acc.push(...valuesWithMeta);
+  //       }
+  //       return acc;
+  //     }, [])
+  //     .sort((a, b) => {
+  //       const nameA = a.name?.toLowerCase() ?? '';
+  //       const nameB = b.name?.toLowerCase() ?? '';
+  //       return nameA.localeCompare(nameB);
+  //     });
+  // }
 
   static getAllMaterialOptions(
     attributes: IAttributeAsset[],
@@ -81,9 +109,10 @@ export class DataAdapterServices {
           materialKeys.includes(item.name),
         );
         if (productElementOptions?.length) {
-          const allMaterialValues = this.getMaterialsValuesFromOptions(
-            productElementOptions,
-          );
+          const allMaterialValues =
+            SwatchesServices.getMaterialsValuesFromOptions(
+              productElementOptions,
+            );
 
           if (allMaterialValues?.length) {
             return { allMaterialValues, productElementOptions };
