@@ -9,7 +9,6 @@ import { MaterialListItem } from '../MaterialListItem/MaterialListItem';
 export const MaterialList = () => {
   const allMaterialsValues = useAppSelector(getAllMaterialValues);
   const filters = useAppSelector(getMaterialSelectStateFilters);
-  console.log('allfilters', allMaterialsValues);
 
   const { filteredItems } = useMemo(() => {
     const filteredItems = allMaterialsValues.filter((item) => {
@@ -47,7 +46,7 @@ export const MaterialList = () => {
     <div className='flex-1 min-h-0 overflow-y-auto p-[var(--padding)]  sm:p-[var(--sm-padding)]'>
       <div className='grid grid-cols-1 gap-[8px]  sm:grid-cols-3'>
         {filteredItems.map((val, index) => {
-          const key = `${val.metadata.label}/${index}`;
+          const key = `${val.metadata.label || index}/${val.parentName}`;
           return <MaterialListItem key={key} val={val} />;
         })}
       </div>

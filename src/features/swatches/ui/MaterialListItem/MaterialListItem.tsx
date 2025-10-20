@@ -16,7 +16,9 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
   };
 
   const assetId = val && val.assetId ? val.assetId : 'false';
-  const isSelected = selected.find((elem) => elem.assetId === assetId);
+  const isSelected = selected.find(
+    (elem) => elem.assetId === assetId && elem.parentName === val.parentName,
+  );
 
   return (
     <div className='w-76 rounded mb-[20px] sm:w-40'>

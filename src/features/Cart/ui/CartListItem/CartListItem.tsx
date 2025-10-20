@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { MaterialItem } from '../../../../shared/ui/MaterialItem/MaterialItem';
 import { setSelectedMaterials } from '../../../swatches/model/swatchesSlice';
 import { decrement, increment, removeItem } from '../../model/cartSlice';
-import { getCartCanIncrement } from '../../model/selectors';
+import { getCartCanIncrement, getCartItems } from '../../model/selectors';
 import type { ICartItem } from '../../model/types';
 import { Counter } from '../Counter/Counter';
 
@@ -13,14 +13,16 @@ interface ICartListItemProps {
 export const CartListItem = ({ item }: ICartListItemProps) => {
   const dispatch = useAppDispatch();
   const canInc = useAppSelector(getCartCanIncrement);
+  const selectedMaterials = useAppSelector(getCartItems) ?? [];
 
   const handleDelete = () => {
     // DeleteSelected material from the Cart
-    dispatch(removeItem({ assetId: item.assetId }));
+    dispatch(removeItem({ selectedMaterial: item }));
     // DeleteSelected material from the  SwatchesList
     dispatch(setSelectedMaterials({ selectedMaterial: item }));
   };
 
+  console.log('CartListItem selectedMaterials', selectedMaterials);
   return (
     <li
       key={item.assetId}
@@ -33,12 +35,15 @@ export const CartListItem = ({ item }: ICartListItemProps) => {
           <MaterialItem val={item} />
         </div>
         <div className='flex flex-col justify-between'>
-          {item.metadata.label}
+          <div className='flex flex-col'>
+            <span className='mb-1 font-medium'>{item.metadata.label}</span>
+            <span className='mb-1 font-semibold'>{item.parentName}</span>
+          </div>
           <Counter
             value={item.count}
             canIncrement={canInc}
-            onIncrement={() => dispatch(increment({ assetId: item.assetId }))}
-            onDecrement={() => dispatch(decrement({ assetId: item.assetId }))}
+            onIncrement={() => dispatch(increment({ selectedMaterial: item }))}
+            onDecrement={() => dispatch(decrement({ selectedMaterial: item }))}
             onDelete={handleDelete}
           />
         </div>
