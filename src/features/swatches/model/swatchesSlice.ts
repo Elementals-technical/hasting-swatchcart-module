@@ -47,8 +47,8 @@ export const swatchesSlice = createSlice({
         const filteredAttributeList =
           SwatchesServices.getMaterialsValuesFromOptions(attributeList);
         if (filteredAttributeList?.length) {
+          // console.log('filteredAttributeList', filteredAttributeList);
           state.allMaterialsValues = SwatchesServices.getUniqueByAssetId(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             filteredAttributeList as any[],
           );
         }

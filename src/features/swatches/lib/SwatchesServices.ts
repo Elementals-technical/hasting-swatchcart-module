@@ -1,4 +1,5 @@
 import {
+  type AttributeValue,
   type IAttributeAsset,
   type IMaterialSelectState,
   type TFilterName,
@@ -16,23 +17,29 @@ const isEqual = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 export class SwatchesServices {
   static getMaterialsValuesFromOptions(
     options: IAttributeAsset[],
-  ): IAttributeAsset[] | undefined {
+  ): AttributeValue[] | undefined {
     if (!options.length) return;
-    return (
-      options
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .reduce<any[]>((acc, item) => {
-          if (Array.isArray(item.values)) {
-            return acc.concat(item.values);
-          }
-          return acc;
-        }, [])
-        .sort((a, b) => {
-          const nameA = a.name?.toLowerCase() ?? '';
-          const nameB = b.name?.toLowerCase() ?? '';
-          return nameA.localeCompare(nameB);
-        })
-    );
+
+    return options
+      .reduce<AttributeValue[]>((acc, item) => {
+        if (Array.isArray(item.values) && item.values.length) {
+          const nameFromMeta =
+            item.metadata?.Name ?? item.metadata?.Label ?? 'without_name';
+
+          const valuesWithMeta = item.values.map((v) => ({
+            ...v,
+            parentName: nameFromMeta,
+          }));
+
+          acc.push(...valuesWithMeta);
+        }
+        return acc;
+      }, [])
+      .sort((a, b) => {
+        const nameA = a.name?.toLowerCase() ?? '';
+        const nameB = b.name?.toLowerCase() ?? '';
+        return nameA.localeCompare(nameB);
+      });
   }
 
   static getUniqueByAssetId<T extends { assetId: string }>(array: T[]): T[] {

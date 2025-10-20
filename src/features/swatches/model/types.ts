@@ -1,7 +1,6 @@
 export interface ISwatchesSlice {
   isOpenSidebar: boolean;
   listAttributes: IAttributeAsset[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   productElementOptions: any[];
   materialSelectState: IMaterialSelectState;
   allMaterialsValues: AttributeValue[];
