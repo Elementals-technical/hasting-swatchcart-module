@@ -9,6 +9,7 @@ import type {
 } from './types';
 import { SwatchesServices } from '../lib/SwatchesServices';
 import { uniqueList } from '../../../shared/utils/uniqueList';
+import type { IMapUIData } from '../../DataAdapter/utils/types';
 
 const initialState: ISwatchesSlice = {
   isOpenSidebar: true,
@@ -26,12 +27,6 @@ export const swatchesSlice = createSlice({
     toggleSidebar: (state) => {
       state.isOpenSidebar = !state.isOpenSidebar;
     },
-    // setListAttributes: (
-    //   state: ISwatchesSlice,
-    //   action: PayloadAction<IAttributeAsset[]>,
-    // ) => {
-    //   state.listAttributes = action.payload;
-    // },
     setMaterialSelect(state, action: PayloadAction<ISetFiltersPayload>) {
       const { filterName, values } = action.payload;
 
@@ -70,19 +65,11 @@ export const swatchesSlice = createSlice({
     clearAllMaterialFilters: (state) => {
       state.materialSelectState = { Finish: [], Color: [], Look: [] };
     },
-    setAllMaterialsOptions: (
-      state,
-      action: PayloadAction<IAttributeAsset[]>,
-    ) => {
-      const results = SwatchesServices.getAllMaterialOptions(action.payload);
-      const allValues = results?.allValues;
-      const productElementOptions = results?.materialOptions;
-
-      if (allValues?.length) {
-        state.allMaterialsValues =
-          SwatchesServices.getUniqueByAssetId(allValues);
+    setAllMaterialsOptions: (state, action: PayloadAction<IMapUIData>) => {
+      const { allMaterialValues, productElementOptions } = action.payload;
+      if (allMaterialValues?.length) {
+        state.allMaterialsValues = allMaterialValues;
       }
-
       if (productElementOptions?.length) {
         state.productElementOptions = productElementOptions;
       }
