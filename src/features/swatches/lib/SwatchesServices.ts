@@ -1,10 +1,21 @@
 import {
   ETypeComponent,
   type IAttributeAsset,
+  type IMaterialSelectState,
   type ISection,
+  type TFilterName,
 } from '../model/types';
+import { FILTER_TO_VALUE_KEY } from '../utils/constants';
+import type {
+  INonZeroSelectedFilters,
+  TAllValue,
+  TFilterGroup,
+  TFilterItem,
+} from '../utils/types';
 
 const GROUPING_KEY = 'UIGrouping';
+
+const isEqual = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
 export class SwatchesServices {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,5 +92,57 @@ export class SwatchesServices {
       seen.add(item.assetId);
       return true;
     });
+  }
+
+  static normalizeToArray(
+    input: string | string[] | null | undefined,
+    splitByComma = true,
+  ): string[] {
+    if (!input) return [];
+    if (Array.isArray(input)) return input.map((s) => s.trim()).filter(Boolean);
+    return (splitByComma ? input.split(',') : [input])
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  // Get all selected filters and their count
+  static mapFiltersFromValues(
+    allValues: TAllValue[],
+    selected: IMaterialSelectState,
+  ): TFilterGroup[] {
+    return (Object.keys(selected) as TFilterName[]).map((filterType) => {
+      const valueKey = FILTER_TO_VALUE_KEY[filterType];
+      const requested = selected[filterType];
+
+      const filters: TFilterItem[] = requested.map((filterKey) => {
+        let occurrences = 0;
+
+        for (const item of allValues) {
+          const entries = Array.isArray(item.values) ? item.values : [];
+          for (const entry of entries) {
+            const list = this.normalizeToArray(entry.metadata?.[valueKey]);
+            occurrences += list.filter((v) => isEqual(v, filterKey)).length;
+          }
+        }
+
+        return { filterKey, filterCount: occurrences };
+      });
+
+      return { filterType, filters };
+    });
+  }
+
+  // Get filters with a positive count
+  static getPositiveSelectedFilers(
+    mappedData: TFilterGroup[],
+  ): INonZeroSelectedFilters[] {
+    return mappedData
+      .map((group) => ({
+        filterName: group.filterType,
+        filterKeys: group.filters
+          .filter((f: TFilterItem) => f.filterCount !== 0)
+          .map((f: TFilterItem) => f.filterKey),
+      }))
+      .filter((group) => group.filterKeys.length > 0);
   }
 }
