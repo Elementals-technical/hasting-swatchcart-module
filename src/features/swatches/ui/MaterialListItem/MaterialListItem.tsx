@@ -41,8 +41,9 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
           <CheckMarkIconSVG />
         </div>
       </button>
-      <div className='mt-3'>
-        <span className='font-medium'>{val.metadata.label} </span>
+      <div className='flex flex-col mt-3'>
+        <span className='font-normal mb-1'>{val.metadata.label} </span>
+        <span className='font-medium'>{val.parentName} </span>
       </div>
     </div>
   );

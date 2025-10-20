@@ -116,6 +116,7 @@ export interface AttributeValue {
   name: string;
   tags: string[];
   metadata: IMaterialMetadata;
+  parentName: string;
   fileSize: number;
   tagids: string[];
   type: 'item' | string;
