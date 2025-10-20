@@ -19,14 +19,14 @@ function App() {
 
   return (
     <>
-      APP
+      APP Is open sidebar {isOpenSidebar ? 'open' : 'close'}
       <button type='button' onClick={handleOpenSidebar}>
-        Is open sidebar {isOpenSidebar ? 'open' : 'close'}
+        Open sidebar
       </button>
       <Swatches
         isOpen={isOpenSidebar}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        attributes={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
+        uiDataType='UI'
+        data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
       />
