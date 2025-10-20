@@ -13,7 +13,7 @@ export interface IMaterialSelectState {
   Color: string[];
   Look: string[];
 }
-export type FilterName = keyof IMaterialSelectState;
+export type TFilterName = keyof IMaterialSelectState;
 
 export interface ISetFiltersPayload {
   filterName: keyof IMaterialSelectState;

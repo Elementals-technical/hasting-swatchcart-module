@@ -4,13 +4,18 @@ import {
   MultiSelect,
   type IMultiSelectOption,
 } from '../../../../shared/ui/MultiSelect/MultiSelect';
-import { getProductElementOptions } from '../../model/selectors';
+import {
+  getMaterialSelectStateFilters,
+  getProductElementOptions,
+} from '../../model/selectors';
 import { uniqueList } from '../../../../shared/utils/uniqueList';
-import { setPanelFilter } from '../../model/swatchesSlice';
+import { setMaterialSelect, setPanelFilter } from '../../model/swatchesSlice';
+import { SwatchesServices } from '../../lib/SwatchesServices';
 
 export const ProductElement = () => {
   const dispatch = useAppDispatch();
   const allProductElementOptions = useAppSelector(getProductElementOptions);
+  const filters = useAppSelector(getMaterialSelectStateFilters);
   const [productOptions, setProductOptions] = useState<IMultiSelectOption[]>(
     [],
   );
@@ -34,7 +39,29 @@ export const ProductElement = () => {
         const filteredMaterialByProduct = allProductElementOptions.filter(
           (item) => uniqueListValue.includes(item.metadata?.Label),
         );
+
         setProductValues(uniqueListValue);
+
+        // Find all counts for every selected type of filters Material, Color, Look according to selected PanelElement
+        const mappedData = SwatchesServices.mapFiltersFromValues(
+          filteredMaterialByProduct,
+          filters,
+        );
+
+        // Find all filters that where value count !== 0
+        const nonZeroCountList =
+          SwatchesServices.getPositiveSelectedFilers(mappedData);
+
+        // Reset all filters that don't have any
+        if (nonZeroCountList.length) {
+          nonZeroCountList.forEach((listItem) => {
+            const { filterName, filterKeys } = listItem;
+            const itemsWithoutZeroCount = { filterName, values: filterKeys };
+
+            dispatch(setMaterialSelect(itemsWithoutZeroCount));
+          });
+        }
+
         dispatch(setPanelFilter({ attributes: filteredMaterialByProduct }));
       } else {
         dispatch(setPanelFilter({ attributes: allProductElementOptions }));
