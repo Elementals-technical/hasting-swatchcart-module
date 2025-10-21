@@ -9,6 +9,7 @@ import type {
 } from './types';
 import { SwatchesServices } from '../lib/SwatchesServices';
 import { uniqueList } from '../../../shared/utils/uniqueList';
+import type { IMapUIData } from '../../DataAdapter/utils/types';
 
 const initialState: ISwatchesSlice = {
   isOpenSidebar: true,
@@ -26,12 +27,6 @@ export const swatchesSlice = createSlice({
     toggleSidebar: (state) => {
       state.isOpenSidebar = !state.isOpenSidebar;
     },
-    // setListAttributes: (
-    //   state: ISwatchesSlice,
-    //   action: PayloadAction<IAttributeAsset[]>,
-    // ) => {
-    //   state.listAttributes = action.payload;
-    // },
     setMaterialSelect(state, action: PayloadAction<ISetFiltersPayload>) {
       const { filterName, values } = action.payload;
 
@@ -52,8 +47,8 @@ export const swatchesSlice = createSlice({
         const filteredAttributeList =
           SwatchesServices.getMaterialsValuesFromOptions(attributeList);
         if (filteredAttributeList?.length) {
+          // console.log('filteredAttributeList', filteredAttributeList);
           state.allMaterialsValues = SwatchesServices.getUniqueByAssetId(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             filteredAttributeList as any[],
           );
         }
@@ -70,46 +65,33 @@ export const swatchesSlice = createSlice({
     clearAllMaterialFilters: (state) => {
       state.materialSelectState = { Finish: [], Color: [], Look: [] };
     },
-    setAllMaterialsOptions: (
-      state,
-      action: PayloadAction<IAttributeAsset[]>,
-    ) => {
-      const results = SwatchesServices.getAllMaterialOptions(action.payload);
-      const allValues = results?.allValues;
-      const productElementOptions = results?.materialOptions;
-
-      if (allValues?.length) {
-        state.allMaterialsValues =
-          SwatchesServices.getUniqueByAssetId(allValues);
+    setAllMaterialsOptions: (state, action: PayloadAction<IMapUIData>) => {
+      const { allMaterialValues, productElementOptions } = action.payload;
+      if (allMaterialValues?.length) {
+        state.allMaterialsValues = allMaterialValues;
       }
-
       if (productElementOptions?.length) {
         state.productElementOptions = productElementOptions;
       }
     },
-
     setSelectedMaterials(
       state,
       action: PayloadAction<{ selectedMaterial: AttributeValue }>,
     ) {
       const { selectedMaterial } = action.payload;
+      if (!selectedMaterial) return;
       const selected = current(state.selectedMaterials);
 
-      if (selectedMaterial) {
-        const isClicked = selected.find(
-          (elem) => elem.assetId === selectedMaterial.assetId,
-        );
-        // console.log('isClicked', isClicked);
-        // console.log('isClicked selected', selected);
-        // console.log('isClicked selectedMaterial', selectedMaterial);
+      const isSame = (i: AttributeValue) =>
+        i.metadata?.label === selectedMaterial.metadata?.label &&
+        i.parentName === selectedMaterial.parentName;
 
-        if (isClicked) {
-          state.selectedMaterials = selected.filter(
-            (item) => item.assetId !== selectedMaterial.assetId,
-          );
-        } else if (selected.length < 5) {
-          state.selectedMaterials = [...selected, selectedMaterial];
-        }
+      const exists = selected.some(isSame);
+
+      if (exists) {
+        state.selectedMaterials = selected.filter((i) => !isSame(i));
+      } else if (selected.length < 5) {
+        state.selectedMaterials = [...selected, selectedMaterial];
       }
     },
   },

@@ -1,8 +1,7 @@
 import {
-  ETypeComponent,
+  type AttributeValue,
   type IAttributeAsset,
   type IMaterialSelectState,
-  type ISection,
   type TFilterName,
 } from '../model/types';
 import { FILTER_TO_VALUE_KEY } from '../utils/constants';
@@ -13,76 +12,34 @@ import type {
   TFilterItem,
 } from '../utils/types';
 
-const GROUPING_KEY = 'UIGrouping';
-
 const isEqual = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
 export class SwatchesServices {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static getGroupingValue(attributes: any[]) {
-    if (!attributes) return;
-
-    return attributes.find((item) => item.name === GROUPING_KEY);
-  }
-
-  static getAllMaterialValuesKeys(
-    attributes: ISection[],
-  ): string[] | undefined {
-    if (!attributes) return;
-
-    return attributes.flatMap((section) =>
-      section.groups
-        .flatMap((group) =>
-          group.options.filter(
-            (opt) => opt.typeComponent === ETypeComponent.MATERIAL,
-          ),
-        )
-        .map((item) => item.optionName),
-    );
-  }
-
   static getMaterialsValuesFromOptions(
     options: IAttributeAsset[],
-  ): IAttributeAsset[] | undefined {
+  ): AttributeValue[] | undefined {
     if (!options.length) return;
-    return (
-      options
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .reduce<any[]>((acc, item) => {
-          if (Array.isArray(item.values)) {
-            return acc.concat(item.values);
-          }
-          return acc;
-        }, [])
-        .sort((a, b) => {
-          const nameA = a.name?.toLowerCase() ?? '';
-          const nameB = b.name?.toLowerCase() ?? '';
-          return nameA.localeCompare(nameB);
-        })
-    );
-  }
 
-  static getAllMaterialOptions(
-    attributes: IAttributeAsset[],
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ): { allValues: any[]; materialOptions: any[] } | undefined {
-    const groupingValues = JSON.parse(this.getGroupingValue(attributes).value);
+    return options
+      .reduce<AttributeValue[]>((acc, item) => {
+        if (Array.isArray(item.values) && item.values.length) {
+          const nameFromMeta =
+            item.metadata?.Name ?? item.metadata?.Label ?? 'without_name';
 
-    if (groupingValues) {
-      const materialKeys = this.getAllMaterialValuesKeys(groupingValues);
-      if (materialKeys?.length) {
-        const materialOptions = attributes.filter((item) =>
-          materialKeys.includes(item.name),
-        );
-        if (materialOptions?.length) {
-          const allValues = this.getMaterialsValuesFromOptions(materialOptions);
+          const valuesWithMeta = item.values.map((v) => ({
+            ...v,
+            parentName: nameFromMeta,
+          }));
 
-          if (allValues?.length) {
-            return { allValues, materialOptions };
-          }
+          acc.push(...valuesWithMeta);
         }
-      }
-    }
+        return acc;
+      }, [])
+      .sort((a, b) => {
+        const nameA = a.name?.toLowerCase() ?? '';
+        const nameB = b.name?.toLowerCase() ?? '';
+        return nameA.localeCompare(nameB);
+      });
   }
 
   static getUniqueByAssetId<T extends { assetId: string }>(array: T[]): T[] {

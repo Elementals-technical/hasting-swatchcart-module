@@ -14,7 +14,7 @@ export const MinusIconSVG: FC<SvgIconProps> = (props) => {
       <path
         d='M2.5 6H9.5'
         stroke='current'
-        stroke-linecap='round'
+        strokeLinecap='round'
         stroke-linejoin='round'
       />
     </svg>
