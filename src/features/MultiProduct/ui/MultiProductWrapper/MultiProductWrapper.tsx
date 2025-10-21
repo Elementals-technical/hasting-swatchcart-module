@@ -16,7 +16,7 @@ export const MultiProductWrapper = () => {
   return (
     <CustomModal isOpen={true} onClose={handleToggleSidebar}>
       {selectedProduct ? (
-        <SelectedProductItem />
+        <SelectedProductItem onSidebarToggle={handleToggleSidebar} />
       ) : (
         <ProductList onSidebarToggle={handleToggleSidebar} />
       )}
