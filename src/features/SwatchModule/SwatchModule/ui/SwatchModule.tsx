@@ -1,9 +1,9 @@
-import { EDataInputType } from '../../DataAdapter/utils/types';
-import type { IAttributeAsset } from '../../swatches/model/types';
-import { useAppSelector } from '../../../app/store/store';
-import { getIsOpenSidebar } from '../../swatches/model/selectors';
-import { MultiProductWrapper } from '../../MultiProduct/ui/MultiProductWrapper/MultiProductWrapper';
-import { Swatches } from '../../swatches/ui/Swatches';
+import { EDataInputType } from '../../../DataAdapter/utils/types';
+import type { IAttributeAsset } from '../../../swatches/model/types';
+import { useAppSelector } from '../../../../app/store/store';
+import { getIsOpenSidebar } from '../../../swatches/model/selectors';
+import { MultiProductWrapper } from '../../../MultiProduct/ui/MultiProductWrapper/MultiProductWrapper';
+import { Swatches } from '../../../swatches/ui/Swatches';
 
 interface ISwatchesModuleProps {
   isOpen: boolean;
