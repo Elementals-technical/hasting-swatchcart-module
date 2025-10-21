@@ -1,6 +1,13 @@
+import { useEffect } from 'react';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { SearchIconSVG } from '../../../../app/assets/svg/SearchIconSVG';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { MultiSelect } from '../../../../shared/ui/MultiSelect/MultiSelect';
+import { getProductListThunk } from '../../../swatches/model/thunks';
+import {
+  getIsLoadingProductList,
+  getProductLIst,
+} from '../../../swatches/model/selectors';
 
 interface IProductList {
   onSidebarToggle: () => void;
@@ -13,6 +20,15 @@ const MOCK_SORT = [
 ];
 
 export const ProductList = ({ onSidebarToggle }: IProductList) => {
+  const dispatch = useAppDispatch();
+  const isLoadingProductList = useAppSelector(getIsLoadingProductList);
+
+  const productList = useAppSelector(getProductLIst);
+
+  useEffect(() => {
+    dispatch(getProductListThunk());
+  }, []);
+
   return (
     <div className='flex h-full flex-col'>
       <header className='flex items-center justify-between p-[var(--sm-padding)] border-b border-[var(--border)]'>
@@ -58,33 +74,32 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
           />
         </div>
 
-        <div className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] bg-red-500'>
+        <div className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] bg-red-500 sm:hidden'>
           sort
         </div>
 
-        <div className='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'>
-          <div className='mb-4'>Select Product</div>
-          <ul
-            className='
+        {isLoadingProductList ? (
+          <div className='w-full flex justify-center items-center flex-1 min-h-0'>
+            loading...
+          </div>
+        ) : (
+          <div className='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'>
+            <div className='mb-4'>Select Product</div>
+            <ul
+              className='
               grid grid-cols-2 sm:grid-cols-6
-              gap-3
-            '
-          >
-            {Array.from({ length: 50 }, (_, i) => (
-              <li
-                key={i}
-                className='
-                  rounded-lg bg-[var(--background-grey)]
-                  text-center py-3 px-2
-                  hover:bg-[var(--background-hover)]
-                  transition
+                gap-4
                 '
-              >
-                Item {i + 1}
-              </li>
-            ))}
-          </ul>
-        </div>
+            >
+              {productList.length
+                ? productList?.map((productListItem) => {
+                    const { name } = productListItem;
+                    return <li key={name}>{name}</li>;
+                  })
+                : null}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import type { IProduct } from '../../MultiProduct/model/types';
+
 export interface ISwatchesSlice {
   isOpenSidebar: boolean;
   listAttributes: IAttributeAsset[];
@@ -5,6 +7,8 @@ export interface ISwatchesSlice {
   materialSelectState: IMaterialSelectState;
   allMaterialsValues: AttributeValue[];
   selectedMaterials: AttributeValue[];
+  productList: IProduct[];
+  isLoadingProductList: boolean;
 }
 
 export interface IMaterialSelectState {

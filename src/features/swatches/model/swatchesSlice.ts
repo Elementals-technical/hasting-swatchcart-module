@@ -10,6 +10,7 @@ import type {
 import { SwatchesServices } from '../lib/SwatchesServices';
 import { uniqueList } from '../../../shared/utils/uniqueList';
 import type { IMapUIData } from '../../DataAdapter/utils/types';
+import { getProductListThunk } from './thunks';
 
 const initialState: ISwatchesSlice = {
   isOpenSidebar: true,
@@ -18,6 +19,8 @@ const initialState: ISwatchesSlice = {
   materialSelectState: { Finish: [], Color: [], Look: [] },
   allMaterialsValues: [],
   selectedMaterials: [],
+  productList: [],
+  isLoadingProductList: false,
 };
 
 export const swatchesSlice = createSlice({
@@ -95,7 +98,19 @@ export const swatchesSlice = createSlice({
       }
     },
   },
-  extraReducers: () => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getProductListThunk.pending, (state) => {
+        state.isLoadingProductList = true;
+      })
+      .addCase(getProductListThunk.fulfilled, (state, action) => {
+        state.productList = action.payload;
+        state.isLoadingProductList = false;
+      })
+      .addCase(getProductListThunk.rejected, (state) => {
+        state.isLoadingProductList = false;
+      });
+  },
 });
 
 export const swatchesReducer = swatchesSlice.reducer;
