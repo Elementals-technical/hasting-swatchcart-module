@@ -8,6 +8,7 @@ import {
   getIsLoadingProductList,
   getProductLIst,
 } from '../../../swatches/model/selectors';
+import { ProductListItem } from '../ProductListItem/ProductListItem';
 
 interface IProductList {
   onSidebarToggle: () => void;
@@ -87,14 +88,19 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
             <div className='mb-4'>Select Product</div>
             <ul
               className='
-              grid grid-cols-2 sm:grid-cols-6
-                gap-4
+              grid grid-cols-2 gap-4
+              sm:grid-cols-6 
                 '
             >
               {productList.length
                 ? productList?.map((productListItem) => {
                     const { name } = productListItem;
-                    return <li key={name}>{name}</li>;
+                    return (
+                      <ProductListItem
+                        key={name}
+                        productListItem={productListItem}
+                      />
+                    );
                   })
                 : null}
             </ul>

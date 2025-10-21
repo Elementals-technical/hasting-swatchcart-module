@@ -32,7 +32,7 @@ export const CustomModal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
     <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40'>
       <div
         ref={modalRef}
-        className='flex h-full flex-col bg-white rounded-sm shadow-lg w-[95%] max-h-[90vh] overflow-hidden transition-all duration-200 max-w-[1440px]
+        className='flex h-full flex-col bg-white rounded-sm shadow-lg w-[95%] max-h-[90vh] overflow-hidden transition-all duration-200 max-w-[1100px]
         '
       >
         {children}
