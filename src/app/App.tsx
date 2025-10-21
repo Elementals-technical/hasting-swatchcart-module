@@ -1,13 +1,13 @@
 import { getIsOpenSidebar } from '../features/swatches/model/selectors';
 import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
-import { Swatches } from '../features/swatches/ui/Swatches';
+import { SwatchModule } from '../features/SwatchModule/SwatchModule/SwatchModule';
 import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import {SwatchesModule} from '../../dist/components/SwatchesModule'
 import { useAppDispatch, useAppSelector } from './store/store';
 
 function App() {
   const dispatch = useAppDispatch();
-  const isOpenSidebar = useAppSelector(getIsOpenSidebar);
+  const isOpenModule = useAppSelector(getIsOpenSidebar);
 
   const handleOpenSidebar = () => {
     dispatch(toggleSidebar());
@@ -19,18 +19,18 @@ function App() {
 
   return (
     <>
-      APP Is open sidebar {isOpenSidebar ? 'open' : 'close'}
+      APP Is open module {isOpenModule ? 'open' : 'close'}
+      <br />
       <button type='button' onClick={handleOpenSidebar}>
-        Open sidebar
+        Open module
       </button>
-      <Swatches
-        isOpen={isOpenSidebar}
-        uiDataType='UI'
+      <SwatchModule
+        isOpen={isOpenModule}
+        uiDataType='DATA_ALL_PRODUCT'
         data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
       />
-      {/* <SwatchesModule isOpen={isOpenSidebar} onToggleSidebar={handleOpenSidebar} onSendData={handleSetData}/>  */}
     </>
   );
 }
