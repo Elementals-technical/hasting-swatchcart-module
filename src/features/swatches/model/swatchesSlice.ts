@@ -9,8 +9,9 @@ import type {
 } from './types';
 import { SwatchesServices } from '../lib/SwatchesServices';
 import { uniqueList } from '../../../shared/utils/uniqueList';
-import type { IMapUIData } from '../../DataAdapter/utils/types';
+import { type IMapUIData } from '../../DataAdapter/utils/types';
 import { getProductListThunk } from './thunks';
+import type { IProduct } from '../../MultiProduct/model/types';
 
 const initialState: ISwatchesSlice = {
   isOpenSidebar: true,
@@ -21,6 +22,8 @@ const initialState: ISwatchesSlice = {
   selectedMaterials: [],
   productList: [],
   isLoadingProductList: false,
+  selectedProduct: null,
+  isLoadingSelectedProduct: false,
 };
 
 export const swatchesSlice = createSlice({
@@ -50,7 +53,6 @@ export const swatchesSlice = createSlice({
         const filteredAttributeList =
           SwatchesServices.getMaterialsValuesFromOptions(attributeList);
         if (filteredAttributeList?.length) {
-          // console.log('filteredAttributeList', filteredAttributeList);
           state.allMaterialsValues = SwatchesServices.getUniqueByAssetId(
             filteredAttributeList as any[],
           );
@@ -97,6 +99,9 @@ export const swatchesSlice = createSlice({
         state.selectedMaterials = [...selected, selectedMaterial];
       }
     },
+    setSelectedProduct(state, action: PayloadAction<IProduct>) {
+      state.selectedProduct = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -110,6 +115,16 @@ export const swatchesSlice = createSlice({
       .addCase(getProductListThunk.rejected, (state) => {
         state.isLoadingProductList = false;
       });
+    // .addCase(getSelectedProductThunk.pending, (state) => {
+    //   state.isLoadingSelectedProduct = true;
+    // })
+    // .addCase(getSelectedProductThunk.fulfilled, (state, action) => {
+    //   state.selectedProduct = action.payload;
+    //   state.isLoadingSelectedProduct = false;
+    // })
+    // .addCase(getSelectedProductThunk.rejected, (state) => {
+    //   state.isLoadingSelectedProduct = false;
+    // });
   },
 });
 
@@ -123,4 +138,5 @@ export const {
   toggleSidebar,
   clearMaterialFilter,
   clearAllMaterialFilters,
+  setSelectedProduct,
 } = swatchesSlice.actions;

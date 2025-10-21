@@ -1,13 +1,13 @@
-import { useAppDispatch } from '../../../../app/store/store';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { toggleSidebar } from '../../../swatches/model/swatchesSlice';
-import { generateRandomProducts } from '../../utils/randomList';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { ProductList } from '../ProductList/ProductList';
+import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem';
 
 export const MultiProductWrapper = () => {
   const dispatch = useAppDispatch();
-  const products = generateRandomProducts(100);
-  console.log('MultiProductWrapper', products);
+  const selectedProduct = useAppSelector(getSelectedProduct);
 
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar());
@@ -15,7 +15,11 @@ export const MultiProductWrapper = () => {
 
   return (
     <CustomModal isOpen={true} onClose={handleToggleSidebar}>
-      <ProductList onSidebarToggle={handleToggleSidebar} />
+      {selectedProduct ? (
+        <SelectedProductItem />
+      ) : (
+        <ProductList onSidebarToggle={handleToggleSidebar} />
+      )}
     </CustomModal>
   );
 };

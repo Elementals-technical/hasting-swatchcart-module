@@ -9,6 +9,8 @@ export interface ISwatchesSlice {
   selectedMaterials: AttributeValue[];
   productList: IProduct[];
   isLoadingProductList: boolean;
+  selectedProduct: IProduct | null;
+  isLoadingSelectedProduct: boolean;
 }
 
 export interface IMaterialSelectState {
