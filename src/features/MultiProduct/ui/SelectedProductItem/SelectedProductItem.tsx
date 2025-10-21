@@ -1,4 +1,3 @@
-import React from 'react';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 
 interface ISelectedProductItemProps {
