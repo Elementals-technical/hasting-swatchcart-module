@@ -49,8 +49,11 @@ export const SwatchWrapper = ({
         </button>
       </header>
       <div className='flex flex-col h-full min-h-0'>
-        <ProductElement />
-        <Filters />
+        <ProductElement
+          containerStyles='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'
+          selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[250px]'
+        />
+        <Filters containerStyles='shrink-0 flex justify-between items-center gap-2 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]' />
         <MaterialList />
         <SwatchesList />
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>

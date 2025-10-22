@@ -1,4 +1,5 @@
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
+import { FiltersSelectedProductItem } from '../FiltersSelectedProductItem/FiltersSelectedProductItem';
 
 interface ISelectedProductItemProps {
   onSidebarToggle: () => void;
@@ -20,9 +21,7 @@ export const SelectedProductItem = ({
         </button>
       </header>
       <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='flex justify-between items-center gap-4 h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)]'>
-          filters
-        </div>
+        <FiltersSelectedProductItem />
         <div className='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'>
           <ul
             className='

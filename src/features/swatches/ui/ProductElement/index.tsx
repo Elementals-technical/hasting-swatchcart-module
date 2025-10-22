@@ -12,7 +12,15 @@ import { uniqueList } from '../../../../shared/utils/uniqueList';
 import { setMaterialSelect, setPanelFilter } from '../../model/swatchesSlice';
 import { SwatchesServices } from '../../lib/SwatchesServices';
 
-export const ProductElement = () => {
+interface IProductElementProps {
+  containerStyles: string;
+  selectStyles: string;
+}
+
+export const ProductElement = ({
+  containerStyles,
+  selectStyles,
+}: IProductElementProps) => {
   const dispatch = useAppDispatch();
   const allProductElementOptions = useAppSelector(getProductElementOptions);
   const filters = useAppSelector(getMaterialSelectStateFilters);
@@ -72,7 +80,8 @@ export const ProductElement = () => {
   };
 
   return (
-    <div className='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
+    // <div className='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
+    <div className={containerStyles}>
       <span>Product element</span>
       <MultiSelect
         options={productOptions}
@@ -81,7 +90,7 @@ export const ProductElement = () => {
         placeholder='All product elements'
         // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
         // sectionName={sectionName}
-        className='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[250px]'
+        className={selectStyles}
         dropdownWidth='w-80'
       />
     </div>
