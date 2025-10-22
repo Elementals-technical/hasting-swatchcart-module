@@ -24,8 +24,8 @@ export const SelectedProductItem = ({
       <div className='flex min-h-0 flex-1 flex-col'>
         <FiltersSelectedProductItem />
         <MaterialList
-          containerStyles='flex-1 min-h-0 overflow-y-auto p-[var(--padding)] sm:p-[var(--sm-padding)]'
-          gridStyles='grid grid-cols-2 gap-[8px] sm:grid-cols-6'
+          containerStyles='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'
+          gridStyles='grid grid-cols-2 gap-4 sm:grid-cols-6'
           desktopColumnsCount={6}
         />
         <div
