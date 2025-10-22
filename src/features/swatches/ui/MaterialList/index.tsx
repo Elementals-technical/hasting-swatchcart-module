@@ -63,12 +63,12 @@ export const MaterialList = ({
   const cols = smUp ? desktopColumnsCount : 1;
 
   const rowCount = Math.ceil(filteredItems.length / cols);
-
+  const estimateSize = smUp ? 300 : 200;
   // Estimate row height close to your card+labels+gap; refine via measureElement
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => scrollRef.current,
-    estimateSize: () => 300,
+    estimateSize: () => estimateSize,
     overscan: 24,
     measureElement: (el) => el?.getBoundingClientRect().height,
   });

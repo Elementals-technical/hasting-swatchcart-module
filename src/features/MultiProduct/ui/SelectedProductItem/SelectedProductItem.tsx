@@ -1,6 +1,7 @@
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { MaterialList } from '../../../swatches/ui/MaterialList';
 import { FiltersSelectedProductItem } from '../FiltersSelectedProductItem/FiltersSelectedProductItem';
+import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
 
 interface ISelectedProductItemProps {
   onSidebarToggle: () => void;
@@ -28,13 +29,7 @@ export const SelectedProductItem = ({
           gridStyles='grid grid-cols-2 gap-4 sm:grid-cols-6'
           desktopColumnsCount={6}
         />
-        <div
-          className='flex justify-between items-center gap-4 h-[64px] p-[var(--sm-padding)]
-        border-t border-[var(--border)]
-        '
-        >
-          bottom content
-        </div>
+        <SwatchContentContainer />
       </div>
     </div>
   );
