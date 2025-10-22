@@ -11,9 +11,13 @@ export const SwatchContentContainer = () => {
   };
 
   return (
-    <div className='flex flex-col border-t border-[var(--border)]'>
-      <SwatchesList containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0' />
-      <div className='p-[var(--sm-padding)] border-t border-[var(--border)]'>
+    <div
+      className='flex flex-col border-t border-[var(--border)]
+      sm:flex-row
+    '
+    >
+      <SwatchesList containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0 sm:w-[50%] sm:border-r sm:border-[var(--border)]' />
+      <div className='flex p-[var(--sm-padding)] border-t border-[var(--border)] sm:border-none sm:w-[50%] sm:justify-center sm:items-center'>
         <CustomButton onClick={handleOpenMultiCart}>
           ADD SWATCHES TO CART
         </CustomButton>
