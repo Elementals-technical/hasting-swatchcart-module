@@ -5,10 +5,17 @@ import {
 } from '../../../swatches/model/selectors';
 import { toggleSidebar } from '../../../swatches/model/swatchesSlice';
 import { CustomModal } from '../CustomModal/CustomModal';
+import { MultiProductItemCart } from '../MultiProductItemCart/MultiProductItemCart';
 import { ProductList } from '../ProductList/ProductList';
 import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem';
 
-export const MultiProductWrapper = () => {
+interface IMultiProductWrapperProps {
+  onSendData: (data: unknown) => void;
+}
+
+export const MultiProductWrapper = ({
+  onSendData,
+}: IMultiProductWrapperProps) => {
   const dispatch = useAppDispatch();
   const isOpenMultiProductCart = useAppSelector(getIsOpenMultiCart);
   const selectedProduct = useAppSelector(getSelectedProduct);
@@ -20,7 +27,7 @@ export const MultiProductWrapper = () => {
   return (
     <CustomModal isOpen={true} onClose={handleToggleSidebar}>
       {isOpenMultiProductCart ? (
-        <div className=''>cart</div>
+        <MultiProductItemCart onSendData={onSendData} />
       ) : selectedProduct ? (
         <SelectedProductItem onSidebarToggle={handleToggleSidebar} />
       ) : (

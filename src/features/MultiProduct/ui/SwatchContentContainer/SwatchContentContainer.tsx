@@ -1,12 +1,21 @@
-import { useAppDispatch } from '../../../../app/store/store';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
+import { CartCervices } from '../../../Cart/lib/CartCervices';
+import { setCartItems } from '../../../Cart/model/cartSlice';
+import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { SwatchesList } from '../../../swatches/ui/SwatchesList/SwatchesList';
 
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
+  const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
 
   const handleOpenMultiCart = () => {
+    const cartData = CartCervices.getCartPreparedOption(selectedMaterials);
+
+    if (cartData) {
+      dispatch(setCartItems(cartData));
+    }
     dispatch(setIsOpenMultiProductCart(true));
   };
 

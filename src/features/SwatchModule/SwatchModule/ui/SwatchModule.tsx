@@ -27,7 +27,7 @@ export const SwatchModule = ({
       {isOpenModule ? (
         <>
           {uiDataType === EDataInputType.DATA_ALL_PRODUCT ? (
-            <MultiProductWrapper />
+            <MultiProductWrapper onSendData={onSendData} />
           ) : null}
 
           {uiDataType === EDataInputType.UI ? (
