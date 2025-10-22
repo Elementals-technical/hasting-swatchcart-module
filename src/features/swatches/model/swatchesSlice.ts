@@ -102,6 +102,9 @@ export const swatchesSlice = createSlice({
     setSelectedProduct(state, action: PayloadAction<IProduct>) {
       state.selectedProduct = action.payload;
     },
+    deleteSelectedProduct(state) {
+      state.selectedProduct = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -139,4 +142,5 @@ export const {
   clearMaterialFilter,
   clearAllMaterialFilters,
   setSelectedProduct,
+  deleteSelectedProduct,
 } = swatchesSlice.actions;

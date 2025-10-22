@@ -1,4 +1,8 @@
+import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
+import { deleteSelectedProduct } from '../../../swatches/model/swatchesSlice';
 import { MaterialList } from '../../../swatches/ui/MaterialList';
 import { FiltersSelectedProductItem } from '../FiltersSelectedProductItem/FiltersSelectedProductItem';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
@@ -10,10 +14,27 @@ interface ISelectedProductItemProps {
 export const SelectedProductItem = ({
   onSidebarToggle,
 }: ISelectedProductItemProps) => {
+  const dispatch = useAppDispatch();
+  const selectedProduct = useAppSelector(getSelectedProduct);
+
+  const handleGoBack = () => {
+    dispatch(deleteSelectedProduct());
+  };
+
   return (
     <div className='flex h-full flex-col'>
       <header className='flex items-center justify-between p-[var(--sm-padding)] border-b border-[var(--border)]'>
-        <span className='text-base font-medium'>Selected Product</span>
+        <div className='flex items-center gap-2'>
+          <button
+            className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
+            onClick={handleGoBack}
+          >
+            <ArrowIconSVG />
+          </button>
+          <h2 className='m-0 text-base leading-[1.6] font-medium '>
+            {selectedProduct?.name}
+          </h2>
+        </div>
         <button
           onClick={onSidebarToggle}
           className='flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[var(--background-grey)]
