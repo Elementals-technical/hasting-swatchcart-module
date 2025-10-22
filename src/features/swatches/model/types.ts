@@ -11,6 +11,7 @@ export interface ISwatchesSlice {
   isLoadingProductList: boolean;
   selectedProduct: IProduct | null;
   isLoadingSelectedProduct: boolean;
+  isOpenMultiProductCart: boolean;
 }
 
 export interface IMaterialSelectState {

@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
+import {
+  getIsOpenMultiCart,
+  getSelectedProduct,
+} from '../../../swatches/model/selectors';
 import { toggleSidebar } from '../../../swatches/model/swatchesSlice';
 import { CustomModal } from '../CustomModal/CustomModal';
 import { ProductList } from '../ProductList/ProductList';
@@ -7,6 +10,7 @@ import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem'
 
 export const MultiProductWrapper = () => {
   const dispatch = useAppDispatch();
+  const isOpenMultiProductCart = useAppSelector(getIsOpenMultiCart);
   const selectedProduct = useAppSelector(getSelectedProduct);
 
   const handleToggleSidebar = () => {
@@ -15,7 +19,9 @@ export const MultiProductWrapper = () => {
 
   return (
     <CustomModal isOpen={true} onClose={handleToggleSidebar}>
-      {selectedProduct ? (
+      {isOpenMultiProductCart ? (
+        <div className=''>cart</div>
+      ) : selectedProduct ? (
         <SelectedProductItem onSidebarToggle={handleToggleSidebar} />
       ) : (
         <ProductList onSidebarToggle={handleToggleSidebar} />

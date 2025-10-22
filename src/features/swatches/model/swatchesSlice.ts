@@ -24,6 +24,7 @@ const initialState: ISwatchesSlice = {
   isLoadingProductList: false,
   selectedProduct: null,
   isLoadingSelectedProduct: false,
+  isOpenMultiProductCart: false,
 };
 
 export const swatchesSlice = createSlice({
@@ -105,6 +106,9 @@ export const swatchesSlice = createSlice({
     deleteSelectedProduct(state) {
       state.selectedProduct = null;
     },
+    setIsOpenMultiProductCart(state, action: PayloadAction<boolean>) {
+      state.isOpenMultiProductCart = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -143,4 +147,5 @@ export const {
   clearAllMaterialFilters,
   setSelectedProduct,
   deleteSelectedProduct,
+  setIsOpenMultiProductCart,
 } = swatchesSlice.actions;
