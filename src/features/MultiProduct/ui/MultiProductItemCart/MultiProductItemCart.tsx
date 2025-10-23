@@ -10,6 +10,7 @@ import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { getCartItems, getSelectedMaterials } from '../../model/selectors';
+import { Label } from '../../../../shared/ui/Label/Label';
 
 interface IMultiProductItemCartProps {
   onSendData?: (data: unknown) => void;
@@ -74,8 +75,9 @@ export const MultiProductItemCart = ({
           <CloseIconSVG width={10} height={10} />
         </button>
       </header>
-      <div className='p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'>
-        slider
+      <div className='flex items-center gap-4 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'>
+        <Label text='text' isActive={true} />
+        <Label text='text 2' />
       </div>
       <div className='flex flex-col h-full min-h-0'>
         {/* <CartList /> */}
