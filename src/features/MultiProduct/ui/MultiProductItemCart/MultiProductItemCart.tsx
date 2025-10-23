@@ -15,8 +15,6 @@ import {
   getCartItems,
   getSelectedMaterials,
 } from '../../model/selectors';
-import { MaterialItem } from '../../../../shared/ui/MaterialItem/MaterialItem';
-import { Counter } from '../../../Cart/ui/Counter/Counter';
 import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { useMemo } from 'react';
 import type { ICartItem } from '../../model/types';
@@ -25,6 +23,7 @@ import {
   incrementMultiProductItem,
   removeMultiProductItem,
 } from '../../model/multiProductCartSlice';
+import { CartListItem } from '../../../Cart/ui/CartListItem/CartListItem';
 
 interface IMultiProductItemCartProps {
   onSendData?: (data: unknown) => void;
@@ -40,8 +39,8 @@ export const MultiProductItemCart = ({
   const selectedMaterials = useAppSelector(
     getSelectedMaterials(selectedProduct?.productId || 999),
   );
-  console.log('selectedProducts', selectedProducts);
-  console.log('selectedMaterials', selectedMaterials);
+  // console.log('selectedProducts', selectedProducts);
+  // console.log('selectedMaterials', selectedMaterials);
 
   const totalCount = useMemo(() => {
     return MultiProductCartService.getCartTotalCount({
@@ -72,8 +71,8 @@ export const MultiProductItemCart = ({
     const { parentName, metadata } = item;
     const productId = selectedProduct?.productId;
     const label = metadata.label;
-    console.log('handleIncrement', item);
-    console.log('selectedMaterials', selectedMaterials);
+    // console.log('handleIncrement', item);
+    // console.log('selectedMaterials', selectedMaterials);
     if (productId && label && parentName) {
       dispatch(incrementMultiProductItem({ productId, label, parentName }));
     }
@@ -83,8 +82,8 @@ export const MultiProductItemCart = ({
     const { parentName, metadata } = item;
     const productId = selectedProduct?.productId;
     const label = metadata.label;
-    console.log('handleDecrement', item);
-    console.log('handleDecrement', selectedMaterials);
+    // console.log('handleDecrement', item);
+    // console.log('handleDecrement', selectedMaterials);
     if (productId && label && parentName) {
       dispatch(decrementMultiProductItem({ productId, label, parentName }));
     }
@@ -125,45 +124,20 @@ export const MultiProductItemCart = ({
           <CloseIconSVG width={10} height={10} />
         </button>
       </header>
+
       <CartSelectedProductList />
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>
           {selectedMaterials?.map((item) => {
             return (
-              // <CartListItem
-              //   key={`${item.assetId}/${item.parentName}`}
-              //   item={item}
-              // />
-              <li
+              <CartListItem
                 key={`${item.assetId}/${item.parentName}`}
-                className='
-                  border-b border-[var(--border)] p-[var(--padding)]
-                  sm:px-[var(--sm-padding)] sm:pb-[var(--sm-padding)]'
-              >
-                <div className='relative flex gap-4 '>
-                  <div>
-                    <MaterialItem val={item} />
-                  </div>
-                  <div className='flex flex-col justify-between'>
-                    <div className='flex flex-col'>
-                      <span className='mb-1 font-medium'>
-                        {item.metadata.label}
-                      </span>
-                      <span className='mb-1 font-semibold'>
-                        {item.parentName}
-                      </span>
-                    </div>
-                    <Counter
-                      value={item.count}
-                      canIncrement={totalCount < MAX_SLOTS}
-                      onIncrement={() => handleIncrement(item)}
-                      onDecrement={() => handleDecrement(item)}
-                      onDelete={() => handleDelete(item)}
-                    />
-                  </div>
-                  <div className='absolute top-0 right-0'>$13.00</div>
-                </div>
-              </li>
+                item={item}
+                canInc={totalCount < MAX_SLOTS}
+                onDelete={handleDelete}
+                onIncrement={handleIncrement}
+                onDecrement={handleDecrement}
+              />
             );
           })}
         </ul>
