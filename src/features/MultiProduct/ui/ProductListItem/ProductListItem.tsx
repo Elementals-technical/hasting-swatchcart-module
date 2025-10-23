@@ -18,11 +18,11 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
   const { name } = productListItem;
 
   const handleSetSelectedItem = async () => {
-    const productId = productListItem.productId;
+    const { productId, name } = productListItem;
 
-    if (productId) {
+    if (productId && name) {
       const data = await dispatch(
-        getSelectedProductThunk({ productId }),
+        getSelectedProductThunk({ productId, productName: name }),
       ).unwrap();
       if (data) {
         const attributes = data.attributes;

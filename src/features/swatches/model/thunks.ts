@@ -2,7 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   getProductListAPI,
   getSelectedProductAPI,
-} from '../../MultiProduct/model/api';
+} from '../../MultiProduct/model/API/api';
+import type { IGetProductParameters } from '../../MultiProduct/model/types';
 
 export const getProductListThunk = createAsyncThunk<
   any,
@@ -18,15 +19,14 @@ export const getProductListThunk = createAsyncThunk<
   }
 });
 
-interface GetSelectedProductParams {
-  productId: number;
-}
-
 export const getSelectedProductThunk = createAsyncThunk(
   'multiProducts/getSelectedProductThunk',
-  async ({ productId }: GetSelectedProductParams, { rejectWithValue }) => {
+  async (
+    { productId, productName }: IGetProductParameters,
+    { rejectWithValue },
+  ) => {
     try {
-      const response = await getSelectedProductAPI(productId);
+      const response = await getSelectedProductAPI({ productId, productName });
 
       return response;
     } catch (e: any) {

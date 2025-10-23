@@ -1,20 +1,29 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { CartCervices } from '../../../Cart/lib/CartCervices';
-import { setCartItems } from '../../../Cart/model/cartSlice';
-import { getSelectedMaterials } from '../../../swatches/model/selectors';
+import {
+  getSelectedMaterials,
+  getSelectedProduct,
+} from '../../../swatches/model/selectors';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { SwatchesList } from '../../../swatches/ui/SwatchesList/SwatchesList';
+import { setCartItems } from '../../model/multiProductCartSlice';
 
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
+  const selectedProduct = useAppSelector(getSelectedProduct);
 
   const handleOpenMultiCart = () => {
     const cartData = CartCervices.getCartPreparedOption(selectedMaterials);
 
-    if (cartData) {
-      dispatch(setCartItems(cartData));
+    if (cartData?.length && selectedProduct) {
+      const cartProductItem = {
+        productId: selectedProduct.productId,
+        name: selectedProduct.name,
+        items: cartData,
+      };
+      dispatch(setCartItems(cartProductItem));
     }
     dispatch(setIsOpenMultiProductCart(true));
   };
