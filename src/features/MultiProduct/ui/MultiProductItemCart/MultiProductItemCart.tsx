@@ -167,11 +167,22 @@ export const MultiProductItemCart = ({
             );
           })}
         </ul>
-        <CartPrice />
-        <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
-          <CustomButton onClick={() => onSendData && onSendData('cartItems')}>
-            GO TO SHIPPING
-          </CustomButton>
+        <div
+          className='flex flex-col 
+          sm:flex-row sm:w-full sm:justify-between sm:items-center
+          sm:border-t sm:border-solid sm:border-[var(--border)]
+        '
+        >
+          <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
+            <CartPrice containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:p-[var(--sm-padding)] sm:border-none' />
+          </div>
+          <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
+            <CustomButton
+              onClick={() => onSendData && onSendData(selectedProducts)}
+            >
+              GO TO SHIPPING
+            </CustomButton>
+          </div>
         </div>
       </div>
     </div>
