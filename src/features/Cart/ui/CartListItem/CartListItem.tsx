@@ -1,8 +1,4 @@
-import { useAppSelector } from '../../../../app/store/store';
 import { MaterialItem } from '../../../../shared/ui/MaterialItem/MaterialItem';
-// import { setSelectedMaterials } from '../../../swatches/model/swatchesSlice';
-// import { decrement, increment, removeItem } from '../../model/cartSlice';
-import { getCartItems } from '../../model/selectors';
 import type { ICartItem } from '../../model/types';
 import { Counter } from '../Counter/Counter';
 
@@ -23,7 +19,6 @@ export const CartListItem = ({
 }: ICartListItemProps) => {
   // const dispatch = useAppDispatch();
   // const canInc = useAppSelector(getCartCanIncrement);
-  const selectedMaterials = useAppSelector(getCartItems) ?? [];
 
   // const handleDelete = () => {
   //   // DeleteSelected material from the Cart
@@ -32,7 +27,6 @@ export const CartListItem = ({
   //   dispatch(setSelectedMaterials({ selectedMaterial: item }));
   // };
 
-  console.log('CartListItem selectedMaterials', selectedMaterials);
   return (
     <li
       key={item.assetId}
