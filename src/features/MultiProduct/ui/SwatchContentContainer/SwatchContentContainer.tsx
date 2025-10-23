@@ -7,7 +7,10 @@ import {
 } from '../../../swatches/model/selectors';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { SwatchesList } from '../../../swatches/ui/SwatchesList/SwatchesList';
-import { setCartItems } from '../../model/multiProductCartSlice';
+import {
+  setActiveMultiCartProduct,
+  setCartItems,
+} from '../../model/multiProductCartSlice';
 
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
@@ -24,8 +27,9 @@ export const SwatchContentContainer = () => {
         items: cartData,
       };
       dispatch(setCartItems(cartProductItem));
+      dispatch(setIsOpenMultiProductCart(true));
+      dispatch(setActiveMultiCartProduct(cartProductItem));
     }
-    dispatch(setIsOpenMultiProductCart(true));
   };
 
   return (
@@ -36,7 +40,10 @@ export const SwatchContentContainer = () => {
     >
       <SwatchesList containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0 sm:w-[50%] sm:border-r sm:border-[var(--border)]' />
       <div className='flex p-[var(--sm-padding)] border-t border-[var(--border)] sm:border-none sm:w-[50%] sm:justify-center sm:items-center'>
-        <CustomButton onClick={handleOpenMultiCart}>
+        <CustomButton
+          onClick={handleOpenMultiCart}
+          disabled={!selectedMaterials.length}
+        >
           ADD SWATCHES TO CART
         </CustomButton>
       </div>

@@ -8,9 +8,15 @@ import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
-import { getCartItems, getSelectedMaterials } from '../../model/selectors';
-import { Label } from '../../../../shared/ui/Label/Label';
+import { CartSelectedProductList } from '../CartSelectedProductList/CartSelectedProductList';
+import {
+  getActiveMultiCartProduct,
+  getSelectedMaterials,
+} from '../../model/selectors';
+import { MaterialItem } from '../../../../shared/ui/MaterialItem/MaterialItem';
+import { Counter } from '../../../Cart/ui/Counter/Counter';
+import { MultiProductCartService } from '../../lib/MultiProductCartServices';
+import { useMemo } from 'react';
 
 interface IMultiProductItemCartProps {
   onSendData?: (data: unknown) => void;
@@ -20,24 +26,38 @@ export const MultiProductItemCart = ({
   onSendData,
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
-  const selectedProduct = useAppSelector(getSelectedProduct);
-  const selectedProducts = useAppSelector(getCartItems);
+  const selectedProduct = useAppSelector(getActiveMultiCartProduct);
+
   const selectedMaterials = useAppSelector(
-    getSelectedMaterials(selectedProduct?.productId),
+    getSelectedMaterials(selectedProduct?.productId || 999),
   );
-  // const totalCount = useAppSelector(getCartTotalCount);
-  const totalCount = 4;
-  console.log('selectedProducts', selectedProducts);
-  console.log('selectedMaterials', selectedMaterials);
+
+  const totalCount = useMemo(() => {
+    return MultiProductCartService.getCartTotalCount({
+      cartItems: selectedMaterials,
+    });
+  }, [selectedMaterials]);
 
   const handleToggleSidebar = () => {
     dispatch(toggleSidebar());
   };
 
   const handleGoBack = () => {
-    console.log('handleGoBack');
-
     dispatch(setIsOpenMultiProductCart(false));
+  };
+
+  const handleDelete = () => {
+    console.log('delete');
+  };
+
+  const handleIncrement = () => {
+    console.log('handleIncrement');
+    console.log('selectedMaterials', selectedMaterials);
+  };
+
+  const handleDecrement = () => {
+    console.log('handleDecrement');
+    console.log('selectedMaterials', selectedMaterials);
   };
 
   return (
@@ -75,41 +95,48 @@ export const MultiProductItemCart = ({
           <CloseIconSVG width={10} height={10} />
         </button>
       </header>
-      <div className='flex items-center gap-4 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'>
-        <Label text='text' isActive={true} />
-        <Label text='text 2' />
-      </div>
+      <CartSelectedProductList />
       <div className='flex flex-col h-full min-h-0'>
-        {/* <CartList /> */}
-        <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--padding)]  sm:py-[var(--sm-padding)] sm:gap-5'>
-          {/* {selectedMaterials?.map((item) => {
+        <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>
+          selectedMaterials {selectedMaterials.length}
+          {selectedMaterials?.map((item) => {
             return (
-              <CartListItem
+              // <CartListItem
+              //   key={`${item.assetId}/${item.parentName}`}
+              //   item={item}
+              // />
+              <li
                 key={`${item.assetId}/${item.parentName}`}
-                item={item}
-              />
+                className='
+                  border-b border-[var(--border)] p-[var(--padding)]
+                  sm:px-[var(--sm-padding)] sm:pb-[var(--sm-padding)]'
+              >
+                <div className='relative flex gap-4 '>
+                  <div>
+                    <MaterialItem val={item} />
+                  </div>
+                  <div className='flex flex-col justify-between'>
+                    <div className='flex flex-col'>
+                      <span className='mb-1 font-medium'>
+                        {item.metadata.label}
+                      </span>
+                      <span className='mb-1 font-semibold'>
+                        {item.parentName}
+                      </span>
+                    </div>
+                    <Counter
+                      value={item.count}
+                      canIncrement={true}
+                      onIncrement={handleIncrement}
+                      onDecrement={handleDecrement}
+                      onDelete={handleDelete}
+                    />
+                  </div>
+                  <div className='absolute top-0 right-0'>$13.00</div>
+                </div>
+              </li>
             );
-          })} */}
-          <li>1</li>
-          <li>2</li>
-          <li>3</li>
-          <li>4</li>
-          <li>5</li>
-          <li>6</li>
-          <li>7</li>
-          <li>8</li>
-          <li>9</li>
-          <li>10</li>
-          <li>11</li>
-          <li>12</li>
-          <li>13</li>
-          <li>14</li>
-          <li>15</li>
-          <li>16</li>
-          <li>17</li>
-          <li>18</li>
-          <li>19</li>
-          <li>20</li>
+          })}
         </ul>
         <CartPrice />
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>

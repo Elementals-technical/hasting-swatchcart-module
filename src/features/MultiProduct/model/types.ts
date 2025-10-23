@@ -12,13 +12,14 @@ export interface IProduct {
 }
 
 export interface IProductCart {
-  cartItems: ICartItem[];
+  items: ICartItem[];
   name: string;
   productId: number;
 }
 
 export interface CartState {
   items: IProductCart[];
+  activeMultiCartProduct: IProductCart | null;
 }
 
 export interface IGetProductParameters {

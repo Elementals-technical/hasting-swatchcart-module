@@ -9,5 +9,8 @@ export const getCartItems = (state: RootState) => state.multiProductCart.items;
 export const getSelectedMaterials = (productId: number) =>
   createSelector(selectMultiProductCart, (cart): ICartItem[] => {
     const bucket = cart.items.find((p) => p.productId === productId);
-    return bucket?.cartItems ?? [];
+    return bucket?.items ?? [];
   });
+
+export const getActiveMultiCartProduct = (state: RootState) =>
+  state.multiProductCart.activeMultiCartProduct;
