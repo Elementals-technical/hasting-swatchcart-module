@@ -100,6 +100,9 @@ export const swatchesSlice = createSlice({
         state.selectedMaterials = [...selected, selectedMaterial];
       }
     },
+    resetSelectedMaterials(state) {
+      state.selectedMaterials = [];
+    },
     setSelectedProduct(state, action: PayloadAction<IProduct>) {
       state.selectedProduct = action.payload;
     },
@@ -148,4 +151,5 @@ export const {
   setSelectedProduct,
   deleteSelectedProduct,
   setIsOpenMultiProductCart,
+  resetSelectedMaterials,
 } = swatchesSlice.actions;

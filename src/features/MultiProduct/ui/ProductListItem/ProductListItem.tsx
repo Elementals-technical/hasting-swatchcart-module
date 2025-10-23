@@ -3,6 +3,7 @@ import productThumbnail from '../../../../app/assets/images/product_thumb.png';
 import { useAppDispatch } from '../../../../app/store/store';
 import { getSelectedProductThunk } from '../../../swatches/model/thunks';
 import {
+  resetSelectedMaterials,
   setAllMaterialsOptions,
   setSelectedProduct,
 } from '../../../swatches/model/swatchesSlice';
@@ -35,7 +36,7 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
           });
 
           if (uiData) {
-            console.log('uiData', uiData);
+            dispatch(resetSelectedMaterials());
             dispatch(setAllMaterialsOptions(uiData));
           }
         }

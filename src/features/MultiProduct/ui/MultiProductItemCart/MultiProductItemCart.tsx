@@ -22,7 +22,7 @@ export const MultiProductItemCart = ({
   const selectedProduct = useAppSelector(getSelectedProduct);
   const selectedProducts = useAppSelector(getCartItems);
   const selectedMaterials = useAppSelector(
-    getSelectedMaterials(selectedProduct.productId),
+    getSelectedMaterials(selectedProduct?.productId),
   );
   // const totalCount = useAppSelector(getCartTotalCount);
   const totalCount = 4;
