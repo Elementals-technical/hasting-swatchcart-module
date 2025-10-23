@@ -3,9 +3,6 @@ import type { CartState, ICartItem, IProductCart } from './types';
 
 const initialState: CartState = { items: [], activeMultiCartProduct: null };
 
-// ===== helpers =====
-// const sum = (arr: ICartItem[]) => arr.reduce((s, i) => s + i.count, 0);
-
 function ensureProduct(state: CartState, productId: number, name?: string) {
   let bucket = state.items.find((p) => p.productId === productId);
   if (!bucket) {
@@ -17,18 +14,31 @@ function ensureProduct(state: CartState, productId: number, name?: string) {
   return bucket;
 }
 
-// function findItem(items: ICartItem[], av: AttributeValue) {
-//   const { metadata, parentName } = av;
-//   return items.find(
-//     (i) => i.metadata.label === metadata.label && i.parentName === parentName,
-//   );
-// }
+type Key = {
+  productId: number;
+  label: string;
+  parentName: string;
+};
+
+const findProductIdx = (state: CartState, productId: number) =>
+  state.items.findIndex((p) => p.productId === productId);
+
+const findItemIdx = (
+  state: CartState,
+  productIdx: number,
+  label: string,
+  parentName: string,
+) =>
+  productIdx === -1
+    ? -1
+    : state.items[productIdx].items.findIndex(
+        (i) => i.metadata.label === label && i.parentName === parentName,
+      );
 
 const multiProductCartSlice = createSlice({
   name: 'multiProduct',
   initialState,
   reducers: {
-    /** Upsert the whole cart for a single product (matches your payload shape) */
     setCartForProduct(state, action: PayloadAction<IProductCart>) {
       const { productId } = action.payload;
       const idx = state.items.findIndex((p) => p.productId === productId);
@@ -52,86 +62,37 @@ const multiProductCartSlice = createSlice({
       bucket.items = items;
     },
 
-    // removeItem(
-    //   state,
-    //   action: PayloadAction<{
-    //     productId: number;
-    //     selectedMaterial: AttributeValue;
-    //   }>,
-    // ) {
-    //   const { productId, selectedMaterial } = action.payload;
-    //   const bucket = ensureProduct(state, productId);
-    //   const { metadata, parentName } = selectedMaterial;
+    incrementMultiProductItem(state, action: PayloadAction<Key>) {
+      const { productId, label, parentName } = action.payload;
+      const pIdx = findProductIdx(state, productId);
+      const iIdx = findItemIdx(state, pIdx, label, parentName);
+      if (iIdx !== -1) {
+        state.items[pIdx].items[iIdx].count += 1;
+      }
+    },
 
-    //   bucket.cartItems = bucket.cartItems.filter(
-    //     (i) =>
-    //       !(i.metadata.label === metadata.label && i.parentName === parentName),
-    //   );
-    // },
+    decrementMultiProductItem(state, action: PayloadAction<Key>) {
+      const { productId, label, parentName } = action.payload;
+      const pIdx = findProductIdx(state, productId);
+      const iIdx = findItemIdx(state, pIdx, label, parentName);
+      if (iIdx !== -1) {
+        const item = state.items[pIdx].items[iIdx];
+        if (item.count > 1) item.count -= 1; // clamp at 1
+      }
+    },
 
-    // increment(
-    //   state,
-    //   action: PayloadAction<{
-    //     productId: number;
-    //     selectedMaterial: AttributeValue;
-    //   }>,
-    // ) {
-    //   const { productId, selectedMaterial } = action.payload;
-    //   const bucket = ensureProduct(state, productId);
-    //   const item = findItem(bucket.cartItems, selectedMaterial);
-    //   if (!item) return;
+    removeMultiProductItem(state, action: PayloadAction<Key>) {
+      const { productId, label, parentName } = action.payload;
+      const pIdx = findProductIdx(state, productId);
+      if (pIdx === -1) return;
 
-    //   if (sum(bucket.cartItems) < MAX_SLOTS) {
-    //     item.count += 1;
-    //   }
-    // },
+      const nextItems = state.items[pIdx].items.filter(
+        (i) => !(i.metadata.label === label && i.parentName === parentName),
+      );
 
-    // decrement(
-    //   state,
-    //   action: PayloadAction<{
-    //     productId: number;
-    //     selectedMaterial: AttributeValue;
-    //   }>,
-    // ) {
-    //   const { productId, selectedMaterial } = action.payload;
-    //   const bucket = ensureProduct(state, productId);
-    //   const item = findItem(bucket.cartItems, selectedMaterial);
-    //   if (!item) return;
+      state.items[pIdx].items = nextItems;
+    },
 
-    //   if (item.count > 1) item.count -= 1;
-    // },
-
-    // setCount(
-    //   state,
-    //   action: PayloadAction<{
-    //     productId: number;
-    //     selectedMaterial: AttributeValue;
-    //     next: number;
-    //   }>,
-    // ) {
-    //   const { productId, selectedMaterial, next } = action.payload;
-    //   const bucket = ensureProduct(state, productId);
-    //   const item = findItem(bucket.cartItems, selectedMaterial);
-    //   if (!item) return;
-
-    //   const clamped = Math.max(1, Math.floor(next));
-    //   const othersTotal = bucket.cartItems
-    //     .filter((i) => i !== item)
-    //     .reduce((s, i) => s + i.count, 0);
-
-    //   const maxForThis = Math.max(1, MAX_SLOTS - othersTotal);
-    //   item.count = Math.min(clamped, maxForThis);
-    // },
-
-    /** Clear a single product cart */
-    // clearProduct(state, action: PayloadAction<{ productId: number }>) {
-    //   const idx = state.items.findIndex(
-    //     (p) => p.productId === action.payload.productId,
-    //   );
-    //   if (idx >= 0) state.items[idx].cartItems = [];
-    // },
-
-    /** Clear all products (keeps your original 'clear' name/behavior) */
     clear(state) {
       state.items = [];
     },
@@ -141,11 +102,9 @@ const multiProductCartSlice = createSlice({
 export const {
   setCartForProduct,
   setCartItems,
-  // removeItem,
-  // increment,
-  // decrement,
-  // setCount,
-  // clearProduct,
+  incrementMultiProductItem,
+  decrementMultiProductItem,
+  removeMultiProductItem,
   clear,
   setActiveMultiCartProduct,
 } = multiProductCartSlice.actions;

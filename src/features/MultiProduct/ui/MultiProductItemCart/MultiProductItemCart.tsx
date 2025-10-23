@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import {
   setIsOpenMultiProductCart,
+  setSelectedMaterials,
   toggleSidebar,
 } from '../../../swatches/model/swatchesSlice';
 import { CartPrice } from '../../../Cart/ui/CartPrice/CartPrice';
@@ -11,12 +12,19 @@ import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { CartSelectedProductList } from '../CartSelectedProductList/CartSelectedProductList';
 import {
   getActiveMultiCartProduct,
+  getCartItems,
   getSelectedMaterials,
 } from '../../model/selectors';
 import { MaterialItem } from '../../../../shared/ui/MaterialItem/MaterialItem';
 import { Counter } from '../../../Cart/ui/Counter/Counter';
 import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { useMemo } from 'react';
+import type { ICartItem } from '../../model/types';
+import {
+  decrementMultiProductItem,
+  incrementMultiProductItem,
+  removeMultiProductItem,
+} from '../../model/multiProductCartSlice';
 
 interface IMultiProductItemCartProps {
   onSendData?: (data: unknown) => void;
@@ -27,10 +35,13 @@ export const MultiProductItemCart = ({
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
+  const selectedProducts = useAppSelector(getCartItems);
 
   const selectedMaterials = useAppSelector(
     getSelectedMaterials(selectedProduct?.productId || 999),
   );
+  console.log('selectedProducts', selectedProducts);
+  console.log('selectedMaterials', selectedMaterials);
 
   const totalCount = useMemo(() => {
     return MultiProductCartService.getCartTotalCount({
@@ -46,18 +57,37 @@ export const MultiProductItemCart = ({
     dispatch(setIsOpenMultiProductCart(false));
   };
 
-  const handleDelete = () => {
-    console.log('delete');
+  const handleDelete = (item: ICartItem) => {
+    const { parentName, metadata } = item;
+    const productId = selectedProduct?.productId;
+    const label = metadata.label;
+    if (productId && label && parentName) {
+      dispatch(removeMultiProductItem({ productId, label, parentName }));
+      // DeleteSelected material from the  SwatchesList
+      dispatch(setSelectedMaterials({ selectedMaterial: item }));
+    }
   };
 
-  const handleIncrement = () => {
-    console.log('handleIncrement');
+  const handleIncrement = (item: ICartItem) => {
+    const { parentName, metadata } = item;
+    const productId = selectedProduct?.productId;
+    const label = metadata.label;
+    console.log('handleIncrement', item);
     console.log('selectedMaterials', selectedMaterials);
+    if (productId && label && parentName) {
+      dispatch(incrementMultiProductItem({ productId, label, parentName }));
+    }
   };
 
-  const handleDecrement = () => {
-    console.log('handleDecrement');
-    console.log('selectedMaterials', selectedMaterials);
+  const handleDecrement = (item: ICartItem) => {
+    const { parentName, metadata } = item;
+    const productId = selectedProduct?.productId;
+    const label = metadata.label;
+    console.log('handleDecrement', item);
+    console.log('handleDecrement', selectedMaterials);
+    if (productId && label && parentName) {
+      dispatch(decrementMultiProductItem({ productId, label, parentName }));
+    }
   };
 
   return (
@@ -98,7 +128,6 @@ export const MultiProductItemCart = ({
       <CartSelectedProductList />
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>
-          selectedMaterials {selectedMaterials.length}
           {selectedMaterials?.map((item) => {
             return (
               // <CartListItem
@@ -126,10 +155,10 @@ export const MultiProductItemCart = ({
                     </div>
                     <Counter
                       value={item.count}
-                      canIncrement={true}
-                      onIncrement={handleIncrement}
-                      onDecrement={handleDecrement}
-                      onDelete={handleDelete}
+                      canIncrement={totalCount < MAX_SLOTS}
+                      onIncrement={() => handleIncrement(item)}
+                      onDecrement={() => handleDecrement(item)}
+                      onDelete={() => handleDelete(item)}
                     />
                   </div>
                   <div className='absolute top-0 right-0'>$13.00</div>
