@@ -12,14 +12,20 @@ import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 const MockTile: React.FC = () => (
   <div
     className={[
-      'relative w-16 h-16 rounded-sm aspect-square overflow-hidden',
-      'border border-solid border-[var(--border)] bg-[var(--sidebar-b)]',
+      'relative w-10 h-10 rounded-sm aspect-square overflow-hidden',
+      'border border-solid border-[var(--border)] bg-[var(--sidebar-b)] sm:w-16 sm:h-16',
     ].join(' ')}
     aria-hidden
   />
 );
 
-export const SwatchesList = () => {
+interface ISwatchesListProps {
+  containerStyles?: string;
+}
+
+export const SwatchesList = ({
+  containerStyles = 'p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:p-[var(--sm-padding)]',
+}: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
 
@@ -30,7 +36,7 @@ export const SwatchesList = () => {
   const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);
 
   return (
-    <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:p-[var(--sm-padding)]'>
+    <div className={containerStyles}>
       <div className='flex justify-between items-center mb-3'>
         <div className='relative w-30'>
           <div className=''>Swatches list</div>
@@ -48,7 +54,8 @@ export const SwatchesList = () => {
           <button
             key={`${val.metadata.label || index}/${val.parentName}`}
             onClick={() => handleSelect(val)}
-            className='relative w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition'
+            className='relative w-10 h-10 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition
+            sm:w-16 sm:h-16'
             aria-label={`Selected swatch ${val.name ?? val.assetId}`}
             title='Click to remove'
           >

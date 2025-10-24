@@ -21,11 +21,11 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
   );
 
   return (
-    <div className='w-76 rounded mb-[20px] sm:w-40'>
+    <div className='w-31 rounded mb-[20px] sm:w-40'>
       <button
         key={val.assetId}
         onClick={() => handleSelect(val)}
-        className={`w-76 h-40 rounded sm:w-40 sm:h-40 relative aspect-square overflow-hidden transition ${
+        className={`w-31 h-31 rounded sm:w-40 sm:h-40 relative aspect-square overflow-hidden transition ${
           isSelected ? 'border-amber-700' : 'border-transparent'
         }`}
       >

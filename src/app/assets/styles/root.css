@@ -59,6 +59,8 @@
   --svg-dark: #282828;
   --background-grey: #e5e6ea;
   --main-font-family: 'Poppins';
+  --grey-text-color: #c2c2c2;
+  --label-bg: #f8f9fa;
   /* padding */
   --sm-padding: 20px;
   --padding: 8px;

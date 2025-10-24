@@ -6,7 +6,7 @@ import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { getCartTotalCount } from '../../model/selectors';
 
 interface ICartHeaderProps {
-  onSetActiveTab: (arg: EActiveTab) => void;
+  onSetActiveTab?: (arg: EActiveTab) => void;
   onToggleSidebar: () => void;
 }
 
@@ -22,7 +22,9 @@ export const CartHeader = ({
         <div className='flex items-center gap-2'>
           <button
             className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
-            onClick={() => onSetActiveTab(EActiveTab.SWATCH)}
+            onClick={() =>
+              onSetActiveTab && onSetActiveTab(EActiveTab.SWATCH as EActiveTab)
+            }
           >
             <ArrowIconSVG />
           </button>
