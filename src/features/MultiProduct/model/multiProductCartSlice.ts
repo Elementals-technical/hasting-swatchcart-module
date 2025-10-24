@@ -49,6 +49,18 @@ const multiProductCartSlice = createSlice({
       state.activeMultiCartProduct = action.payload;
     },
 
+    // setCartItems(
+    //   state,
+    //   action: PayloadAction<{
+    //     productId: number;
+    //     items: ICartItem[];
+    //     name?: string;
+    //   }>,
+    // ) {
+    //   const { productId, items, name } = action.payload;
+    //   const bucket = ensureProduct(state, productId, name);
+    //   bucket.items = items;
+    // },
     setCartItems(
       state,
       action: PayloadAction<{
@@ -58,6 +70,13 @@ const multiProductCartSlice = createSlice({
       }>,
     ) {
       const { productId, items, name } = action.payload;
+
+      if (!items || items.length === 0) {
+        const idx = state.items.findIndex((b) => b.productId === productId);
+        if (idx !== -1) state.items.splice(idx, 1);
+        return;
+      }
+
       const bucket = ensureProduct(state, productId, name);
       bucket.items = items;
     },

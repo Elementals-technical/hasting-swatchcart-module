@@ -12,7 +12,7 @@ export interface IProduct {
 }
 
 export interface IProductCart {
-  items?: ICartItem[];
+  items: ICartItem[];
   value?: string;
   name: string;
   productId: number;

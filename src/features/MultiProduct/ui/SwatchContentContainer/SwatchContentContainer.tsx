@@ -20,12 +20,13 @@ export const SwatchContentContainer = () => {
   const handleOpenMultiCart = () => {
     const cartData = CartCervices.getCartPreparedOption(selectedMaterials);
 
-    if (cartData?.length && selectedProduct) {
+    if (selectedProduct) {
       const cartProductItem = {
         productId: selectedProduct.productId,
         name: selectedProduct.name,
         items: cartData,
       };
+
       dispatch(setCartItems(cartProductItem));
       dispatch(setIsOpenMultiProductCart(true));
       dispatch(setActiveMultiCartProduct(cartProductItem));
@@ -42,7 +43,7 @@ export const SwatchContentContainer = () => {
       <div className='flex p-[var(--sm-padding)] border-t border-[var(--border)] sm:border-none sm:w-[50%] sm:justify-center sm:items-center'>
         <CustomButton
           onClick={handleOpenMultiCart}
-          disabled={!selectedMaterials.length}
+          // disabled={!selectedMaterials.length}
         >
           ADD SWATCHES TO CART
         </CustomButton>
