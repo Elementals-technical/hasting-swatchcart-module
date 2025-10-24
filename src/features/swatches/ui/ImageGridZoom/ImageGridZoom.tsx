@@ -13,7 +13,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ImageGridZoom = ({ item }: { item: any }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [zoomSrc, setZoomSrc] = useState<string | undefined>('');
+  const [zoomSrc, _] = useState<string | undefined>('');
   const [open, setOpen] = useState(false);
 
   const imageUrl = AttributeHelper.getImage(item);

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getSelectedMaterials } from '../../model/selectors';
 import { CartCervices } from '../../../Cart/lib/CartCervices';
 import { setCartItems } from '../../../Cart/model/cartSlice';
+import { getCartItems } from '../../../Cart/model/selectors';
 
 interface ISidebarWrapperProps {
   isOpen: boolean;
@@ -23,9 +24,14 @@ export const SwatchWrapper = ({
 }: ISidebarWrapperProps) => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
+  const cartItems = useAppSelector(getCartItems);
 
   const handleOpenCart = () => {
+    console.log('cartItems', cartItems);
+    console.log('selectedMaterials', cartItems);
+
     const cartData = CartCervices.getCartPreparedOption(selectedMaterials);
+    console.log('cartData', cartData);
 
     if (cartData) {
       dispatch(setCartItems(cartData));
