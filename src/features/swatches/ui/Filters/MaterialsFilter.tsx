@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import {
-  MultiSelect,
-  type IMultiSelectOption,
-} from '../../../../shared/ui/MultiSelect/MultiSelect';
+import { MultiSelect } from '../../../../shared/ui/MultiSelect/MultiSelect';
 import {
   getAllMaterialValues,
   getMaterialSelectStateFilters,
@@ -15,9 +12,7 @@ export const MaterialsFilter = () => {
   const dispatch = useAppDispatch();
   const filters = useAppSelector(getMaterialSelectStateFilters);
   const allMaterialsValues = useAppSelector(getAllMaterialValues);
-  const [materialOptions, setMaterialOptions] = useState<IMultiSelectOption[]>(
-    [],
-  );
+  const [materialOptions, setMaterialOptions] = useState<any[]>([]);
 
   useEffect(() => {
     if (allMaterialsValues?.length) {

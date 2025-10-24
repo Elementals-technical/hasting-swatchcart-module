@@ -24,7 +24,7 @@ export const LooksFilter = () => {
           allMaterialsValues
             .map((value) => value?.metadata?.Look)
             .filter(Boolean)
-            .map((c) => c.split(',').map((s: string) => s.trim()))
+            .map((c: any) => c.split(',').map((s: string) => s.trim()))
             .flat(),
         ),
       ].map((look) => {

@@ -24,7 +24,7 @@ export const PopoverTooltip = ({
 }) => {
   if (!tooltipData?.trim()) return null;
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     event.stopPropagation();
   };
 

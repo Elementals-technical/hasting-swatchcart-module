@@ -19,6 +19,7 @@ export interface IProductCart {
 }
 
 export interface ISliderItem {
+  items: ICartItem[];
   value: string;
   name: string;
   productId: number;

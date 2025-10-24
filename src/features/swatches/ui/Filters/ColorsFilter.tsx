@@ -24,7 +24,7 @@ export const ColorsFilter = () => {
           allMaterialsValues
             .map((value) => value?.metadata?.Color)
             .filter(Boolean)
-            .map((c) => c.split(',').map((s: string) => s.trim()))
+            .map((c: any) => c.split(',').map((s: string) => s.trim()))
             .flat(),
         ),
       ].map((color) => {

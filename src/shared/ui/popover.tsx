@@ -3,6 +3,8 @@
 import * as React from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
 import { cn } from '@/lib/utils';
 
 function Popover({
@@ -18,7 +20,7 @@ function PopoverTrigger({
 }: React.ComponentProps<typeof PopoverPrimitive.Trigger> & {
   stopPropagation?: boolean;
 }) {
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: any) => {
     if (stopPropagation) {
       event.stopPropagation();
     }

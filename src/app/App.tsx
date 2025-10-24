@@ -26,7 +26,7 @@ function App() {
       </button>
       <SwatchModule
         isOpen={isOpenModule}
-        uiDataType='DATA_ALL_PRODUCT'
+        uiDataType='UI'
         data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
