@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { getIsOpenSidebar } from '../features/swatches/model/selectors';
 import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
 import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
@@ -8,6 +9,9 @@ import { useAppDispatch, useAppSelector } from './store/store';
 function App() {
   const dispatch = useAppDispatch();
   const isOpenModule = useAppSelector(getIsOpenSidebar);
+  const [mockDataMode, setMockDataMode] = useState<'DATA_ALL_PRODUCT' | 'UI'>(
+    'DATA_ALL_PRODUCT',
+  );
 
   const handleOpenSidebar = () => {
     dispatch(toggleSidebar());
@@ -17,6 +21,13 @@ function App() {
     console.log('handleSetData', data);
   };
 
+  const handleChangeMode = () => {
+    const newMode =
+      mockDataMode === 'DATA_ALL_PRODUCT' ? 'UI' : 'DATA_ALL_PRODUCT';
+
+    setMockDataMode(newMode);
+  };
+
   return (
     <>
       APP Is open module {isOpenModule ? 'open' : 'close'}
@@ -24,9 +35,17 @@ function App() {
       <button type='button' onClick={handleOpenSidebar}>
         Open module
       </button>
+      <br />
+      <button
+        className='p-1 m-2 rounded-sm bg-amber-300'
+        onClick={handleChangeMode}
+      >
+        change app Mode to{' '}
+        {mockDataMode === 'DATA_ALL_PRODUCT' ? 'UI' : 'DATA_ALL_PRODUCT'}
+      </button>
       <SwatchModule
         isOpen={isOpenModule}
-        uiDataType='UI'
+        uiDataType={mockDataMode}
         data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
