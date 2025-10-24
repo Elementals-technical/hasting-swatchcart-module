@@ -1,12 +1,12 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
-import { CartCervices } from '../../../Cart/lib/CartCervices';
 import {
   getSelectedMaterials,
   getSelectedProduct,
 } from '../../../swatches/model/selectors';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { SwatchesList } from '../../../swatches/ui/SwatchesList/SwatchesList';
+import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import {
   setActiveMultiCartProduct,
   setCartItems,
@@ -20,7 +20,7 @@ export const SwatchContentContainer = () => {
   const cartItems = useAppSelector(getCartItems);
 
   const handleOpenMultiCart = () => {
-    const cartData = CartCervices.getCartPreparedOption(
+    const cartData = MultiProductCartService.getCartPreparedOption(
       selectedMaterials,
       cartItems,
     );

@@ -13,7 +13,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const HexGridZoom = ({ item }: { item: any }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [zoomSrc, setZoomSrc] = useState(null);
+  const [zoomSrc, _] = useState(null);
   const [open, setOpen] = useState(false);
 
   const defaultHex = `#f2f1f1`;

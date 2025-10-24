@@ -11,7 +11,7 @@ import {
 import { ProductListItem } from '../ProductListItem/ProductListItem';
 import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { Slider } from '../../../../shared/ui/Slider/Slider';
-import type { ISliderItem } from '../../model/types';
+import type { IProductCart, ISliderItem } from '../../model/types';
 import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../../utils/constants';
 
 interface IProductList {
@@ -27,9 +27,9 @@ const MOCK_SORT = [
 export const ProductList = ({ onSidebarToggle }: IProductList) => {
   const dispatch = useAppDispatch();
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
-  const [activeCategory, setActiveCategory] = useState<ISliderItem>(
-    MOCK_ALL_CATEGORY_SLIDER_ITEM,
-  );
+  const [activeCategory, setActiveCategory] = useState<
+    ISliderItem | IProductCart
+  >(MOCK_ALL_CATEGORY_SLIDER_ITEM);
 
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');

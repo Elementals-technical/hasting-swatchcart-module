@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Label } from '../Label/Label';
-import type { ISliderItem } from '../../../features/MultiProduct/model/types';
+import type {
+  IProductCart,
+  ISliderItem,
+} from '../../../features/MultiProduct/model/types';
 
 interface ISliderProps {
-  items: ISliderItem[];
-  activeId?: ISliderItem['productId'];
-  onSelect: (item: ISliderItem) => void;
+  items: ISliderItem[] | IProductCart[];
+  activeId?: ISliderItem['productId'] | IProductCart['productId'];
+  onSelect: (item: ISliderItem | IProductCart) => void;
   className?: string;
   stepRatio?: number;
 }
