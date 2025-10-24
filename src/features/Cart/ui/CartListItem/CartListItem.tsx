@@ -1,28 +1,32 @@
-import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { MaterialItem } from '../../../../shared/ui/MaterialItem/MaterialItem';
-import { setSelectedMaterials } from '../../../swatches/model/swatchesSlice';
-import { decrement, increment, removeItem } from '../../model/cartSlice';
-import { getCartCanIncrement, getCartItems } from '../../model/selectors';
 import type { ICartItem } from '../../model/types';
 import { Counter } from '../Counter/Counter';
 
 interface ICartListItemProps {
   item: ICartItem;
+  canInc: boolean;
+  onDelete: (item: ICartItem) => void;
+  onIncrement: (item: ICartItem) => void;
+  onDecrement: (item: ICartItem) => void;
 }
 
-export const CartListItem = ({ item }: ICartListItemProps) => {
-  const dispatch = useAppDispatch();
-  const canInc = useAppSelector(getCartCanIncrement);
-  const selectedMaterials = useAppSelector(getCartItems) ?? [];
+export const CartListItem = ({
+  item,
+  canInc,
+  onDelete,
+  onIncrement,
+  onDecrement,
+}: ICartListItemProps) => {
+  // const dispatch = useAppDispatch();
+  // const canInc = useAppSelector(getCartCanIncrement);
 
-  const handleDelete = () => {
-    // DeleteSelected material from the Cart
-    dispatch(removeItem({ selectedMaterial: item }));
-    // DeleteSelected material from the  SwatchesList
-    dispatch(setSelectedMaterials({ selectedMaterial: item }));
-  };
+  // const handleDelete = () => {
+  //   // DeleteSelected material from the Cart
+  //   dispatch(removeItem({ selectedMaterial: item }));
+  //   // DeleteSelected material from the  SwatchesList
+  //   dispatch(setSelectedMaterials({ selectedMaterial: item }));
+  // };
 
-  console.log('CartListItem selectedMaterials', selectedMaterials);
   return (
     <li
       key={item.assetId}
@@ -42,9 +46,11 @@ export const CartListItem = ({ item }: ICartListItemProps) => {
           <Counter
             value={item.count}
             canIncrement={canInc}
-            onIncrement={() => dispatch(increment({ selectedMaterial: item }))}
-            onDecrement={() => dispatch(decrement({ selectedMaterial: item }))}
-            onDelete={handleDelete}
+            // onIncrement={() => dispatch(increment({ selectedMaterial: item }))}
+            // onDecrement={() => dispatch(decrement({ selectedMaterial: item }))}
+            onIncrement={() => onIncrement(item)}
+            onDecrement={() => onDecrement(item)}
+            onDelete={() => onDelete(item)}
           />
         </div>
         <div className='absolute top-0 right-0'>$13.00</div>
