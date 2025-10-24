@@ -90,7 +90,7 @@ export const Slider: React.FC<ISliderProps> = ({
       <div
         ref={scrollerRef}
         className='
-        no-scrollbar flex-1 overflow-x-auto overflow-y-hidden scroll-smooth
+        no-scrollbar flex-1 overflow-hidden scroll-smooth
       '
         style={{
           WebkitOverflowScrolling: 'touch',

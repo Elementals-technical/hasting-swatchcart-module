@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { SearchIconSVG } from '../../../../app/assets/svg/SearchIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
@@ -9,6 +9,10 @@ import {
   getProductLIst,
 } from '../../../swatches/model/selectors';
 import { ProductListItem } from '../ProductListItem/ProductListItem';
+import { MultiProductCartService } from '../../lib/MultiProductCartServices';
+import { Slider } from '../../../../shared/ui/Slider/Slider';
+import type { IProductCart } from '../../model/types';
+import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../../utils/constants';
 
 interface IProductList {
   onSidebarToggle: () => void;
@@ -23,12 +27,50 @@ const MOCK_SORT = [
 export const ProductList = ({ onSidebarToggle }: IProductList) => {
   const dispatch = useAppDispatch();
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
+  const [activeCategory, setActiveCategory] = useState<IProductCart>(
+    MOCK_ALL_CATEGORY_SLIDER_ITEM,
+  );
+
+  const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setDebouncedSearch(search.trim().toLowerCase());
+    }, 300);
+    return () => clearTimeout(id);
+  }, [search]);
 
   const productList = useAppSelector(getProductLIst);
 
+  const uniqueCategories = useMemo(() => {
+    return MultiProductCartService.getUniqueCategories(productList);
+  }, [productList]);
+
+  const norm = (s: string) => s.toLowerCase();
+
+  const filteredProductList = useMemo(() => {
+    let list = productList;
+
+    if (activeCategory?.value) {
+      const target = norm(activeCategory.value);
+      list = list.filter((product) =>
+        product.categories.some((cat: string) => norm(cat) === target),
+      );
+    }
+
+    if (debouncedSearch) {
+      list = list.filter((product) =>
+        norm(product.name).includes(debouncedSearch),
+      );
+    }
+
+    return list;
+  }, [productList, activeCategory, debouncedSearch]);
+
   useEffect(() => {
     dispatch(getProductListThunk());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className='flex h-full flex-col'>
@@ -44,11 +86,13 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
       </header>
 
       <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='flex justify-between items-center gap-4 h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)]'>
-          <div className='relative w-full max-w-[180px] h-[32px]'>
+        <div className='flex justify-between items-center gap-4 h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:justify-start'>
+          <div className='relative w-full max-w-[180px] h-[36px] sm:max-w-[240px]'>
             <input
               type='text'
               placeholder='Search'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className='
                 h-full w-full pr-8 pl-4 rounded-2xl border border-[var(--border)]
                 text-sm text-[var(--grey-text-color)] placeholder-[var(--text-muted)]
@@ -71,13 +115,24 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
             options={MOCK_SORT}
             values={['opt']}
             onValueChange={(values) => console.log('value', values)}
-            className='h-[32px]'
+            className='max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]'
+            dropdownWidth='w-80'
+          />
+
+          <Slider
+            items={uniqueCategories}
+            activeId={activeCategory?.productId}
+            className='hidden sm:max-w-[680px] sm:overflow-hidden sm:flex'
+            onSelect={(item) => setActiveCategory(item)}
           />
         </div>
 
-        <div className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] bg-red-500 sm:hidden'>
-          sort
-        </div>
+        <Slider
+          items={uniqueCategories}
+          activeId={activeCategory?.productId}
+          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:hidden sm:max-w-[680px] sm:overflow-hidden'
+          onSelect={(item) => setActiveCategory(item)}
+        />
 
         {isLoadingProductList ? (
           <div className='w-full flex justify-center items-center flex-1 min-h-0'>
@@ -88,12 +143,12 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
             <div className='mb-4'>Select Product</div>
             <ul
               className='
-              grid grid-cols-2 gap-4
-              sm:grid-cols-6 
-                '
+                grid grid-cols-2 gap-4
+                sm:grid-cols-6
+              '
             >
-              {productList.length
-                ? productList?.map((productListItem) => {
+              {filteredProductList.length
+                ? filteredProductList.map((productListItem) => {
                     const { name } = productListItem;
                     return (
                       <ProductListItem

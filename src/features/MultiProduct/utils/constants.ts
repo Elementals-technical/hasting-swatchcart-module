@@ -7,3 +7,9 @@ export const MOCK_SELECTED_PRODUCT: IProduct = {
   productId: 999,
   attributes: MOCK_ROW_PROPS_ATTRIBUTES,
 };
+
+export const MOCK_ALL_CATEGORY_SLIDER_ITEM = {
+  name: 'All',
+  value: '',
+  productId: 0,
+};
