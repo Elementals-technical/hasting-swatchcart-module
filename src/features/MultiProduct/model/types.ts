@@ -18,6 +18,12 @@ export interface IProductCart {
   productId: number;
 }
 
+export interface ISliderItem {
+  value: string;
+  name: string;
+  productId: number;
+}
+
 export interface CartState {
   items: IProductCart[];
   activeMultiCartProduct: IProductCart | null;

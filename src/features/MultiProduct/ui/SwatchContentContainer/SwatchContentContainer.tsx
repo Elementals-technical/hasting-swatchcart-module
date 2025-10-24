@@ -11,14 +11,19 @@ import {
   setActiveMultiCartProduct,
   setCartItems,
 } from '../../model/multiProductCartSlice';
+import { getCartItems } from '../../model/selectors';
 
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
   const selectedProduct = useAppSelector(getSelectedProduct);
+  const cartItems = useAppSelector(getCartItems);
 
   const handleOpenMultiCart = () => {
-    const cartData = CartCervices.getCartPreparedOption(selectedMaterials);
+    const cartData = CartCervices.getCartPreparedOption(
+      selectedMaterials,
+      cartItems,
+    );
 
     if (selectedProduct) {
       const cartProductItem = {

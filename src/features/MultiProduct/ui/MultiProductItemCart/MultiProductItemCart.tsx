@@ -107,6 +107,7 @@ export const MultiProductItemCart = ({
           <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
             <CustomButton
               onClick={() => onSendData && onSendData(selectedProducts)}
+              disabled={totalCount > MAX_SLOTS + 1}
             >
               GO TO SHIPPING
             </CustomButton>

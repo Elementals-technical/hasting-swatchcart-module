@@ -1,4 +1,4 @@
-import type { ICartItem, IProduct, IProductCart } from '../model/types';
+import type { ICartItem, IProduct, ISliderItem } from '../model/types';
 import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../utils/constants';
 
 export class MultiProductCartService {
@@ -6,7 +6,7 @@ export class MultiProductCartService {
     return cartItems.reduce((sum, item) => sum + item.count, 0);
   }
 
-  static getUniqueCategories(productList: IProduct[]): IProductCart[] {
+  static getUniqueCategories(productList: IProduct[]): ISliderItem[] {
     const uniqueCategories = [
       ...new Set(productList.flatMap((p) => p.categories)),
     ];
