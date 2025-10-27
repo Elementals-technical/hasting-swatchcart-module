@@ -1,26 +1,40 @@
 name: Publish to NPM
-on: push
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.x'
+          node-version: 20
           registry-url: 'https://registry.npmjs.org'
-      - name: Install dependencies and build 🔧
-        run: npm ci npm run build
-      - name: Git config
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build library 🔧
+        run: npm run build:lib
+
+      - name: Configure git user
         run: |
           git config --global user.email "${{ secrets.GH_ORG_EMAIL }}"
           git config --global user.name "${{ secrets.GH_ORG_NAME }}"
-      # This is a tempopary solution
-      - name: Change version(minor)
-        run: npm version minor
+
+      # optional: automatically bump version (minor)
+      - name: Bump version (minor)
+        run: npm version minor --no-git-tag-version
+
       - name: Publish package on NPM 📦
-        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ELEMENTALS_AUTH_TOKEN }}
+        run: npm publish --access public
