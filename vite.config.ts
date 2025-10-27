@@ -48,4 +48,14 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    host: true,
+    allowedHosts: ['.ondigitalocean.app'],
+  },
+
+  preview: {
+    host: true,
+    // allowedHosts: ['clownfish-app-cvxrz.ondigitalocean.app'],
+    allowedHosts: ['.ondigitalocean.app'],
+  },
 });
