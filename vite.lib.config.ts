@@ -34,11 +34,7 @@ export default defineConfig({
             ignore: ['lib/**/*.d.ts'],
           })
           .map((file) => [
-            // The name of the entry point
-            // lib/nested/foo.ts becomes nested/foo
             relative('lib', file.slice(0, file.length - extname(file).length)),
-            // The absolute path to the entry file
-            // lib/nested/foo.ts becomes /project/lib/nested/foo.ts
             fileURLToPath(new URL(file, import.meta.url)),
           ]),
       ),
@@ -55,7 +51,6 @@ export default defineConfig({
 
   preview: {
     host: true,
-    // allowedHosts: ['clownfish-app-cvxrz.ondigitalocean.app'],
     allowedHosts: ['.ondigitalocean.app'],
   },
 });
