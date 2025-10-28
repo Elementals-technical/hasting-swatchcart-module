@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { getIsOpenSidebar } from '../features/swatches/model/selectors';
 import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
-import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
+// import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
 import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
-// import {SwatchesModule} from '../../dist/components/SwatchesModule'
 import { useAppDispatch, useAppSelector } from './store/store';
+import { SwatchModule } from '../../lib/main';
 
 function App() {
   const dispatch = useAppDispatch();
