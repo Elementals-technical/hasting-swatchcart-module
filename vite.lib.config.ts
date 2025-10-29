@@ -8,16 +8,15 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(), // ✅ REQUIRED for Tailwind v4
+    tailwindcss(),
     dts({
       entryRoot: 'lib',
       outDir: 'dist',
       insertTypesEntry: true,
       include: ['lib/**/*.ts', 'lib/**/*.tsx', 'lib/main.ts'],
     }),
-    libInjectCss(), // ✅ auto inject CSS into final JS bundle
+    libInjectCss(),
   ],
-
   build: {
     copyPublicDir: false,
     cssCodeSplit: true,
@@ -35,8 +34,14 @@ export default defineConfig({
         'react/jsx-runtime',
       ],
       output: {
-        assetFileNames: 'assets/[name][extname]',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'assets/index.css';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
       },
     },
+    sourcemap: true,
   },
 });
