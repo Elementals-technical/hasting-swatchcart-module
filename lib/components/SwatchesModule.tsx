@@ -4,6 +4,7 @@ import { MultiProductWrapper } from '../../src/features/MultiProduct/ui/MultiPro
 import { getIsOpenSidebar } from '../../src/features/swatches/model/selectors';
 import { IAttributeAsset } from '../../src/features/swatches/model/types';
 import { Swatches } from '../../src/features/swatches/ui/Swatches';
+import { LibraryProvider } from '../store/LibraryProvider';
 
 interface ISwatchesModuleProps {
   isOpen: boolean;
@@ -23,7 +24,10 @@ export const SwatchModule = ({
   const isOpenModule = useAppSelector(getIsOpenSidebar);
 
   return (
-    <>
+    <LibraryProvider>
+      <button className='tw-flex tw-items-center tw-gap-2 bg-amber-700'>
+        Click me 2
+      </button>
       {isOpenModule ? (
         <>
           {uiDataType === EDataInputType.DATA_ALL_PRODUCT ? (
@@ -41,6 +45,6 @@ export const SwatchModule = ({
           ) : null}
         </>
       ) : null}
-    </>
+    </LibraryProvider>
   );
 };

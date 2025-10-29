@@ -1,56 +1,36 @@
-// an old version base vite config
-// import { defineConfig } from 'vite';
-// import react from '@vitejs/plugin-react';
-
-// // https://vite.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// });
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { extname, relative, resolve } from 'path';
-import { fileURLToPath } from 'node:url';
-import { glob } from 'glob';
 import dts from 'vite-plugin-dts';
-import tailwindcss from '@tailwindcss/vite';
+import { resolve } from 'path';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), dts({ include: ['lib'] }), libInjectCss()],
+  plugins: [
+    react(),
+    dts({
+      entryRoot: 'lib', // take types from lib/**
+      outDir: 'dist', // emit d.ts into dist/** mirroring structure
+      insertTypesEntry: true, // creates dist/main.d.ts
+    }),
+  ],
   build: {
     copyPublicDir: false,
-    cssCodeSplit: true,
+    cssCodeSplit: true, // or false if you want a single JS with CSS injected
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
-      formats: ['es'],
+      formats: ['es'], // add 'cjs' if you also need CommonJS
+      fileName: 'main', // dist/main.js
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
-      input: Object.fromEntries(
-        glob
-          .sync('lib/**/*.{ts,tsx}', {
-            ignore: ['lib/**/*.d.ts'],
-          })
-          .map((file) => [
-            relative('lib', file.slice(0, file.length - extname(file).length)),
-            fileURLToPath(new URL(file, import.meta.url)),
-          ]),
-      ),
+      external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
+        dir: 'dist',
+        format: 'es',
+        entryFileNames: '[name].js', // main.js
+        chunkFileNames: 'chunks/[name].js',
         assetFileNames: 'assets/[name][extname]',
-        entryFileNames: '[name].js',
+        preserveModules: true, // keep file-per-module
+        preserveModulesRoot: 'lib', // strip "lib/" prefix -> dist/components/...
       },
     },
-  },
-  server: {
-    host: true,
-    allowedHosts: ['.ondigitalocean.app'],
-  },
-
-  preview: {
-    host: true,
-    allowedHosts: ['.ondigitalocean.app'],
   },
 });

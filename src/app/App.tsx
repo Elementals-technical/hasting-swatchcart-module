@@ -1,25 +1,39 @@
 import { useState } from 'react';
-import { getIsOpenSidebar } from '../features/swatches/model/selectors';
-import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
+// import { getIsOpenSidebar } from '../features/swatches/model/selectors';
+// import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
 import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
-import { useAppDispatch, useAppSelector } from './store/store';
+// import { useAppDispatch, useAppSelector } from './store/store';
+// import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
 import { SwatchModule } from '../../lib/main';
 
 function App() {
-  const dispatch = useAppDispatch();
-  const isOpenModule = useAppSelector(getIsOpenSidebar);
+  const [isOpenModule, setIsOpenModule] = useState(true);
   const [mockDataMode, setMockDataMode] = useState<'DATA_ALL_PRODUCT' | 'UI'>(
     'DATA_ALL_PRODUCT',
   );
 
   const handleOpenSidebar = () => {
-    dispatch(toggleSidebar());
+    setIsOpenModule((prev) => !prev);
   };
 
   const handleSetData = (data: unknown) => {
     console.log('handleSetData', data);
   };
+  // const dispatch = useAppDispatch();
+  // const isOpenModule = useAppSelector(getIsOpenSidebar);
+
+  // const [mockDataMode, setMockDataMode] = useState<'DATA_ALL_PRODUCT' | 'UI'>(
+  //   'DATA_ALL_PRODUCT',
+  // );
+
+  // const handleOpenSidebar = () => {
+  //   // dispatch(toggleSidebar());
+  // };
+
+  // const handleSetData = (data: unknown) => {
+  //   console.log('handleSetData', data);
+  // };
 
   const handleChangeMode = () => {
     const newMode =
