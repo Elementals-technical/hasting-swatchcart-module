@@ -1,7 +1,5 @@
-import { useAppSelector } from '../../src/app/store/store';
 import { EDataInputType } from '../../src/features/DataAdapter/utils/types';
 import { MultiProductWrapper } from '../../src/features/MultiProduct/ui/MultiProductWrapper/MultiProductWrapper';
-import { getIsOpenSidebar } from '../../src/features/swatches/model/selectors';
 import { IAttributeAsset } from '../../src/features/swatches/model/types';
 import { Swatches } from '../../src/features/swatches/ui/Swatches';
 import { LibraryProvider } from '../store/LibraryProvider';
@@ -22,17 +20,15 @@ export const SwatchModule = ({
   onToggleSidebar,
   onSendData,
 }: ISwatchesModuleProps) => {
-  const isOpenModule = useAppSelector(getIsOpenSidebar);
-
   return (
     <LibraryProvider>
-      <button className='tw-flex tw-items-center tw-gap-2 bg-amber-700'>
-        Click me 2
-      </button>
-      {isOpenModule ? (
+      {isOpen ? (
         <>
           {uiDataType === EDataInputType.DATA_ALL_PRODUCT ? (
-            <MultiProductWrapper onSendData={onSendData} />
+            <MultiProductWrapper
+              onSendData={onSendData}
+              onToggleSidebar={onToggleSidebar}
+            />
           ) : null}
 
           {uiDataType === EDataInputType.UI ? (

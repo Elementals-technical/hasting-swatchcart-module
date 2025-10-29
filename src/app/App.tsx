@@ -21,20 +21,6 @@ function App() {
   const handleSetData = (data: unknown) => {
     console.log('handleSetData', data);
   };
-  // const dispatch = useAppDispatch();
-  // const isOpenModule = useAppSelector(getIsOpenSidebar);
-
-  // const [mockDataMode, setMockDataMode] = useState<'DATA_ALL_PRODUCT' | 'UI'>(
-  //   'DATA_ALL_PRODUCT',
-  // );
-
-  // const handleOpenSidebar = () => {
-  //   // dispatch(toggleSidebar());
-  // };
-
-  // const handleSetData = (data: unknown) => {
-  //   console.log('handleSetData', data);
-  // };
 
   const handleChangeMode = () => {
     const newMode =
