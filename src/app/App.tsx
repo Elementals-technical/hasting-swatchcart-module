@@ -4,8 +4,9 @@ import { useState } from 'react';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
 import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import { useAppDispatch, useAppSelector } from './store/store';
-// import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
-import { SwatchModule } from '../../lib/main';
+// import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule'; // App
+import { SwatchModule } from '../../dist/main'; // build module
+// import { SwatchModule } from '../../lib/main'; // lib
 
 function App() {
   const [isOpenModule, setIsOpenModule] = useState(true);

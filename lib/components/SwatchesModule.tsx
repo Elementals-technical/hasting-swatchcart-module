@@ -5,8 +5,9 @@ import { getIsOpenSidebar } from '../../src/features/swatches/model/selectors';
 import { IAttributeAsset } from '../../src/features/swatches/model/types';
 import { Swatches } from '../../src/features/swatches/ui/Swatches';
 import { LibraryProvider } from '../store/LibraryProvider';
+import './styles.css';
 
-interface ISwatchesModuleProps {
+export interface ISwatchesModuleProps {
   isOpen: boolean;
   uiDataType: EDataInputType;
   data: IAttributeAsset[] | any[];
