@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SwatchModule via CDN (bundled)</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.css"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="module">
+      import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
+
+      const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
+      const mockData = await fetch(jsonUrl).then((r) => r.json());
+
+      mountSwatchModule(document.getElementById('root'), {
+        isOpen: true,
+        uiDataType: 'UI',
+        data: mockData,
+        onToggleSidebar: () => console.log('handleOpenSidebar'),
+        onSendData: (payload) => console.log('handleSetData', payload),
+      });
+
+      // later: unmount();
+    </script>
+  </body>
+</html>

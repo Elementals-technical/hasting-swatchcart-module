@@ -3,7 +3,7 @@ import { MultiProductWrapper } from '../../src/features/MultiProduct/ui/MultiPro
 import { IAttributeAsset } from '../../src/features/swatches/model/types';
 import { Swatches } from '../../src/features/swatches/ui/Swatches';
 import { LibraryProvider } from '../store/LibraryProvider';
-import './styles.css';
+import '../assets/styles/index.css';
 
 export interface ISwatchesModuleProps {
   isOpen: boolean;
