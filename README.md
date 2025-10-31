@@ -11,10 +11,6 @@ There are two ways of using this module: `NPM` or `CDN`
 npm i hasting-swatchcart-module
 ```
 
-### Download JSON mock data
-
-➡️ [Click here to download `demo-data.json`](src/mockAttribute.json)
-
 ### NPM usage
 
 ```js
