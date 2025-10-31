@@ -33,7 +33,7 @@ import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
 export default defineConfig({
-  base: './', // ✅ Ensures assets & fonts resolve correctly for CDN paths
+  base: './',
 
   plugins: [
     react(),
@@ -56,13 +56,12 @@ export default defineConfig({
       fileName: () => 'main.js',
     },
 
-    // ✅ Bundle EVERYTHING, including React/Redux. No externals for CDN.
     rollupOptions: {
       external: [], // keep empty for CDN
     },
 
-    cssCodeSplit: true, // ✅ Guarantees CSS is emitted separately
-    assetsDir: 'assets', // ✅ Fonts go to dist/cdn/assets/
+    cssCodeSplit: true,
+    assetsDir: 'assets',
 
     outDir: 'dist/cdn',
     emptyOutDir: true,
