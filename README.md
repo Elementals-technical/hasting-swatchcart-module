@@ -18,8 +18,8 @@ import { SwatchModule } from 'hasting-swatchcart-module';
 
 <SwatchModule
   isOpen={isOpenModule}
-  uiDataType={mockDataMode}
-  data={MOCK_ROW_PROPS_ATTRIBUTES}
+  uiDataType={'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT'}
+  data={data}
   onToggleSidebar={handleOpenSidebar}
   onSendData={handleSetData}
 />;
@@ -37,17 +37,22 @@ import { SwatchModule } from 'hasting-swatchcart-module';
   <script type="module">
     import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
 
-    const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
-    const mockData = await fetch(jsonUrl).then((r) => r.json());
-
     const rootElement = document.getElementById('root');
+
+    const handleToggleSidebar = () => {
+      // handleToggleSidebar
+    }
+
+    const handleSendData = (selectedData) => {
+      // handleSendData
+    }
 
     mountSwatchModule(rootElement, {
       isOpen: true,
-      uiDataType: 'UI',
-      data: mockData,
-      onToggleSidebar: () => console.log('handleOpenSidebar'),
-      onSendData: (payload) => console.log('handleSetData', payload),
+      uiDataType: 'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT',
+      data: data,
+      onToggleSidebar: handleToggleSidebar,
+      onSendData: handleSendData,
     });
   </script>
 </body>
@@ -148,19 +153,26 @@ npm run build:cdn
 ```html
 <link rel="stylesheet" href="../dist/cdn/main.css" />
 <script type="module">
-  import { mountSwatchModule } from '../dist/cdn/main.js';
+  import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
 
+  const rootElement = document.getElementById('root');
   const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
   const mockData = await fetch(jsonUrl).then((r) => r.json());
 
-  const rootElement = document.getElementById('root');
+  const handleToggleSidebar = () => {
+    console.log("handleToggleSidebar is working");
+  }
+
+  const handleSendData = (selectedData) => {
+    console.log("handleSendData  is working", selectedData);
+  }
 
   mountSwatchModule(rootElement, {
     isOpen: true,
-    uiDataType: 'UI',
+    uiDataType: 'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT',
     data: mockData,
-    onToggleSidebar: () => console.log('handleOpenSidebar'),
-    onSendData: (payload) => console.log('handleSetData', payload),
+    onToggleSidebar: handleToggleSidebar,
+    onSendData: handleSendData,
   });
 </script>
 ```
@@ -175,17 +187,26 @@ npm run build:cdn
 <script type="module">
   import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
 
+  // local JSON data
   const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
   const mockData = await fetch(jsonUrl).then((r) => r.json());
 
   const rootElement = document.getElementById('root');
 
+  const handleToggleSidebar = () => {
+    console.log("handleToggleSidebar is working");
+  }
+
+  const handleSendData = (selectedData) => {
+    console.log("handleSendData  is working", selectedData);
+  }
+
   mountSwatchModule(rootElement, {
     isOpen: true,
-    uiDataType: 'UI',
-    data: mockData,
-    onToggleSidebar: () => console.log('handleOpenSidebar'),
-    onSendData: (payload) => console.log('handleSetData', payload),
+    uiDataType: 'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT',
+    data: mockData, // or your data
+    onToggleSidebar: handleToggleSidebar,
+    onSendData: (payload) => handleSendData(selectedData),
   });
 </script>
 ```
@@ -211,8 +232,8 @@ import { SwatchModule } from '../../dist/main'; // build module
 ```js
   <SwatchModule
     isOpen={isOpenModule}
-    uiDataType={mockDataMode}
-    data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
+    uiDataType={'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT'}
+    data={data}
     onToggleSidebar={handleOpenSidebar}
     onSendData={handleSetData}
   />
