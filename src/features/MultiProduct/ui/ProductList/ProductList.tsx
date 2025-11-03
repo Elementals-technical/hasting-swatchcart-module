@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { SearchIconSVG } from '../../../../app/assets/svg/SearchIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { MultiSelect } from '../../../../shared/ui/MultiSelect/MultiSelect';
 import { getProductListThunk } from '../../../swatches/model/thunks';
 import {
   getIsLoadingProductList,
@@ -11,28 +10,34 @@ import {
 import { ProductListItem } from '../ProductListItem/ProductListItem';
 import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { Slider } from '../../../../shared/ui/Slider/Slider';
-import type { IProductCart, ISliderItem } from '../../model/types';
+import type {
+  IProductCart,
+  ISingleSelectOption,
+  ISliderItem,
+} from '../../model/types';
 import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../../utils/constants';
+import { SingleSelect } from '../../../../shared/ui/SingleSelect/SingleSelect';
 
 interface IProductList {
   onSidebarToggle: () => void;
 }
 
-const MOCK_SORT = [
-  { value: 'opt', label: 'opt' },
-  { value: 'opt1', label: 'opt1' },
-  { value: 'opt2', label: 'opt2' },
+const SORT_OPTIONS: ISingleSelectOption[] = [
+  { label: 'A-Z', value: 'asc' },
+  { label: 'Z-A', value: 'dsc' },
 ];
 
 export const ProductList = ({ onSidebarToggle }: IProductList) => {
   const dispatch = useAppDispatch();
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
+
   const [activeCategory, setActiveCategory] = useState<
     ISliderItem | IProductCart
   >(MOCK_ALL_CATEGORY_SLIDER_ITEM);
 
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [sortValue, setSortValue] = useState<string | null>(null);
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -48,6 +53,11 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
   }, [productList]);
 
   const norm = (s: string) => s.toLowerCase();
+
+  const collator = useMemo(
+    () => new Intl.Collator(undefined, { sensitivity: 'base', numeric: false }),
+    [],
+  );
 
   const filteredProductList = useMemo(() => {
     let list = productList;
@@ -65,8 +75,14 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
       );
     }
 
+    if (sortValue === 'asc') {
+      list = [...list].sort((a, b) => collator.compare(a.name, b.name));
+    } else if (sortValue === 'dsc') {
+      list = [...list].sort((a, b) => collator.compare(b.name, a.name));
+    }
+
     return list;
-  }, [productList, activeCategory, debouncedSearch]);
+  }, [productList, activeCategory, debouncedSearch, sortValue, collator]);
 
   useEffect(() => {
     dispatch(getProductListThunk());
@@ -87,6 +103,7 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
 
       <div className='flex min-h-0 flex-1 flex-col'>
         <div className='flex justify-between items-center gap-4 h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:justify-start'>
+          {/* Search */}
           <div className='relative w-full max-w-[180px] h-[36px] sm:max-w-[240px]'>
             <input
               type='text'
@@ -112,12 +129,14 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
             </div>
           </div>
 
-          <MultiSelect
-            options={MOCK_SORT}
-            values={['opt']}
-            onValueChange={(values) => console.log('value', values)}
-            className='max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]'
-            dropdownWidth='w-80'
+          <SingleSelect
+            title='Sort by'
+            placeholder='Sort by'
+            values={SORT_OPTIONS}
+            value={sortValue}
+            onValueChange={setSortValue}
+            className='max-w-[102px] bg-[var(--label-bg)]'
+            dropdownWidth='w-64'
           />
 
           <Slider
@@ -142,12 +161,7 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
         ) : (
           <div className='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'>
             <div className='mb-4'>Select Product</div>
-            <ul
-              className='
-                grid grid-cols-2 gap-4
-                sm:grid-cols-6
-              '
-            >
+            <ul className='grid grid-cols-2 gap-4 sm:grid-cols-6'>
               {filteredProductList.length
                 ? filteredProductList.map((productListItem) => {
                     const { name } = productListItem;

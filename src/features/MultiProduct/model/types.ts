@@ -34,3 +34,8 @@ export interface IGetProductParameters {
   productId: number;
   productName: string;
 }
+
+export interface ISingleSelectOption {
+  value: string;
+  label: string;
+}
