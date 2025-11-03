@@ -32,8 +32,6 @@ export const ImageGridZoom = ({ item }: { item: any }) => {
   //   }
   // };
 
-  // console.log("metadata-item", item);
-
   return (
     <>
       <div className='group relative w-full h-full aspect-video overflow-hidden shadow-sm group cursor-pointer rounded-sm'>

@@ -1,10 +1,7 @@
 import { useMemo } from 'react';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import {
-  setIsOpenMultiProductCart,
-  toggleSidebar,
-} from '../../../swatches/model/swatchesSlice';
+import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import {
   getActiveMultiCartProduct,
   getSelectedMaterials,
@@ -13,7 +10,13 @@ import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 
-export const MultiProductCartHeader = () => {
+interface IMultiProductCartHeaderProps {
+  onToggleSidebar: () => void;
+}
+
+export const MultiProductCartHeader = ({
+  onToggleSidebar,
+}: IMultiProductCartHeaderProps) => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
 
@@ -27,7 +30,9 @@ export const MultiProductCartHeader = () => {
   }, [selectedMaterials]);
 
   const handleToggleSidebar = () => {
-    dispatch(toggleSidebar());
+    // dispatch(toggleSidebar());
+    console.log('MultiProductCartHeader');
+    onToggleSidebar();
   };
 
   const handleGoBack = () => {

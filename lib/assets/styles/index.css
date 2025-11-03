@@ -1,0 +1,23 @@
+@layer theme, base, components, utilities;
+@import './normalize.css';
+@import './root.css';
+@import './fonts.css';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tw-animate-css';
+@import './theme.css';
+@import './hubspot-forms.css';
+@import 'tailwindcss';
+
+.root-app {
+  @import 'tailwindcss/utilities.css';
+}
+
+body {
+  font-family: var(--main-font-family), sans-serif;
+  font-weight: 400;
+}
+
+button {
+  cursor: pointer;
+}

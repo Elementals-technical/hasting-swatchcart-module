@@ -1,7 +1,5 @@
 import { EDataInputType } from '../../../DataAdapter/utils/types';
 import type { IAttributeAsset } from '../../../swatches/model/types';
-import { useAppSelector } from '../../../../app/store/store';
-import { getIsOpenSidebar } from '../../../swatches/model/selectors';
 import { MultiProductWrapper } from '../../../MultiProduct/ui/MultiProductWrapper/MultiProductWrapper';
 import { Swatches } from '../../../swatches/ui/Swatches';
 
@@ -20,14 +18,15 @@ export const SwatchModule = ({
   onToggleSidebar,
   onSendData,
 }: ISwatchesModuleProps) => {
-  const isOpenModule = useAppSelector(getIsOpenSidebar);
-
   return (
     <>
-      {isOpenModule ? (
+      {isOpen ? (
         <>
           {uiDataType === EDataInputType.DATA_ALL_PRODUCT ? (
-            <MultiProductWrapper onSendData={onSendData} />
+            <MultiProductWrapper
+              onSendData={onSendData}
+              onToggleSidebar={onToggleSidebar}
+            />
           ) : null}
 
           {uiDataType === EDataInputType.UI ? (

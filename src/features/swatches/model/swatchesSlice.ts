@@ -14,7 +14,7 @@ import { getProductListThunk } from './thunks';
 import type { IProduct } from '../../MultiProduct/model/types';
 
 const initialState: ISwatchesSlice = {
-  isOpenSidebar: true,
+  // isOpenSidebar: true,
   listAttributes: [],
   productElementOptions: [],
   materialSelectState: { Finish: [], Color: [], Look: [] },
@@ -31,9 +31,9 @@ export const swatchesSlice = createSlice({
   name: 'swatches',
   initialState,
   reducers: {
-    toggleSidebar: (state) => {
-      state.isOpenSidebar = !state.isOpenSidebar;
-    },
+    // toggleSidebar: (state) => {
+    //   state.isOpenSidebar = !state.isOpenSidebar;
+    // },
     setMaterialSelect(state, action: PayloadAction<ISetFiltersPayload>) {
       const { filterName, values } = action.payload;
 
@@ -145,7 +145,7 @@ export const {
   setAllMaterialsOptions,
   setPanelFilter,
   setSelectedMaterials,
-  toggleSidebar,
+  // toggleSidebar,
   clearMaterialFilter,
   clearAllMaterialFilters,
   setSelectedProduct,
