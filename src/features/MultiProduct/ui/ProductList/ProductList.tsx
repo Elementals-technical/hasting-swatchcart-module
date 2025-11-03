@@ -102,12 +102,13 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
             />
             <div
               className='
-                absolute right-2 top-1/2 -translate-y-1/2
+                absolute right-3 top-1/2 -translate-y-1/2
                 pointer-events-none
                 [&_svg_path]:stroke-[var(--svg-dark)]
+                sm:right-4
               '
             >
-              <SearchIconSVG width={16} height={16} />
+              <SearchIconSVG width={20} height={20} />
             </div>
           </div>
 
