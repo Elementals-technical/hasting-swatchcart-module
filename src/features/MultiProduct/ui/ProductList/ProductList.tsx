@@ -111,11 +111,11 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className='
-                h-full w-full pr-8 pl-4 rounded-2xl border border-[var(--border)]
-                text-sm text-[var(--grey-text-color)] placeholder-[var(--text-muted)]
-                focus:outline-none focus:border-[var(--main-accent-color)]
-                bg-[var(--background)] transition
-              '
+              h-full w-full pr-8 pl-4 rounded-2xl border border-[var(--border)]
+              text-sm     text-black
+              focus:outline-none focus:border-[var(--main-accent-color)]
+              bg-[var(--background)] transition
+            '
             />
             <div
               className='
@@ -161,19 +161,23 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
         ) : (
           <div className='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'>
             <div className='mb-4'>Select Product</div>
-            <ul className='grid grid-cols-2 gap-4 sm:grid-cols-6'>
-              {filteredProductList.length
-                ? filteredProductList.map((productListItem) => {
-                    const { name } = productListItem;
-                    return (
-                      <ProductListItem
-                        key={name}
-                        productListItem={productListItem}
-                      />
-                    );
-                  })
-                : null}
-            </ul>
+            {filteredProductList.length ? (
+              <ul className='grid grid-cols-2 gap-4 sm:grid-cols-6'>
+                {filteredProductList.map((productListItem) => {
+                  const { name } = productListItem;
+                  return (
+                    <ProductListItem
+                      key={name}
+                      productListItem={productListItem}
+                    />
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className='flex justify-center items-center h-100%'>
+                No products were found
+              </div>
+            )}
           </div>
         )}
       </div>
