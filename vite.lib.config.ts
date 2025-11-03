@@ -1,56 +1,47 @@
-// an old version base vite config
-// import { defineConfig } from 'vite';
-// import react from '@vitejs/plugin-react';
-
-// // https://vite.dev/config/
-// export default defineConfig({
-//   plugins: [react()],
-// });
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { extname, relative, resolve } from 'path';
-import { fileURLToPath } from 'node:url';
-import { glob } from 'glob';
 import dts from 'vite-plugin-dts';
+import { libInjectCss } from 'vite-plugin-lib-inject-css';
 import tailwindcss from '@tailwindcss/vite';
+import { resolve } from 'path';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), dts({ include: ['lib'] }), libInjectCss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    dts({
+      entryRoot: 'lib',
+      outDir: 'dist',
+      insertTypesEntry: true,
+      include: ['lib/**/*.ts', 'lib/**/*.tsx', 'lib/main.ts'],
+    }),
+    libInjectCss(),
+  ],
   build: {
     copyPublicDir: false,
     cssCodeSplit: true,
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
-      formats: ['es'],
+      formats: ['es', 'cjs'],
+      fileName: (format) => (format === 'cjs' ? 'main.cjs' : 'main.js'),
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
-      input: Object.fromEntries(
-        glob
-          .sync('lib/**/*.{ts,tsx}', {
-            ignore: ['lib/**/*.d.ts'],
-          })
-          .map((file) => [
-            relative('lib', file.slice(0, file.length - extname(file).length)),
-            fileURLToPath(new URL(file, import.meta.url)),
-          ]),
-      ),
+      external: [
+        'react',
+        'react-dom',
+        'react-redux',
+        '@reduxjs/toolkit',
+        'react/jsx-runtime',
+      ],
       output: {
-        assetFileNames: 'assets/[name][extname]',
-        entryFileNames: '[name].js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            return 'assets/index.css';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
       },
     },
-  },
-  server: {
-    host: true,
-    allowedHosts: ['.ondigitalocean.app'],
-  },
-
-  preview: {
-    host: true,
-    allowedHosts: ['.ondigitalocean.app'],
+    sourcemap: true,
   },
 });

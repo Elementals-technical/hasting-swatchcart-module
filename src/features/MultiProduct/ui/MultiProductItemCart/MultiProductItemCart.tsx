@@ -22,10 +22,12 @@ import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCa
 
 interface IMultiProductItemCartProps {
   onSendData?: (data: unknown) => void;
+  onToggleSidebar: () => void;
 }
 
 export const MultiProductItemCart = ({
   onSendData,
+  onToggleSidebar,
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
@@ -34,8 +36,6 @@ export const MultiProductItemCart = ({
   const selectedMaterials = useAppSelector(
     getSelectedMaterials(selectedProduct?.productId || 999),
   );
-  // console.log('selectedProducts', selectedProducts);
-  // console.log('selectedMaterials', selectedMaterials);
 
   const totalCount = useMemo(() => {
     return MultiProductCartService.getCartTotalCount({
@@ -58,8 +58,7 @@ export const MultiProductItemCart = ({
     const { parentName, metadata } = item;
     const productId = selectedProduct?.productId;
     const label = metadata.label;
-    // console.log('handleIncrement', item);
-    // console.log('selectedMaterials', selectedMaterials);
+
     if (productId && label && parentName) {
       dispatch(incrementMultiProductItem({ productId, label, parentName }));
     }
@@ -69,8 +68,7 @@ export const MultiProductItemCart = ({
     const { parentName, metadata } = item;
     const productId = selectedProduct?.productId;
     const label = metadata.label;
-    // console.log('handleDecrement', item);
-    // console.log('handleDecrement', selectedMaterials);
+
     if (productId && label && parentName) {
       dispatch(decrementMultiProductItem({ productId, label, parentName }));
     }
@@ -78,7 +76,7 @@ export const MultiProductItemCart = ({
 
   return (
     <div className='flex min-h-0 flex-1 flex-col'>
-      <MultiProductCartHeader />
+      <MultiProductCartHeader onToggleSidebar={onToggleSidebar} />
       <CartSelectedProductList />
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>

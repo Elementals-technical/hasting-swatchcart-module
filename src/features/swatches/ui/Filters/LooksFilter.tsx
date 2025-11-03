@@ -36,7 +36,6 @@ export const LooksFilter = () => {
               .includes(look),
         ).length;
 
-        // console.log("look count: ", look, count);
         return {
           value: look,
           label: look,

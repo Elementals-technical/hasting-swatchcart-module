@@ -10,12 +10,14 @@ interface ICartWrapperProps {
   isOpen: boolean;
   onSetActiveTab: (activeTab: EActiveTab) => void;
   onToggleSidebar: () => void;
+  onSendData: (data: any[]) => void;
 }
 
 export const CartWrapper = ({
   isOpen,
   onToggleSidebar,
   onSetActiveTab,
+  onSendData,
 }: ICartWrapperProps) => {
   const cartItems = useAppSelector(getCartItems);
 
@@ -31,7 +33,7 @@ export const CartWrapper = ({
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
             className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold cursor-pointer'
-            onClick={() => console.log(cartItems)}
+            onClick={() => onSendData(cartItems)}
           >
             GO TO SHIPPING
           </button>

@@ -1,7 +1,7 @@
 import type { IProduct } from '../../MultiProduct/model/types';
 
 export interface ISwatchesSlice {
-  isOpenSidebar: boolean;
+  // isOpenSidebar: boolean;
   listAttributes: IAttributeAsset[];
   productElementOptions: any[];
   materialSelectState: IMaterialSelectState;

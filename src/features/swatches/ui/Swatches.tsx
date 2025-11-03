@@ -21,7 +21,7 @@ export const Swatches = ({
   uiDataType,
   data,
   onToggleSidebar,
-  // onSendData,
+  onSendData,
 }: ISwatchesProps) => {
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState<EActiveTab>(EActiveTab.SWATCH);
@@ -59,6 +59,7 @@ export const Swatches = ({
           isOpen={isOpen}
           onToggleSidebar={onToggleSidebar}
           onSetActiveTab={handleSetActiveTab}
+          onSendData={onSendData}
         />
       )}
     </>
