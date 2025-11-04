@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getSelectedMaterials } from '../../model/selectors';
 import type { AttributeValue } from '../../model/types';
@@ -8,6 +8,7 @@ import { ImageGridZoom } from '../ImageGridZoom/ImageGridZoom';
 import { HexGridZoom } from '../HexGridZoom/HexGridZoom';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
+import { Hint } from '../../../../shared/ui/Hint/Hint';
 
 const MockTile: React.FC = () => (
   <div
@@ -28,6 +29,12 @@ export const SwatchesList = ({
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
+  const [hoveredEl, setHoveredEl] = useState<HTMLElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [text, setText] = useState<{
+    materialName: string;
+    parentName: string;
+  }>({ materialName: '', parentName: '' });
 
   const handleSelect = (item: AttributeValue) => {
     dispatch(setSelectedMaterials({ selectedMaterial: item }));
@@ -58,6 +65,18 @@ export const SwatchesList = ({
             sm:w-16 sm:h-16'
             aria-label={`Selected swatch ${val.name ?? val.assetId}`}
             title='Click to remove'
+            onMouseEnter={(e) => {
+              setHoveredEl(e.currentTarget as HTMLElement);
+              // setText(`${val.metadata.label || val.name} <br/> (${val.parentName})`);
+              setText({
+                materialName: val.metadata.label || val.name,
+                parentName: val.parentName,
+              });
+              setIsOpen(true);
+            }}
+            onMouseLeave={() => {
+              setIsOpen(false);
+            }}
           >
             {AttributeHelper.getImage(val) ? (
               <ImageGridZoom item={val} />
@@ -73,7 +92,12 @@ export const SwatchesList = ({
             </div>
           </button>
         ))}
-
+        <Hint open={isOpen} target={hoveredEl} side='bottom' offset={8}>
+          <>
+            {text.materialName}
+            <br />({text.parentName})
+          </>
+        </Hint>
         {Array.from({ length: mockCount }).map((_, i) => (
           <MockTile key={`mock-${i}`} />
         ))}

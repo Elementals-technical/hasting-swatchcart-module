@@ -24,7 +24,7 @@ export const MultiProductWrapper = ({
   };
 
   return (
-    <div>
+    <>
       {isOpenMultiProductCart ? (
         <MultiProductItemCart
           onSendData={onSendData}
@@ -35,6 +35,6 @@ export const MultiProductWrapper = ({
       ) : (
         <ProductList />
       )}
-    </div>
+    </>
   );
 };
