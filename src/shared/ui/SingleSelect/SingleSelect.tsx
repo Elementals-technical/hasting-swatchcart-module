@@ -81,13 +81,16 @@ const SingleSelect = React.forwardRef<
           aria-expanded={isOpen}
           className={cn(
             'inline-flex items-center justify-between gap-2 rounded-full bg-[var(--label-bg, #f5f5f5)] ' +
-              'px-2 py-2 text-[1rem] font-medium text-black w-[102px]' +
+              'px-3 py-2 text-xs font-medium h-9 text-black' +
               'border border-transparent hover:bg-gray-100 ' +
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--main-accent-color)]',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--main-accent-color)]' +
+              'sm:w-[102px]',
             className,
           )}
         >
-          <span className={cn(!selected && 'text-gray-700')}>
+          <span
+            className={cn(!selected && 'text-xs  text-gray-700 ms:text-sm')}
+          >
             {selected?.label ?? placeholder}
           </span>
           <ChevronDownIcon

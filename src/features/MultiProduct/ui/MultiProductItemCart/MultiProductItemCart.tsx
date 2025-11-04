@@ -22,12 +22,12 @@ import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCa
 
 interface IMultiProductItemCartProps {
   onSendData?: (data: unknown) => void;
-  onToggleSidebar: () => void;
+  // onToggleSidebar: () => void;
 }
 
 export const MultiProductItemCart = ({
   onSendData,
-  onToggleSidebar,
+  // onToggleSidebar,
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
@@ -76,7 +76,7 @@ export const MultiProductItemCart = ({
 
   return (
     <div className='flex min-h-0 flex-1 flex-col'>
-      <MultiProductCartHeader onToggleSidebar={onToggleSidebar} />
+      <MultiProductCartHeader />
       <CartSelectedProductList />
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>

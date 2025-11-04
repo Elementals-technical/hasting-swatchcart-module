@@ -3,7 +3,6 @@ import {
   getIsOpenMultiCart,
   getSelectedProduct,
 } from '../../../swatches/model/selectors';
-import { CustomModal } from '../CustomModal/CustomModal';
 import { MultiProductItemCart } from '../MultiProductItemCart/MultiProductItemCart';
 import { ProductList } from '../ProductList/ProductList';
 import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem';
@@ -25,17 +24,17 @@ export const MultiProductWrapper = ({
   };
 
   return (
-    <CustomModal isOpen={true} onClose={handleToggleSidebar}>
+    <div>
       {isOpenMultiProductCart ? (
         <MultiProductItemCart
           onSendData={onSendData}
-          onToggleSidebar={onToggleSidebar}
+          // onToggleSidebar={onToggleSidebar}
         />
       ) : selectedProduct ? (
         <SelectedProductItem onSidebarToggle={handleToggleSidebar} />
       ) : (
-        <ProductList onSidebarToggle={handleToggleSidebar} />
+        <ProductList />
       )}
-    </CustomModal>
+    </div>
   );
 };

@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import { useAppDispatch, useAppSelector } from './store/store';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule'; // App
-import { SwatchModule } from '../../dist/main'; // build module
-// import { SwatchModule } from '../../lib/main'; // lib
+// import { SwatchModule } from '../../dist/main'; // build module
+import { SwatchModule } from '../../lib/main'; // lib
 
 function App() {
   const [isOpenModule, setIsOpenModule] = useState(true);
@@ -44,6 +44,7 @@ function App() {
         change app Mode to{' '}
         {mockDataMode === 'DATA_ALL_PRODUCT' ? 'UI' : 'DATA_ALL_PRODUCT'}
       </button>
+      {/* <div className='bg-purple-500 h-[500px] min-h-0 overflow-hidden flex flex-col'> */}
       <SwatchModule
         isOpen={isOpenModule}
         uiDataType={mockDataMode}
@@ -51,6 +52,7 @@ function App() {
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
       />
+      {/* </div> */}
     </>
   );
 }

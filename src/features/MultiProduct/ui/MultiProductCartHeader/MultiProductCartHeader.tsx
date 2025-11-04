@@ -10,13 +10,11 @@ import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 
-interface IMultiProductCartHeaderProps {
-  onToggleSidebar: () => void;
-}
+// interface IMultiProductCartHeaderProps {
+//   onToggleSidebar: () => void;
+// }
 
-export const MultiProductCartHeader = ({
-  onToggleSidebar,
-}: IMultiProductCartHeaderProps) => {
+export const MultiProductCartHeader = () => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
 
@@ -29,11 +27,11 @@ export const MultiProductCartHeader = ({
     });
   }, [selectedMaterials]);
 
-  const handleToggleSidebar = () => {
-    // dispatch(toggleSidebar());
-    console.log('MultiProductCartHeader');
-    onToggleSidebar();
-  };
+  // const handleToggleSidebar = () => {
+  //   // dispatch(toggleSidebar());
+  //   console.log('MultiProductCartHeader');
+  //   // onToggleSidebar();
+  // };
 
   const handleGoBack = () => {
     dispatch(setIsOpenMultiProductCart(false));
@@ -67,7 +65,7 @@ export const MultiProductCartHeader = ({
         className='flex justify-center items-center w-[30px] h-[30px] bg-[var(--background-grey)]
               border-none cursor-pointer rounded-full
               [&_svg_path]:stroke-[var(--svg-dark)]'
-        onClick={handleToggleSidebar}
+        // onClick={handleToggleSidebar}
       >
         <CloseIconSVG width={10} height={10} />
       </button>

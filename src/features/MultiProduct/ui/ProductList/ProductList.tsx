@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { SearchIconSVG } from '../../../../app/assets/svg/SearchIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getProductListThunk } from '../../../swatches/model/thunks';
@@ -18,16 +17,12 @@ import type {
 import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../../utils/constants';
 import { SingleSelect } from '../../../../shared/ui/SingleSelect/SingleSelect';
 
-interface IProductList {
-  onSidebarToggle: () => void;
-}
-
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'A-Z', value: 'asc' },
   { label: 'Z-A', value: 'dsc' },
 ];
 
-export const ProductList = ({ onSidebarToggle }: IProductList) => {
+export const ProductList = () => {
   const dispatch = useAppDispatch();
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
 
@@ -90,55 +85,60 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
 
   return (
     <div className='flex h-full flex-col'>
-      <header className='flex items-center justify-between p-[var(--sm-padding)] border-b border-[var(--border)]'>
-        <span className='text-base font-medium'>Swatches List</span>
-        <button
-          onClick={onSidebarToggle}
-          className='flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[var(--background-grey)]
-                     [&_svg_path]:stroke-[var(--svg-dark)]'
-        >
-          <CloseIconSVG width={10} height={10} />
-        </button>
+      <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
+        <span className='text-base font-medium p-[var(--sm-padding)]'>
+          Swatches List
+        </span>
+
+        <div className='p-[var(--sm-padding)] border-t border-[var(--border)] font-medium text-xs leading-[24px] lg:border-none'>
+          <span>
+            Choose 5 free swatches to curate your perfect design. Plus get{' '}
+            <span className='text-[var(--main-accent-color)] underline'>
+              free design advice
+            </span>{' '}
+            from our experts
+          </span>
+        </div>
       </header>
 
       <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='flex justify-between items-center gap-4 h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:justify-start'>
-          {/* Search */}
-          <div className='relative w-full max-w-[180px] h-[36px] sm:max-w-[240px]'>
-            <input
-              type='text'
-              placeholder='Search'
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className='
-              h-full w-full pr-8 pl-4 rounded-2xl border border-[var(--border)]
-              text-sm     text-black
-              focus:outline-none focus:border-[var(--main-accent-color)]
-              bg-[var(--background)] transition
-            '
-            />
-            <div
-              className='
+        <div className='flex w-full items-center gap-4 justify-between p-[var(--sm-padding)] border-b border-[var(--border)] sm:justify-between'>
+          <div className='flex items-center justify-between h-[36px] w-full gap-4 sm:max-w-90'>
+            <div className='relative w-full max-w-[260px] h-[36px] sm:max-w-[240px]'>
+              <input
+                type='text'
+                placeholder='Search'
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className='
+                h-full w-full pr-8 pl-4 rounded-2xl border border-[var(--border)]
+                text-sm     text-black
+                focus:outline-none focus:border-[var(--main-accent-color)]
+                bg-[var(--background)] transition
+              '
+              />
+              <div
+                className='
                 absolute right-3 top-1/2 -translate-y-1/2
                 pointer-events-none
                 [&_svg_path]:stroke-[var(--svg-dark)]
                 sm:right-4
-              '
-            >
-              <SearchIconSVG width={20} height={20} />
+                '
+              >
+                <SearchIconSVG width={20} height={20} />
+              </div>
             </div>
+
+            <SingleSelect
+              title='Sort by'
+              placeholder='Sort by'
+              values={SORT_OPTIONS}
+              value={sortValue}
+              onValueChange={setSortValue}
+              className='w-full max-w-[94px] bg-[var(--label-bg)]'
+              dropdownWidth='w-64'
+            />
           </div>
-
-          <SingleSelect
-            title='Sort by'
-            placeholder='Sort by'
-            values={SORT_OPTIONS}
-            value={sortValue}
-            onValueChange={setSortValue}
-            className='max-w-[102px] bg-[var(--label-bg)]'
-            dropdownWidth='w-64'
-          />
-
           <Slider
             items={uniqueCategories}
             activeId={activeCategory?.productId}
@@ -159,10 +159,10 @@ export const ProductList = ({ onSidebarToggle }: IProductList) => {
             loading...
           </div>
         ) : (
-          <div className='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'>
+          <div className='h-100% overflow-y-auto p-[var(--sm-padding)]'>
             <div className='mb-4'>Select Product</div>
             {filteredProductList.length ? (
-              <ul className='grid grid-cols-2 gap-4 sm:grid-cols-6'>
+              <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
                 {filteredProductList.map((productListItem) => {
                   const { name } = productListItem;
                   return (

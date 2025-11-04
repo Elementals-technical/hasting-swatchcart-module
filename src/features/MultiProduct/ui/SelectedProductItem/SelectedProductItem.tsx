@@ -46,11 +46,14 @@ export const SelectedProductItem = ({
       <div className='flex min-h-0 flex-1 flex-col'>
         <FiltersSelectedProductItem />
         <MaterialList
-          containerStyles='flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]'
-          gridStyles='grid grid-cols-2 gap-4 sm:grid-cols-6'
+          containerStyles='flex-1 max-h-50 overflow-y-auto p-[var(--sm-padding)] md:max-h-94'
+          // containerStyles='flex-1 overflow-y-auto p-[var(--sm-padding)]'
+          gridStyles='grid grid-cols-2 gap-4 sm:grid-cols-8'
           desktopColumnsCount={6}
         />
-        <SwatchContentContainer />
+        <div className=''>
+          <SwatchContentContainer />
+        </div>
       </div>
     </div>
   );
