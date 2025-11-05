@@ -33,24 +33,29 @@ export const MaterialMultiProductListItem = ({
       (product) => selectedProduct.productId === product.productId,
     );
 
-    if (allItems.length >= 5) {
-      const isSame = (i: AttributeValue) =>
-        i.metadata?.label === item.metadata?.label &&
-        i.parentName === item.parentName;
+    const isSame = (i: AttributeValue) =>
+      i.metadata?.label === item.metadata?.label &&
+      i.parentName === item.parentName;
 
-      const exists = allItems.some(isSame);
+    const exists = allItems.some(isSame);
 
-      if (exists) {
-        const filteredArray = allItems.filter((item) => !isSame(item));
-        const cartProductItem: IMultiCartProductItem = {
-          productId: selectedProduct.productId,
-          name: selectedProduct.name,
-          items: filteredArray,
-        };
+    if (exists) {
+      const filteredArray = allItems.filter((item) => !isSame(item));
+      const existProductId = selectedProducts.find((p) =>
+        p.items.some(
+          (i) =>
+            i.metadata?.label === item.metadata?.label &&
+            i.parentName === item.parentName,
+        ),
+      );
+      const cartProductItem: IMultiCartProductItem = {
+        productId: existProductId?.productId || selectedProduct.productId,
+        name: selectedProduct.name,
+        items: filteredArray,
+      };
 
-        dispatch(setMultiCartItems(cartProductItem));
-        dispatch(setActiveMultiCartProduct(cartProductItem));
-      }
+      dispatch(setMultiCartItems(cartProductItem));
+      dispatch(setActiveMultiCartProduct(cartProductItem));
     } else {
       const newMaterial = { ...item, count: 1 };
 
