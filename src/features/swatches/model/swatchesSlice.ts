@@ -80,7 +80,7 @@ export const swatchesSlice = createSlice({
         state.productElementOptions = productElementOptions;
       }
     },
-    setSelectedMaterials(
+    setSelectedMaterial(
       state,
       action: PayloadAction<{ selectedMaterial: AttributeValue }>,
     ) {
@@ -144,7 +144,7 @@ export const {
   setMaterialSelect,
   setAllMaterialsOptions,
   setPanelFilter,
-  setSelectedMaterials,
+  setSelectedMaterial,
   // toggleSidebar,
   clearMaterialFilter,
   clearAllMaterialFilters,

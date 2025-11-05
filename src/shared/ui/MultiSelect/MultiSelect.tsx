@@ -103,9 +103,9 @@ const MultiSelect = React.forwardRef<
         options.find((opt) => opt.value === values[0])?.label ||
         `${placeholder} selected`
       ) : (
-        <div className='flex flex-row items-center justify-between w-full'>
-          <span className='truncate'>{placeholder}</span>
-          <span className='text-[0.8rem] text-white bg-[var(--main-accent-color)] px-1.5 py-0.5 ml-2 rounded-full whitespace-nowrap'>
+        <div className='flex flex-row items-center w-full'>
+          <span className='truncate mr-1'>{placeholder}</span>
+          <span className='flex justify-center items-center text-white bg-[var(--main-accent-color)] w-[20px] h-[20px] rounded-full whitespace-nowrap'>
             {selectedCount}
           </span>
         </div>
@@ -116,11 +116,11 @@ const MultiSelect = React.forwardRef<
         <PopoverPrimitive.Trigger
           ref={ref}
           className={cn(
-            'flex flex-row items-center justify-between rounded-full border px-3 sm:px-5 py-2 bg-white cursor-pointer hover:bg-gray-50 data-[state=open]:border-primary hover:border-primary focus:border-primary',
+            'flex flex-row items-center justify-between rounded-full border border-[var(--main-accent-color)] px-3 sm:px-4 py-2 bg-white cursor-pointer hover:bg-gray-50 data-[state=open]:border-primary hover:border-primary focus:border-primary  min-h-9',
             className,
           )}
         >
-          <div className='w-full text-[0.9rem] truncate text-left'>
+          <div className='w-full text-xs truncate text-left leading-[20px] sm:text-sm'>
             {displayContent}
           </div>
           <ChevronDownIcon
