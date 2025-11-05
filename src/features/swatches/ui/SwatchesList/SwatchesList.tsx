@@ -26,7 +26,7 @@ interface ISwatchesListProps {
 
 export const SwatchesList = ({
   selectedMaterials,
-  containerStyles = 'p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:p-[var(--sm-padding)]',
+  containerStyles = 'p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0',
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
   const [hoveredEl, setHoveredEl] = useState<HTMLElement | null>(null);

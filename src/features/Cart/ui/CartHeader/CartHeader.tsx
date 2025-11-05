@@ -17,7 +17,7 @@ export const CartHeader = ({
   const totalCount = useAppSelector(getCartTotalCount);
 
   return (
-    <header className='flex p-[var(--padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
+    <header className='flex MaterialMultiProductList justify-between items-center border-b border-solid border-[var(--border)] p-[var(--sm-padding)]'>
       <div className='flex items-center flex-row  gap-[4px]'>
         <div className='flex items-center gap-2'>
           <button

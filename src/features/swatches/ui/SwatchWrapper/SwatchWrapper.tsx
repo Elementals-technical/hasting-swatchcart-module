@@ -35,7 +35,7 @@ export const SwatchWrapper = ({
 
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
-      <header className='flex p-[var(--padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
+      <header className='flex p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
         <h2 className='m-0 text-[16px] leading-[1.6] font-medium'>
           Order free swatches
         </h2>
@@ -50,13 +50,13 @@ export const SwatchWrapper = ({
       </header>
       <div className='flex flex-col h-full min-h-0'>
         <ProductElement
-          containerStyles='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'
+          containerStyles='flex justify-between items-center shrink-0 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'
           selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[250px]'
         />
-        <Filters containerStyles='shrink-0 flex justify-between items-center gap-2 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]' />
+        <Filters containerStyles='shrink-0 flex justify-between items-center gap-1 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]' />
         <MaterialSingleProductList />
         <SwatchesSingleProductListWrapper />
-        <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
+        <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
             className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold cursor-pointer'
             onClick={handleOpenCart}

@@ -24,7 +24,8 @@ export const MultiProductWrapper = ({
   };
 
   return (
-    <>
+    // Simulate a parent height block delete before pushing to the module
+    <div className='h-[600px] min-h-0 overflow-hidden flex flex-col border'>
       {isOpenMultiProductCart ? (
         <MultiProductItemCart
           onSendData={onSendData}
@@ -35,6 +36,6 @@ export const MultiProductWrapper = ({
       ) : (
         <ProductList />
       )}
-    </>
+    </div>
   );
 };

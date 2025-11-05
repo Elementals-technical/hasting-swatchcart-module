@@ -25,7 +25,7 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
       <button
         key={val.assetId}
         onClick={() => handleSelect(val)}
-        className={`w-31 h-31 rounded sm:w-40 sm:h-40 relative aspect-square overflow-hidden transition ${
+        className={`w-37 h-37 rounded sm:w-40 sm:h-40 relative aspect-square overflow-hidden transition ${
           isSelected ? 'border-amber-700' : 'border-transparent'
         }`}
       >

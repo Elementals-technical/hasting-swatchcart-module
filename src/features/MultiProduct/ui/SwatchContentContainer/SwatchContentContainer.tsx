@@ -32,10 +32,7 @@ export const SwatchContentContainer = () => {
         containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0 sm:w-[50%] sm:border-r sm:border-[var(--border)]'
       />
       <div className='flex p-[var(--sm-padding)] border-t border-[var(--border)] sm:border-none sm:w-[50%] sm:justify-center sm:items-center'>
-        <CustomButton
-          onClick={handleOpenMultiCart}
-          // disabled={!selectedMaterials.length}
-        >
+        <CustomButton onClick={handleOpenMultiCart}>
           ADD SWATCHES TO CART
         </CustomButton>
       </div>
