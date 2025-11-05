@@ -1,36 +1,17 @@
-import { useMemo } from 'react';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
-import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
+import { useAppDispatch } from '../../../../app/store/store';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
-import {
-  getActiveMultiCartProduct,
-  getMultiSelectedMaterials,
-} from '../../model/selectors';
-import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 
-// interface IMultiProductCartHeaderProps {
-//   onToggleSidebar: () => void;
-// }
+interface IMultiProductCartHeaderProps {
+  totalCount: number;
+}
 
-export const MultiProductCartHeader = () => {
+export const MultiProductCartHeader = ({
+  totalCount,
+}: IMultiProductCartHeaderProps) => {
   const dispatch = useAppDispatch();
-  const selectedProduct = useAppSelector(getActiveMultiCartProduct);
-
-  const selectedMaterials = useAppSelector(
-    getMultiSelectedMaterials(selectedProduct?.productId || 999),
-  );
-  const totalCount = useMemo(() => {
-    return MultiProductCartService.getCartTotalCount({
-      cartItems: selectedMaterials,
-    });
-  }, [selectedMaterials]);
-
-  // const handleToggleSidebar = () => {
-  //   // dispatch(toggleSidebar());
-  //   // onToggleSidebar();
-  // };
 
   const handleGoBack = () => {
     dispatch(setIsOpenMultiProductCart(false));

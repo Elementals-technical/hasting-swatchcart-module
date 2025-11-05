@@ -33,9 +33,9 @@ export const CartList = () => {
             key={`${item.assetId}/${item.parentName}`}
             item={item}
             canInc={canInc}
-            onDelete={handleDelete}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
+            onDelete={() => handleDelete(item)}
+            onIncrement={() => handleIncrement(item)}
+            onDecrement={() => handleDecrement(item)}
           />
         );
       })}

@@ -46,3 +46,8 @@ export interface IMultiCartProductItem {
   items: ICartItem[];
   name: string;
 }
+
+export interface IMultiProductCartHandleProps {
+  item: ICartItem;
+  productId: number;
+}

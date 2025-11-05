@@ -3,15 +3,9 @@ import { setSelectedMaterial } from '../../../swatches/model/swatchesSlice';
 import { CartPrice } from '../../../Cart/ui/CartPrice/CartPrice';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
-import { CartSelectedProductList } from '../CartSelectedProductList/CartSelectedProductList';
-import {
-  getActiveMultiCartProduct,
-  getMultiCartItems,
-  getMultiSelectedMaterials,
-} from '../../model/selectors';
-import { MultiProductCartService } from '../../lib/MultiProductCartServices';
+import { getMultiCartItems } from '../../model/selectors';
 import { useMemo } from 'react';
-import type { ICartItem } from '../../model/types';
+import type { IMultiProductCartHandleProps } from '../../model/types';
 import {
   decrementMultiProductItem,
   incrementMultiProductItem,
@@ -30,21 +24,14 @@ export const MultiProductItemCart = ({
   // onToggleSidebar,
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
-  const selectedProduct = useAppSelector(getActiveMultiCartProduct);
   const selectedProducts = useAppSelector(getMultiCartItems);
-  const selectedMaterials = useAppSelector(
-    getMultiSelectedMaterials(selectedProduct?.productId || 999),
-  );
 
-  const totalCount = useMemo(() => {
-    return MultiProductCartService.getCartTotalCount({
-      cartItems: selectedMaterials,
-    });
-  }, [selectedMaterials]);
+  const allItems = useMemo(() => {
+    return selectedProducts.flatMap((p) => p.items);
+  }, [selectedProducts]);
 
-  const handleDelete = (item: ICartItem) => {
+  const handleDelete = ({ item, productId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const productId = selectedProduct?.productId;
     const label = metadata.label;
     if (productId && label && parentName) {
       dispatch(removeMultiProductItem({ productId, label, parentName }));
@@ -53,9 +40,11 @@ export const MultiProductItemCart = ({
     }
   };
 
-  const handleIncrement = (item: ICartItem) => {
+  const handleIncrement = ({
+    item,
+    productId,
+  }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const productId = selectedProduct?.productId;
     const label = metadata.label;
 
     if (productId && label && parentName) {
@@ -63,9 +52,11 @@ export const MultiProductItemCart = ({
     }
   };
 
-  const handleDecrement = (item: ICartItem) => {
+  const handleDecrement = ({
+    item,
+    productId,
+  }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const productId = selectedProduct?.productId;
     const label = metadata.label;
 
     if (productId && label && parentName) {
@@ -73,22 +64,44 @@ export const MultiProductItemCart = ({
     }
   };
 
+  const totalCount = useMemo(() => {
+    return allItems.reduce((sum, item) => sum + (item.count ?? 0), 0);
+  }, [allItems]);
+
   return (
     <div className='flex min-h-0 flex-1 flex-col'>
-      <MultiProductCartHeader />
-      <CartSelectedProductList />
+      <MultiProductCartHeader totalCount={totalCount} />
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>
-          {selectedMaterials?.map((item) => {
+          {selectedProducts.map((product) => {
+            const { items, name, productId } = product;
+
+            if (!items.length) return null;
+
             return (
-              <CartListItem
-                key={`${item.assetId}/${item.parentName}`}
-                item={item}
-                canInc={totalCount < MAX_SLOTS}
-                onDelete={handleDelete}
-                onIncrement={handleIncrement}
-                onDecrement={handleDecrement}
-              />
+              <>
+                <div
+                  key={product.productId}
+                  className='    border-b border-[var(--border)] p-[var(--padding)] pt-0
+        sm:px-[var(--sm-padding)] sm:p-[var(--sm-padding)] sm:pt-0'
+                >
+                  {name}
+                </div>
+                <ul>
+                  {items?.map((item) => {
+                    return (
+                      <CartListItem
+                        key={`${item.assetId}/${item.parentName}`}
+                        item={item}
+                        canInc={totalCount < MAX_SLOTS}
+                        onDelete={() => handleDelete({ item, productId })}
+                        onIncrement={() => handleIncrement({ item, productId })}
+                        onDecrement={() => handleDecrement({ item, productId })}
+                      />
+                    );
+                  })}
+                </ul>
+              </>
             );
           })}
         </ul>
@@ -104,7 +117,7 @@ export const MultiProductItemCart = ({
           <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
             <CustomButton
               onClick={() => onSendData && onSendData(selectedProducts)}
-              disabled={totalCount > MAX_SLOTS + 1}
+              disabled={allItems.length > MAX_SLOTS + 1}
             >
               GO TO SHIPPING
             </CustomButton>
