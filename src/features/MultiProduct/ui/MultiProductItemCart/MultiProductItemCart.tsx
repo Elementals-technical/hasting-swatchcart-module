@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { setSelectedMaterial } from '../../../swatches/model/swatchesSlice';
-import { CartPrice } from '../../../Cart/ui/CartPrice/CartPrice';
+import { CartPrice } from '../../../../shared/ui/CartPrice/CartPrice';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { getMultiCartItems } from '../../model/selectors';
@@ -112,7 +112,10 @@ export const MultiProductItemCart = ({
         '
         >
           <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
-            <CartPrice containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:p-[var(--sm-padding)] sm:border-none' />
+            <CartPrice
+              materials={allItems}
+              containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:p-[var(--sm-padding)] sm:border-none'
+            />
           </div>
           <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
             <CustomButton

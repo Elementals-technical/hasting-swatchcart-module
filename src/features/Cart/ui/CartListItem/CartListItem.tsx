@@ -1,3 +1,4 @@
+import { MATERIAL_PRICE } from '../../../../shared/constants/constants';
 import { MaterialItem } from '../../../../shared/ui/MaterialItem/MaterialItem';
 import type { ICartItem } from '../../model/types';
 import { Counter } from '../Counter/Counter';
@@ -41,7 +42,9 @@ export const CartListItem = ({
             onDelete={onDelete}
           />
         </div>
-        <div className='absolute top-0 right-0'>$6.50</div>
+        <div className='absolute top-0 right-0'>
+          ${item.count * MATERIAL_PRICE}
+        </div>
       </div>
     </li>
   );
