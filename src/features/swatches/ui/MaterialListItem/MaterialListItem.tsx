@@ -3,16 +3,16 @@ import { ImageGridZoom } from '../ImageGridZoom/ImageGridZoom';
 import { HexGridZoom } from '../HexGridZoom/HexGridZoom';
 import type { AttributeValue } from '../../model/types';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { setSelectedMaterials } from '../../model/swatchesSlice';
 import { getSelectedMaterials } from '../../model/selectors';
 import { CheckMarkIconSVG } from '../../../../app/assets/svg/CheckMarkIconSVG';
+import { setSelectedMaterial } from '../../model/swatchesSlice';
 
 export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
   const dispatch = useAppDispatch();
   const selected = useAppSelector(getSelectedMaterials);
 
   const handleSelect = (item: AttributeValue) => {
-    dispatch(setSelectedMaterials({ selectedMaterial: item }));
+    dispatch(setSelectedMaterial({ selectedMaterial: item }));
   };
 
   const assetId = val && val.assetId ? val.assetId : 'false';
@@ -25,7 +25,7 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
       <button
         key={val.assetId}
         onClick={() => handleSelect(val)}
-        className={`w-31 h-31 rounded sm:w-40 sm:h-40 relative aspect-square overflow-hidden transition ${
+        className={`w-37 h-37 rounded sm:w-40 sm:h-40 relative aspect-square overflow-hidden transition ${
           isSelected ? 'border-amber-700' : 'border-transparent'
         }`}
       >

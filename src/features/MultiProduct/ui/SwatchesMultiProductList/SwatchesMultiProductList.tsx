@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../../../app/store/store';
-import type { AttributeValue } from '../../model/types';
-import { setSelectedMaterial } from '../../model/swatchesSlice';
-import { AttributeHelper } from '../../lib/AttributeHelper';
-import { ImageGridZoom } from '../ImageGridZoom/ImageGridZoom';
-import { HexGridZoom } from '../HexGridZoom/HexGridZoom';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { Hint } from '../../../../shared/ui/Hint/Hint';
+import { AttributeValue } from '../../../swatches/model/types';
+import { ImageGridZoom } from '../../../swatches/ui/ImageGridZoom/ImageGridZoom';
+import { AttributeHelper } from '../../../swatches/lib/AttributeHelper';
+import { HexGridZoom } from '../../../swatches/ui/HexGridZoom/HexGridZoom';
+import { IMultiCartProductItem } from '../../model/types';
+import {
+  setActiveMultiCartProduct,
+  setMultiCartItems,
+} from '../../model/multiProductCartSlice';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
+import { getMultiCartItems } from '../../model/selectors';
 
 const MockTile: React.FC = () => (
   <div
@@ -24,9 +30,9 @@ interface ISwatchesListProps {
   selectedMaterials: AttributeValue[];
 }
 
-export const SwatchesList = ({
+export const SwatchesMultiProductList = ({
   selectedMaterials,
-  containerStyles = 'p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0',
+  containerStyles = 'p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:p-[var(--sm-padding)]',
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
   const [hoveredEl, setHoveredEl] = useState<HTMLElement | null>(null);
@@ -35,9 +41,30 @@ export const SwatchesList = ({
     materialName: string;
     parentName: string;
   }>({ materialName: '', parentName: '' });
+  const selectedProduct = useAppSelector(getSelectedProduct);
+  const selectedProducts = useAppSelector(getMultiCartItems);
 
   const handleSelect = (item: AttributeValue) => {
-    dispatch(setSelectedMaterial({ selectedMaterial: item }));
+    if (!selectedProduct) return;
+
+    const isSame = (i: AttributeValue) =>
+      i.metadata?.label === item.metadata?.label &&
+      i.parentName === item.parentName;
+
+    const productWithItem = selectedProducts.find((p) => p.items.some(isSame));
+
+    const filteredItems = productWithItem?.items.filter((i) => !isSame(i));
+
+    if (productWithItem) {
+      const cartProductItem: IMultiCartProductItem = {
+        productId: productWithItem.productId,
+        name: productWithItem.name,
+        items: filteredItems || [],
+      };
+
+      dispatch(setMultiCartItems(cartProductItem));
+      dispatch(setActiveMultiCartProduct(cartProductItem));
+    }
   };
 
   const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);

@@ -14,17 +14,15 @@ interface IMaterialListProps {
   desktopColumnsCount?: number;
 }
 
-export const MaterialList = ({
+export const MaterialSingleProductList = ({
   containerStyles = 'flex-1 min-h-0 overflow-y-auto p-[var(--padding)] sm:p-[var(--sm-padding)]',
-  gridStyles = 'grid grid-cols-1 gap-[8px] sm:grid-cols-3',
+  gridStyles = 'grid grid-cols-2 gap-[8px] sm:grid-cols-3 sm:gap-[var(--sm-padding)]',
   desktopColumnsCount = 3,
 }: IMaterialListProps) => {
   const scrollRef = useRef<HTMLDivElement | null>(null);
-
   const allMaterialsValues = useAppSelector(getAllMaterialValues);
   const filters = useAppSelector(getMaterialSelectStateFilters);
 
-  // 1) Filtering (unchanged)
   const filteredItems = useMemo(() => {
     return allMaterialsValues.filter((item) => {
       const finishOk =
@@ -64,7 +62,7 @@ export const MaterialList = ({
 
   const rowCount = Math.ceil(filteredItems.length / cols);
   const estimateSize = smUp ? 300 : 200;
-  // Estimate row height close to your card+labels+gap; refine via measureElement
+
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => scrollRef.current,
@@ -76,7 +74,6 @@ export const MaterialList = ({
   const virtualRows = rowVirtualizer.getVirtualItems();
   const totalSize = rowVirtualizer.getTotalSize();
 
-  // Compute slice we actually render
   const startRow = virtualRows[0]?.index ?? 0;
   const endRow = virtualRows[virtualRows.length - 1]?.index ?? -1;
 

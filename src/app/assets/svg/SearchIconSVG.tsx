@@ -4,22 +4,22 @@ import type { SvgIconProps } from '../../../shared/types/svg';
 export const SearchIconSVG: FC<SvgIconProps> = (props) => {
   return (
     <svg
-      width='16'
-      height='16'
-      viewBox='0 0 16 16'
+      width='20'
+      height='20'
+      viewBox='0 0 20 20'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
       {...props}
     >
       <path
-        d='M13.9998 14L11.1064 11.1067'
+        d='M17.5 17.5L13.8833 13.8834'
         stroke='current'
         strokeWidth='2'
         strokeLinecap='round'
         strokeLinejoin='round'
       />
       <path
-        d='M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z'
+        d='M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z'
         stroke='current'
         strokeWidth='1.5'
         strokeLinecap='round'

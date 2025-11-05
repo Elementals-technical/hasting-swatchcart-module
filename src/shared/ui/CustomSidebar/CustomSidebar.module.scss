@@ -20,6 +20,14 @@
   transform: translateX(100%);
 
   @media (max-width: 640px) {
+    width: 500px;
+  }
+
+  @media (max-width: 500px) {
+    width: 400px;
+  }
+
+  @media (max-width: 400px) {
     width: 320px;
   }
 }
