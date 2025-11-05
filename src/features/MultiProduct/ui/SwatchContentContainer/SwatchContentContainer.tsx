@@ -1,42 +1,25 @@
+import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
-import {
-  getSelectedMaterials,
-  getSelectedProduct,
-} from '../../../swatches/model/selectors';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { SwatchesList } from '../../../swatches/ui/SwatchesList/SwatchesList';
-import { MultiProductCartService } from '../../lib/MultiProductCartServices';
-import {
-  setActiveMultiCartProduct,
-  setCartItems,
-} from '../../model/multiProductCartSlice';
-import { getCartItems } from '../../model/selectors';
+import { getMultiCartItems } from '../../model/selectors';
 
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
-  const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
   const selectedProduct = useAppSelector(getSelectedProduct);
-  const cartItems = useAppSelector(getCartItems);
+  const selectedProducts = useAppSelector(getMultiCartItems);
 
   const handleOpenMultiCart = () => {
-    const cartData = MultiProductCartService.getCartPreparedOption(
-      selectedMaterials,
-      cartItems,
-    );
-
     if (selectedProduct) {
-      const cartProductItem = {
-        productId: selectedProduct.productId,
-        name: selectedProduct.name,
-        items: cartData,
-      };
-
-      dispatch(setCartItems(cartProductItem));
       dispatch(setIsOpenMultiProductCart(true));
-      dispatch(setActiveMultiCartProduct(cartProductItem));
     }
   };
+
+  const allItems = useMemo(() => {
+    return selectedProducts.flatMap((p) => p.items);
+  }, [selectedProducts]);
 
   return (
     <div
@@ -44,7 +27,10 @@ export const SwatchContentContainer = () => {
       sm:flex-row
     '
     >
-      <SwatchesList containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0 sm:w-[50%] sm:border-r sm:border-[var(--border)]' />
+      <SwatchesList
+        selectedMaterials={allItems}
+        containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0 sm:w-[50%] sm:border-r sm:border-[var(--border)]'
+      />
       <div className='flex p-[var(--sm-padding)] border-t border-[var(--border)] sm:border-none sm:w-[50%] sm:justify-center sm:items-center'>
         <CustomButton
           onClick={handleOpenMultiCart}

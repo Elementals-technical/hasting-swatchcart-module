@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { getActiveMultiCartProduct, getCartItems } from '../../model/selectors';
+import {
+  getActiveMultiCartProduct,
+  getMultiCartItems,
+} from '../../model/selectors';
 import type { IProductCart } from '../../model/types';
 import { setActiveMultiCartProduct } from '../../model/multiProductCartSlice';
 import { Slider } from '../../../../shared/ui/Slider/Slider';
@@ -7,7 +10,8 @@ import { Slider } from '../../../../shared/ui/Slider/Slider';
 export const CartSelectedProductList = () => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
-  const selectedProducts = useAppSelector(getCartItems);
+  const selectedProducts = useAppSelector(getMultiCartItems);
+
   const handleClick = (item: IProductCart) => {
     dispatch(setActiveMultiCartProduct(item));
   };

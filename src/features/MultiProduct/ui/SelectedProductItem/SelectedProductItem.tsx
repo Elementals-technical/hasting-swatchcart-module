@@ -3,8 +3,8 @@ import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { deleteSelectedProduct } from '../../../swatches/model/swatchesSlice';
-import { MaterialList } from '../../../swatches/ui/MaterialList';
 import { FiltersSelectedProductItem } from '../FiltersSelectedProductItem/FiltersSelectedProductItem';
+import { MaterialMultiProductList } from '../MaterialMultiProductList/MaterialMultiProductList';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
 
 interface ISelectedProductItemProps {
@@ -45,7 +45,7 @@ export const SelectedProductItem = ({
       </header>
       <div className='flex min-h-0 flex-1 flex-col'>
         <FiltersSelectedProductItem />
-        <MaterialList
+        <MaterialMultiProductList
           containerStyles='flex-1 max-h-50 overflow-y-auto p-[var(--sm-padding)] md:max-h-94'
           // containerStyles='flex-1 overflow-y-auto p-[var(--sm-padding)]'
           gridStyles='grid grid-cols-2 gap-4 sm:grid-cols-8'

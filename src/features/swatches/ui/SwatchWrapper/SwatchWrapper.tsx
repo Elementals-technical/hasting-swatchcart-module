@@ -1,7 +1,5 @@
 import { ProductElement } from '../ProductElement';
 import { Filters } from '../Filters';
-import { MaterialList } from '../MaterialList';
-import { SwatchesList } from '../SwatchesList/SwatchesList';
 import { EActiveTab } from '../../../../shared/types/activeTab';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import CustomSidebar from '../../../../shared/ui/CustomSidebar/CustomSidebar';
@@ -9,7 +7,8 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getSelectedMaterials } from '../../model/selectors';
 import { CartCervices } from '../../../Cart/lib/CartCervices';
 import { setCartItems } from '../../../Cart/model/cartSlice';
-// import { getCartItems } from '../../../Cart/model/selectors';
+import { SwatchesListWrapper } from '../SwatchesListWrapper/SwatchesListWrapper';
+import { MaterialSingleProductList } from '../MaterialSingleProductList/MaterialSingleProductList';
 
 interface ISidebarWrapperProps {
   isOpen: boolean;
@@ -24,7 +23,6 @@ export const SwatchWrapper = ({
 }: ISidebarWrapperProps) => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
-  // const cartItems = useAppSelector(getCartItems);
 
   const handleOpenCart = () => {
     const cartData = CartCervices.getCartPreparedOption(selectedMaterials);
@@ -56,8 +54,8 @@ export const SwatchWrapper = ({
           selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[250px]'
         />
         <Filters containerStyles='shrink-0 flex justify-between items-center gap-2 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]' />
-        <MaterialList />
-        <SwatchesList />
+        <MaterialSingleProductList />
+        <SwatchesListWrapper />
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
             className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold cursor-pointer'

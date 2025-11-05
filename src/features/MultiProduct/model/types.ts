@@ -1,5 +1,11 @@
 import type { AttributeValue } from '../../swatches/model/types';
 
+export interface CartState {
+  items: IProductCart[];
+  activeMultiCartProduct: IProductCart | null;
+  totalCount: number;
+}
+
 export interface ICartItem extends AttributeValue {
   count: number;
 }
@@ -25,11 +31,6 @@ export interface ISliderItem {
   productId: number;
 }
 
-export interface CartState {
-  items: IProductCart[];
-  activeMultiCartProduct: IProductCart | null;
-}
-
 export interface IGetProductParameters {
   productId: number;
   productName: string;
@@ -38,4 +39,10 @@ export interface IGetProductParameters {
 export interface ISingleSelectOption {
   value: string;
   label: string;
+}
+
+export interface IMultiCartProductItem {
+  productId: number;
+  items: ICartItem[];
+  name: string;
 }

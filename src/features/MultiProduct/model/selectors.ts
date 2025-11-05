@@ -4,9 +4,10 @@ import type { ICartItem, IProductCart } from './types';
 const selectMultiProductCart = (state: RootState) =>
   state.multiProductCart as { items: IProductCart[] };
 
-export const getCartItems = (state: RootState) => state.multiProductCart.items;
+export const getMultiCartItems = (state: RootState) =>
+  state.multiProductCart.items;
 
-export const getSelectedMaterials = (productId: number) =>
+export const getMultiSelectedMaterials = (productId: number) =>
   createSelector(selectMultiProductCart, (cart): ICartItem[] => {
     const bucket = cart.items.find((p) => p.productId === productId);
     return bucket?.items ?? [];

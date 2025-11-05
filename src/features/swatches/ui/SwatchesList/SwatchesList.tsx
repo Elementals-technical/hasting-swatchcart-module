@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { getSelectedMaterials } from '../../model/selectors';
+import { useAppDispatch } from '../../../../app/store/store';
 import type { AttributeValue } from '../../model/types';
-import { setSelectedMaterials } from '../../model/swatchesSlice';
+import { setSelectedMaterial } from '../../model/swatchesSlice';
 import { AttributeHelper } from '../../lib/AttributeHelper';
 import { ImageGridZoom } from '../ImageGridZoom/ImageGridZoom';
 import { HexGridZoom } from '../HexGridZoom/HexGridZoom';
@@ -22,13 +21,14 @@ const MockTile: React.FC = () => (
 
 interface ISwatchesListProps {
   containerStyles?: string;
+  selectedMaterials: AttributeValue[];
 }
 
 export const SwatchesList = ({
+  selectedMaterials,
   containerStyles = 'p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:p-[var(--sm-padding)]',
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
-  const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
   const [hoveredEl, setHoveredEl] = useState<HTMLElement | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [text, setText] = useState<{
@@ -37,7 +37,7 @@ export const SwatchesList = ({
   }>({ materialName: '', parentName: '' });
 
   const handleSelect = (item: AttributeValue) => {
-    dispatch(setSelectedMaterials({ selectedMaterial: item }));
+    dispatch(setSelectedMaterial({ selectedMaterial: item }));
   };
 
   const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);

@@ -1,13 +1,13 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { setSelectedMaterials } from '../../../swatches/model/swatchesSlice';
+import { setSelectedMaterial } from '../../../swatches/model/swatchesSlice';
 import { CartPrice } from '../../../Cart/ui/CartPrice/CartPrice';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { CartSelectedProductList } from '../CartSelectedProductList/CartSelectedProductList';
 import {
   getActiveMultiCartProduct,
-  getCartItems,
-  getSelectedMaterials,
+  getMultiCartItems,
+  getMultiSelectedMaterials,
 } from '../../model/selectors';
 import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { useMemo } from 'react';
@@ -31,10 +31,9 @@ export const MultiProductItemCart = ({
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
-  const selectedProducts = useAppSelector(getCartItems);
-
+  const selectedProducts = useAppSelector(getMultiCartItems);
   const selectedMaterials = useAppSelector(
-    getSelectedMaterials(selectedProduct?.productId || 999),
+    getMultiSelectedMaterials(selectedProduct?.productId || 999),
   );
 
   const totalCount = useMemo(() => {
@@ -50,7 +49,7 @@ export const MultiProductItemCart = ({
     if (productId && label && parentName) {
       dispatch(removeMultiProductItem({ productId, label, parentName }));
       // DeleteSelected material from the  SwatchesList
-      dispatch(setSelectedMaterials({ selectedMaterial: item }));
+      dispatch(setSelectedMaterial({ selectedMaterial: item }));
     }
   };
 

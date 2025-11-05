@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { setSelectedMaterials } from '../../../swatches/model/swatchesSlice';
+import { setSelectedMaterial } from '../../../swatches/model/swatchesSlice';
 import { decrement, increment, removeItem } from '../../model/cartSlice';
 import { getCartCanIncrement, getCartItems } from '../../model/selectors';
 import type { ICartItem } from '../../model/types';
@@ -14,7 +14,7 @@ export const CartList = () => {
     // DeleteSelected material from the Cart
     dispatch(removeItem({ selectedMaterial: item }));
     // DeleteSelected material from the  SwatchesList
-    dispatch(setSelectedMaterials({ selectedMaterial: item }));
+    dispatch(setSelectedMaterial({ selectedMaterial: item }));
   };
 
   const handleIncrement = (item: ICartItem) => {

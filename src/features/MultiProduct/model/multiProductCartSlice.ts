@@ -1,7 +1,11 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { CartState, ICartItem, IProductCart } from './types';
+import type { CartState, IMultiCartProductItem, IProductCart } from './types';
 
-const initialState: CartState = { items: [], activeMultiCartProduct: null };
+const initialState: CartState = {
+  items: [],
+  activeMultiCartProduct: null,
+  totalCount: 0,
+};
 
 function ensureProduct(state: CartState, productId: number, name?: string) {
   let bucket = state.items.find((p) => p.productId === productId);
@@ -48,27 +52,7 @@ const multiProductCartSlice = createSlice({
     setActiveMultiCartProduct(state, action: PayloadAction<IProductCart>) {
       state.activeMultiCartProduct = action.payload;
     },
-
-    // setCartItems(
-    //   state,
-    //   action: PayloadAction<{
-    //     productId: number;
-    //     items: ICartItem[];
-    //     name?: string;
-    //   }>,
-    // ) {
-    //   const { productId, items, name } = action.payload;
-    //   const bucket = ensureProduct(state, productId, name);
-    //   bucket.items = items;
-    // },
-    setCartItems(
-      state,
-      action: PayloadAction<{
-        productId: number;
-        items: ICartItem[];
-        name?: string;
-      }>,
-    ) {
+    setMultiCartItems(state, action: PayloadAction<IMultiCartProductItem>) {
       const { productId, items, name } = action.payload;
 
       if (!items || items.length === 0) {
@@ -120,7 +104,7 @@ const multiProductCartSlice = createSlice({
 
 export const {
   setCartForProduct,
-  setCartItems,
+  setMultiCartItems,
   incrementMultiProductItem,
   decrementMultiProductItem,
   removeMultiProductItem,

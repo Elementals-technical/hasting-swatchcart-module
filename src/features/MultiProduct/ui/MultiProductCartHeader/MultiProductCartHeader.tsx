@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import {
   getActiveMultiCartProduct,
-  getSelectedMaterials,
+  getMultiSelectedMaterials,
 } from '../../model/selectors';
 import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
@@ -19,7 +19,7 @@ export const MultiProductCartHeader = () => {
   const selectedProduct = useAppSelector(getActiveMultiCartProduct);
 
   const selectedMaterials = useAppSelector(
-    getSelectedMaterials(selectedProduct?.productId || 999),
+    getMultiSelectedMaterials(selectedProduct?.productId || 999),
   );
   const totalCount = useMemo(() => {
     return MultiProductCartService.getCartTotalCount({
@@ -29,7 +29,6 @@ export const MultiProductCartHeader = () => {
 
   // const handleToggleSidebar = () => {
   //   // dispatch(toggleSidebar());
-  //   console.log('MultiProductCartHeader');
   //   // onToggleSidebar();
   // };
 
