@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
-import { SwatchesList } from '../../../swatches/ui/SwatchesList/SwatchesList';
 import { getMultiCartItems } from '../../model/selectors';
+import { SwatchesMultiProductList } from '../SwatchesMultiProductList/SwatchesMultiProductList';
 
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ export const SwatchContentContainer = () => {
       sm:flex-row
     '
     >
-      <SwatchesList
+      <SwatchesMultiProductList
         selectedMaterials={allItems}
         containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0 sm:w-[50%] sm:border-r sm:border-[var(--border)]'
       />

@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getSelectedMaterials } from '../../model/selectors';
 import { CartCervices } from '../../../Cart/lib/CartCervices';
 import { setCartItems } from '../../../Cart/model/cartSlice';
-import { SwatchesListWrapper } from '../SwatchesListWrapper/SwatchesListWrapper';
+import { SwatchesSingleProductListWrapper } from '../SwatchesListWrapper/SwatchesListWrapper';
 import { MaterialSingleProductList } from '../MaterialSingleProductList/MaterialSingleProductList';
 
 interface ISidebarWrapperProps {
@@ -55,7 +55,7 @@ export const SwatchWrapper = ({
         />
         <Filters containerStyles='shrink-0 flex justify-between items-center gap-2 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]' />
         <MaterialSingleProductList />
-        <SwatchesListWrapper />
+        <SwatchesSingleProductListWrapper />
         <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
             className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold cursor-pointer'
