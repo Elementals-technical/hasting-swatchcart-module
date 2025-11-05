@@ -86,11 +86,11 @@ export const ProductList = () => {
   return (
     <div className='flex h-full flex-col'>
       <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
-        <span className='text-base font-medium p-[var(--sm-padding)]'>
+        <span className='p-[var(--sm-padding)] text-base font-medium'>
           Swatches List
         </span>
 
-        <div className='p-[var(--sm-padding)] border-t border-[var(--border)] font-medium text-xs leading-[24px] lg:border-none'>
+        <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
           <span>
             Choose 5 free swatches to curate your perfect design. Plus get{' '}
             <span className='text-[var(--main-accent-color)] underline'>
@@ -102,27 +102,25 @@ export const ProductList = () => {
       </header>
 
       <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='flex w-full items-center gap-4 justify-between p-[var(--sm-padding)] border-b border-[var(--border)] sm:justify-between'>
-          <div className='flex items-center justify-between h-[36px] w-full gap-4 sm:max-w-90'>
-            <div className='relative w-full max-w-[260px] h-[36px] sm:max-w-[240px]'>
+        <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
+          <div className='flex h-[36px] w-full items-center justify-between gap-4 sm:max-w-90'>
+            <div className='relative h-[36px] w-full max-w-[260px] sm:max-w-[240px]'>
               <input
                 type='text'
                 placeholder='Search'
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className='
-                h-full w-full pr-8 pl-4 rounded-2xl border border-[var(--border)]
-                text-sm     text-black
-                focus:outline-none focus:border-[var(--main-accent-color)]
-                bg-[var(--background)] transition
-              '
+                  h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
+                  px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
+                  transition focus:border-[var(--main-accent-color)] focus:outline-none
+                '
               />
+
               <div
                 className='
-                absolute right-3 top-1/2 -translate-y-1/2
-                pointer-events-none
-                [&_svg_path]:stroke-[var(--svg-dark)]
-                sm:right-4
+                  pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 sm:right-4
+                  [&_svg_path]:stroke-[var(--svg-dark)]
                 '
               >
                 <SearchIconSVG width={20} height={20} />
@@ -139,47 +137,44 @@ export const ProductList = () => {
               dropdownWidth='w-64'
             />
           </div>
+
           <Slider
             items={uniqueCategories}
             activeId={activeCategory?.productId}
-            className='hidden sm:max-w-[680px] sm:overflow-hidden sm:flex'
             onSelect={(item) => setActiveCategory(item)}
+            className='hidden sm:flex sm:max-w-[680px] sm:overflow-hidden'
           />
         </div>
 
         <Slider
           items={uniqueCategories}
           activeId={activeCategory?.productId}
-          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:hidden sm:max-w-[680px] sm:overflow-hidden'
           onSelect={(item) => setActiveCategory(item)}
+          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:hidden'
         />
 
-        {isLoadingProductList ? (
-          <div className='w-full flex justify-center items-center flex-1 min-h-0'>
-            loading...
-          </div>
-        ) : (
-          <div className='h-100% overflow-y-auto p-[var(--sm-padding)]'>
-            <div className='mb-4'>Select Product</div>
-            {filteredProductList.length ? (
-              <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
-                {filteredProductList.map((productListItem) => {
-                  const { name } = productListItem;
-                  return (
-                    <ProductListItem
-                      key={name}
-                      productListItem={productListItem}
-                    />
-                  );
-                })}
-              </ul>
-            ) : (
-              <div className='flex justify-center items-center h-100%'>
-                No products were found
-              </div>
-            )}
-          </div>
-        )}
+        <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'>
+          <div className='mb-4'>Select Product</div>
+
+          {isLoadingProductList ? (
+            <div className='flex h-full min-h-0 flex-1 items-center justify-center'>
+              loading...
+            </div>
+          ) : filteredProductList.length ? (
+            <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
+              {filteredProductList.map((productListItem: any) => (
+                <ProductListItem
+                  key={productListItem.name}
+                  productListItem={productListItem}
+                />
+              ))}
+            </ul>
+          ) : (
+            <div className='flex h-full items-center justify-center'>
+              No products were found
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

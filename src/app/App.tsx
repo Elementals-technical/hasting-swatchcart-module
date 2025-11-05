@@ -44,7 +44,7 @@ function App() {
         change app Mode to{' '}
         {mockDataMode === 'DATA_ALL_PRODUCT' ? 'UI' : 'DATA_ALL_PRODUCT'}
       </button>
-      {/* <div className='bg-purple-500 h-[500px] min-h-0 overflow-hidden flex flex-col'> */}
+      {/* <div className='bg-purple-500 h-[600px] min-h-0 overflow-hidden flex flex-col'> */}
       <SwatchModule
         isOpen={isOpenModule}
         uiDataType={mockDataMode}
