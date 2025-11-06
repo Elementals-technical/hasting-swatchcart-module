@@ -7,6 +7,7 @@ import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule'; // App
 // import { SwatchModule } from '../../dist/main'; // build module
 import { SwatchModule } from '../../lib/main'; // lib
+import { EDataInputType } from '../features/DataAdapter/utils/types';
 
 function App() {
   const [isOpenModule, setIsOpenModule] = useState(true);
@@ -46,8 +47,9 @@ function App() {
       </button>
       <SwatchModule
         isOpen={isOpenModule}
-        uiDataType={mockDataMode}
+        uiDataType={EDataInputType.FETCH_DATA_PRODUCT}
         data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
+        assetId='1dbcaae1-ed33-48ff-ace6-aed814402448'
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
       />
