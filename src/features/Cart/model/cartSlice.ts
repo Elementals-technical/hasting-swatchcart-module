@@ -22,7 +22,9 @@ const cartSlice = createSlice({
 
       state.items = state.items.filter(
         (i) =>
-          !(i.metadata.label === metadata.label && i.parentName === parentName),
+          !(
+            i.metadata?.label === metadata?.label && i.parentName === parentName
+          ),
       );
     },
     increment(
@@ -33,7 +35,7 @@ const cartSlice = createSlice({
 
       const item = state.items.find(
         (i) =>
-          i.metadata.label === metadata.label && i.parentName === parentName,
+          i.metadata?.label === metadata?.label && i.parentName === parentName,
       );
       if (!item) return;
       if (sum(state.items) < MAX_SLOTS) {
@@ -47,7 +49,7 @@ const cartSlice = createSlice({
       const { metadata, parentName } = action.payload.selectedMaterial;
       const item = state.items.find(
         (i) =>
-          i.metadata.label === metadata.label && i.parentName === parentName,
+          i.metadata?.label === metadata?.label && i.parentName === parentName,
       );
       if (!item) return;
       if (item.count > 1) item.count -= 1;
@@ -60,7 +62,7 @@ const cartSlice = createSlice({
       const { next } = action.payload;
       const item = state.items.find(
         (i) =>
-          i.metadata.label === metadata.label && i.parentName === parentName,
+          i.metadata?.label === metadata?.label && i.parentName === parentName,
       );
       if (!item) return;
 
@@ -69,7 +71,8 @@ const cartSlice = createSlice({
         .filter(
           (i) =>
             !(
-              i.metadata.label === metadata.label && i.parentName === parentName
+              i.metadata?.label === metadata?.label &&
+              i.parentName === parentName
             ),
         )
         .reduce((s, i) => s + i.count, 0);

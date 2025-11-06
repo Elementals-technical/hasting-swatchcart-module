@@ -10,7 +10,7 @@ import type {
 import { SwatchesServices } from '../lib/SwatchesServices';
 import { uniqueList } from '../../../shared/utils/uniqueList';
 import { type IMapUIData } from '../../DataAdapter/utils/types';
-import { getProductListThunk } from './thunks';
+import { getProductListThunk, getSelectedProductThunk } from './thunks';
 import type { IProduct } from '../../MultiProduct/model/types';
 
 const initialState: ISwatchesSlice = {
@@ -54,9 +54,7 @@ export const swatchesSlice = createSlice({
         const filteredAttributeList =
           SwatchesServices.getMaterialsValuesFromOptions(attributeList);
         if (filteredAttributeList?.length) {
-          state.allMaterialsValues = SwatchesServices.getUniqueByAssetId(
-            filteredAttributeList as any[],
-          );
+          state.allMaterialsValues = filteredAttributeList;
         }
       }
     },
@@ -124,17 +122,16 @@ export const swatchesSlice = createSlice({
       })
       .addCase(getProductListThunk.rejected, (state) => {
         state.isLoadingProductList = false;
+      })
+      .addCase(getSelectedProductThunk.pending, (state) => {
+        state.isLoadingSelectedProduct = true;
+      })
+      .addCase(getSelectedProductThunk.fulfilled, (state) => {
+        state.isLoadingSelectedProduct = false;
+      })
+      .addCase(getSelectedProductThunk.rejected, (state) => {
+        state.isLoadingSelectedProduct = false;
       });
-    // .addCase(getSelectedProductThunk.pending, (state) => {
-    //   state.isLoadingSelectedProduct = true;
-    // })
-    // .addCase(getSelectedProductThunk.fulfilled, (state, action) => {
-    //   state.selectedProduct = action.payload;
-    //   state.isLoadingSelectedProduct = false;
-    // })
-    // .addCase(getSelectedProductThunk.rejected, (state) => {
-    //   state.isLoadingSelectedProduct = false;
-    // });
   },
 });
 

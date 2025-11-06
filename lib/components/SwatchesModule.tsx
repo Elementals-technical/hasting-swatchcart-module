@@ -8,12 +8,13 @@ import { useAppDispatch } from '../store/store';
 import { useEffect } from 'react';
 import { DataAdapterServices } from '../../src/features/DataAdapter/lib/DataAdapterServices';
 import { setAllMaterialsOptions } from '../../src/features/swatches/model/swatchesSlice';
+import { getSelectedProductThunk } from '../../src/features/swatches/model/thunks';
 
 export interface ISwatchesModuleProps {
   isOpen: boolean;
   uiDataType: EDataInputType;
   assetId?: string;
-  data: IAttributeAsset[] | any[];
+  data?: IAttributeAsset[] | any[];
   onToggleSidebar: () => void;
   onSendData: (data: unknown) => void;
 }
@@ -34,23 +35,42 @@ export const SwatchModule = ({
   const isSingleProduct = SINGLE_PRODUCT_DATA.includes(uiDataType);
 
   const dispatch = useAppDispatch();
-  console.log('Swatches assetIв', assetId);
+
   useEffect(() => {
-    if (!data) {
-      throw new Error(`SwatchCart-module: Attributes are important`);
-    } else {
-      if (uiDataType === EDataInputType.UI) {
-        const uiData = DataAdapterServices.getTransformedData({
-          dataType: EDataInputType.UI,
-          data,
-        });
-        if (uiData) {
-          dispatch(setAllMaterialsOptions(uiData));
-        }
-      } else if (uiDataType === EDataInputType.FETCH_DATA_PRODUCT) {
-        console.log('Swatches assetId effect', assetId);
+    // if (!data && uiDataType === EDataInputType.UI) {
+    //   throw new Error(`SwatchCart-module: Attributes are important`);
+    // } else {
+    if (uiDataType === EDataInputType.UI) {
+      if (!data) throw new Error(`SwatchCart-module: Attributes are important`);
+
+      const uiData = DataAdapterServices.getTransformedData({
+        dataType: EDataInputType.UI,
+        data,
+      });
+
+      if (uiData) {
+        dispatch(setAllMaterialsOptions(uiData));
       }
+    } else if (uiDataType === EDataInputType.FETCH_DATA_PRODUCT && assetId) {
+      const fetchProductDetails = async () => {
+        try {
+          const productData = await dispatch(
+            getSelectedProductThunk({ assetId }),
+          ).unwrap();
+
+          const fetchProductData = DataAdapterServices.getTransformedData({
+            dataType: EDataInputType.FETCH_DATA_PRODUCT,
+            data: productData,
+          });
+
+          dispatch(setAllMaterialsOptions(fetchProductData));
+        } catch (error) {
+          console.error('Failed to load product', error);
+        }
+      };
+      fetchProductDetails();
     }
+    // }
   }, [uiDataType, data, assetId]);
 
   return (

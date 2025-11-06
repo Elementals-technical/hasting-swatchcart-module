@@ -1,6 +1,6 @@
 import {
+  IAttributeAsset,
   type AttributeValue,
-  type IAttributeAsset,
   type IMaterialSelectState,
   type TFilterName,
 } from '../model/types';
@@ -18,28 +18,42 @@ export class SwatchesServices {
   static getMaterialsValuesFromOptions(
     options: IAttributeAsset[],
   ): AttributeValue[] | undefined {
-    if (!options.length) return;
+    if (!options?.length) return;
 
     return options
       .reduce<AttributeValue[]>((acc, item) => {
-        if (Array.isArray(item.values) && item.values.length) {
-          const nameFromMeta =
-            item.metadata?.Name ?? item.metadata?.Label ?? 'without_name';
+        const sourceValues =
+          Array.isArray(item.values) && item.values.length
+            ? item.values
+            : Array.isArray(item.valuesArray) && item.valuesArray.length
+              ? item.valuesArray
+              : undefined;
 
-          const valuesWithMeta = item.values.map((v) => ({
-            ...v,
-            parentName: nameFromMeta,
-          }));
+        if (!sourceValues) return acc;
 
-          acc.push(...valuesWithMeta);
-        }
+        const parentName =
+          item.metadata?.Name ??
+          item.metadata?.Label ??
+          item.option ??
+          item.label ??
+          'without_name';
+
+        const valuesWithMeta = sourceValues.map((v) => ({
+          ...v,
+          parentName,
+        }));
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        acc.push(...valuesWithMeta);
+
         return acc;
       }, [])
-      .sort((a, b) => {
-        const nameA = a.name?.toLowerCase() ?? '';
-        const nameB = b.name?.toLowerCase() ?? '';
-        return nameA.localeCompare(nameB);
-      });
+      .sort((a, b) =>
+        (a.name?.toLowerCase() ?? '').localeCompare(
+          b.name?.toLowerCase() ?? '',
+        ),
+      );
   }
 
   static getUniqueByAssetId<T extends { assetId: string }>(array: T[]): T[] {
@@ -67,6 +81,8 @@ export class SwatchesServices {
     allValues: TAllValue[],
     selected: IMaterialSelectState,
   ): TFilterGroup[] {
+    console.log('mapFiltersFromValues allValues', allValues);
+    console.log('mapFiltersFromValues selected', selected);
     return (Object.keys(selected) as TFilterName[]).map((filterType) => {
       const valueKey = FILTER_TO_VALUE_KEY[filterType];
       const requested = selected[filterType];

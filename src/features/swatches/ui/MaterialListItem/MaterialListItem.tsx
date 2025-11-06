@@ -15,9 +15,10 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
     dispatch(setSelectedMaterial({ selectedMaterial: item }));
   };
 
-  const assetId = val && val.assetId ? val.assetId : 'false';
+  const value = val && val.metadata?.value;
   const isSelected = selected.find(
-    (elem) => elem.assetId === assetId && elem.parentName === val.parentName,
+    (elem) =>
+      elem.metadata?.value === value && elem.parentName === val.parentName,
   );
 
   return (
@@ -44,7 +45,7 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
         </div>
       </button>
       <div className='flex flex-col mt-3'>
-        <span className='font-normal mb-1'>{val.metadata.label} </span>
+        <span className='font-normal mb-1'>{val.metadata?.label} </span>
         <span className='font-medium'>{val.parentName} </span>
       </div>
     </div>

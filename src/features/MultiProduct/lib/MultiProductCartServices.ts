@@ -40,7 +40,7 @@ export class MultiProductCartService {
       const existing = allCartItems.find(
         (cartItem) =>
           cartItem.parentName === item.parentName &&
-          cartItem.metadata.label === item.metadata.label,
+          cartItem.metadata?.label === item.metadata?.label,
       );
 
       return {

@@ -1,3 +1,4 @@
+import { IFetchProductData } from '../../../shared/types/fetchData';
 import { SwatchesServices } from '../../swatches/lib/SwatchesServices';
 import {
   ETypeComponent,
@@ -14,7 +15,7 @@ export class DataAdapterServices {
     data,
   }: {
     dataType: EDataInputType;
-    data: any[];
+    data: IFetchProductData | any;
   }) {
     switch (dataType) {
       case EDataInputType.UI:
@@ -23,6 +24,8 @@ export class DataAdapterServices {
         return console.log(EDataInputType.DATA_INPUT);
       case EDataInputType.DATA_ALL_PRODUCT:
         return console.log(EDataInputType.DATA_ALL_PRODUCT);
+      case EDataInputType.FETCH_DATA_PRODUCT:
+        return this.getTransformedFetchProductData(data);
       default:
         throw new Error('Unsupported format');
     }
@@ -80,5 +83,47 @@ export class DataAdapterServices {
     return this.getAllMaterialOptions(data);
   }
 
-  // EDataInputType.UI DATA
+  static getTransformedFetchProductData(data: IFetchProductData): any {
+    const { materials, structure } = data;
+    const optionNamesRaw = structure.flatMap((section) =>
+      section.groups.flatMap((group) =>
+        group.options
+          .filter((opt) => opt.typeComponent === ETypeComponent.MATERIAL)
+          .map((opt) => opt.optionName),
+      ),
+    );
+
+    const materialsValues = materials.filter((material) => {
+      if (!material.optionName) return;
+      return optionNamesRaw.includes(material.optionName);
+    });
+
+    console.log('materialsValues', materialsValues);
+
+    const allMaterialValues = materialsValues.flatMap((item) =>
+      item.valuesArray?.map((value) => ({
+        ...value,
+        parentName: item.option || item.label || 'without_name',
+      })),
+    );
+
+    const productElementOptions = materialsValues.map((material) => {
+      const { label } = material;
+      return {
+        id: label,
+        value: label,
+        label: label,
+      };
+    });
+
+    console.log('TTTT', {
+      allMaterialValues,
+      productElementOptions,
+    });
+
+    return {
+      allMaterialValues,
+      productElementOptions: materialsValues,
+    };
+  }
 }
