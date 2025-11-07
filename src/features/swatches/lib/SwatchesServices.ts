@@ -34,7 +34,7 @@ export class SwatchesServices {
         const parentName =
           item.metadata?.Name ??
           item.metadata?.Label ??
-          item.option ??
+          item.value ??
           item.label ??
           'without_name';
 

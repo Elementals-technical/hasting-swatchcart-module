@@ -45,7 +45,9 @@ export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
         </div>
       </button>
       <div className='flex flex-col mt-3'>
-        <span className='font-normal mb-1'>{val.metadata?.label} </span>
+        <span className='font-normal mb-1'>
+          {val.metadata?.label || val.label}{' '}
+        </span>
         <span className='font-medium'>{val.parentName} </span>
       </div>
     </div>

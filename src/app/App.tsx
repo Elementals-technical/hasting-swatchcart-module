@@ -50,7 +50,7 @@ function App() {
         uiDataType={EDataInputType.FETCH_DATA_PRODUCT}
         // uiDataType={mockDataMode}
         // data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
-        assetId='67119b1c-36ba-42c1-bcd1-2d21cf44df55'
+        assetId='9aa4a6cc-05a2-4de0-b376-ef3ef2271bfe'
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
       />
