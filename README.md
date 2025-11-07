@@ -180,35 +180,92 @@ npm run build:cdn
 3. **Test with CDN** - Use the published CDN version:
 
 ```html
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.css"
-/>
-<script type="module">
-  import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
+  <!-- Test locally -->
+  <link rel="stylesheet" href="../dist/cdn/main.css" />
+  <!-- Test real CDN -->
+  <!-- <link
+    rel="stylesheet"
+    href="https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.css"
+  /> -->
 
-  // local JSON data
-  const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
-  const mockData = await fetch(jsonUrl).then((r) => r.json());
+<div id="root"></div>
+  <script type="module">
+    // Test locally
+    import { mountSwatchModule } from '../dist/cdn/main.js';
 
-  const rootElement = document.getElementById('root');
+    // Test real CDN
+    // import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
 
-  const handleToggleSidebar = () => {
-    console.log("handleToggleSidebar is working");
-  }
+    // local JSON data
+    const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
+    const mockData = await fetch(jsonUrl).then((r) => r.json());
 
-  const handleSendData = (selectedData) => {
-    console.log("handleSendData  is working", selectedData);
-  }
+    const rootElement = document.getElementById('root');  <script type="module">
+      // Test locally
+      import { mountSwatchModule } from '../dist/cdn/main.js';
 
-  mountSwatchModule(rootElement, {
-    isOpen: true,
-    uiDataType: 'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT',
-    data: mockData, // or your data
-    onToggleSidebar: handleToggleSidebar,
-    onSendData: (payload) => handleSendData(selectedData),
-  });
-</script>
+      // Test real CDN
+      // import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
+
+      // local JSON data
+      const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
+      const mockData = await fetch(jsonUrl).then((r) => r.json());
+
+      const rootElement = document.getElementById('root');
+
+      const handleToggleSidebar = () => {
+        console.log('handleToggleSidebar');
+      };
+
+      const handleSendData = (selectedData) => {
+        console.log('handleSendData', selectedData);
+      };
+
+      // UI (attributes from outside) - single product
+      // mountSwatchModule(rootElement, {
+      //   isOpen: true,
+      //   uiDataType: 'UI',
+      //   data: mockData, // or your data
+      //   onToggleSidebar: handleToggleSidebar,
+      //   onSendData: handleSendData,
+      // });
+
+      // Fetch product data - single product
+      mountSwatchModule(rootElement, {
+        isOpen: true,
+        uiDataType: 'FETCH_DATA_PRODUCT',
+        assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+        onToggleSidebar: handleToggleSidebar,
+        onSendData: handleSendData,
+      });
+    </script>
+
+    const handleToggleSidebar = () => {
+      console.log('handleToggleSidebar');
+    };
+
+    const handleSendData = (selectedData) => {
+      console.log('handleSendData', selectedData);
+    };
+
+    // UI (attributes from outside) - single product
+    // mountSwatchModule(rootElement, {
+    //   isOpen: true,
+    //   uiDataType: 'UI',
+    //   data: mockData, // or your data
+    //   onToggleSidebar: handleToggleSidebar,
+    //   onSendData: handleSendData,
+    // });
+
+    // Fetch product data - single product
+    mountSwatchModule(rootElement, {
+      isOpen: true,
+      uiDataType: 'FETCH_DATA_PRODUCT',
+      assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+      onToggleSidebar: handleToggleSidebar,
+      onSendData: handleSendData,
+    });
+  </script>
 ```
 
 ### Testing Module Usage Locally
