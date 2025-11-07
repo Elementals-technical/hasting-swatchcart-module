@@ -7,11 +7,18 @@ const selectMultiProductCart = (state: RootState) =>
 export const getMultiCartItems = (state: RootState) =>
   state.multiProductCart.items;
 
-export const getMultiSelectedMaterials = (productId: number) =>
+export const getMultiSelectedMaterials = (assetId: string) =>
   createSelector(selectMultiProductCart, (cart): ICartItem[] => {
-    const bucket = cart.items.find((p) => p.productId === productId);
+    const bucket = cart.items.find((p) => p.assetId === assetId);
     return bucket?.items ?? [];
   });
 
 export const getActiveMultiCartProduct = (state: RootState) =>
   state.multiProductCart.activeMultiCartProduct;
+
+export const getProductLIst = (state: RootState) =>
+  state.multiProductCart.productList;
+export const getIsLoadingProductList = (state: RootState) =>
+  state.multiProductCart.isLoadingProductList;
+export const getSelectedProduct = (state: RootState) =>
+  state.multiProductCart.selectedProduct;

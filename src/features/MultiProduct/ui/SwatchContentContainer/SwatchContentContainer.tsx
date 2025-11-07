@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
-import { getMultiCartItems } from '../../model/selectors';
+import { getMultiCartItems, getSelectedProduct } from '../../model/selectors';
 import { SwatchesMultiProductList } from '../SwatchesMultiProductList/SwatchesMultiProductList';
 
 export const SwatchContentContainer = () => {

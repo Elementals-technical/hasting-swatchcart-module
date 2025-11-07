@@ -47,7 +47,7 @@ function App() {
       </button>
       <SwatchModule
         isOpen={isOpenModule}
-        uiDataType={EDataInputType.FETCH_DATA_PRODUCT}
+        uiDataType={EDataInputType.FETCH_DATA_ALL}
         // uiDataType={mockDataMode}
         // data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         assetId='67119b1c-36ba-42c1-bcd1-2d21cf44df55'

@@ -100,7 +100,6 @@ export const Slider: React.FC<ISliderProps> = ({
           ${canLeft ? 'bg-black text-white hover:brightness-110' : 'bg-gray-200 text-gray-500 opacity-60 cursor-not-allowed'}`}
       >
         <ChevronSVGIcon className='w-4 h-4 rotate-360' />{' '}
-        {/* ← inherits currentColor */}
       </button>
 
       <div

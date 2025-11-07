@@ -1,4 +1,9 @@
-import type { IProduct } from '../../MultiProduct/model/types';
+export interface IProduct {
+  attributes: AttributeValue[] | any[];
+  name: string;
+  productId: number;
+  categories: string[];
+}
 
 export interface ISwatchesSlice {
   // isOpenSidebar: boolean;
@@ -7,8 +12,7 @@ export interface ISwatchesSlice {
   materialSelectState: IMaterialSelectState;
   allMaterialsValues: AttributeValue[];
   selectedMaterials: AttributeValue[];
-  productList: IProduct[];
-  isLoadingProductList: boolean;
+  // productList: IProduct[];
   selectedProduct: IProduct | null;
   isLoadingSelectedProduct: boolean;
   isOpenMultiProductCart: boolean;

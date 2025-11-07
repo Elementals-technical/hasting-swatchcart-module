@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { CheckMarkIconSVG } from '../../../../app/assets/svg/CheckMarkIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { AttributeHelper } from '../../../swatches/lib/AttributeHelper';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { AttributeValue } from '../../../swatches/model/types';
 import { HexGridZoom } from '../../../swatches/ui/HexGridZoom/HexGridZoom';
 import { ImageGridZoom } from '../../../swatches/ui/ImageGridZoom/ImageGridZoom';
@@ -10,7 +9,7 @@ import {
   setActiveMultiCartProduct,
   setMultiCartItems,
 } from '../../model/multiProductCartSlice';
-import { getMultiCartItems } from '../../model/selectors';
+import { getMultiCartItems, getSelectedProduct } from '../../model/selectors';
 import { IMultiCartProductItem } from '../../model/types';
 
 export const MaterialMultiProductListItem = ({
@@ -30,7 +29,7 @@ export const MaterialMultiProductListItem = ({
     if (!selectedProduct) return;
 
     const activeProduct = selectedProducts.find(
-      (product) => selectedProduct.productId === product.productId,
+      (product) => selectedProduct.assetId === product.assetId,
     );
 
     const isSame = (i: AttributeValue) =>
@@ -49,7 +48,7 @@ export const MaterialMultiProductListItem = ({
         ),
       );
       const cartProductItem: IMultiCartProductItem = {
-        productId: existProductId?.productId || selectedProduct.productId,
+        assetId: existProductId?.assetId || selectedProduct.assetId,
         name: selectedProduct.name,
         items: filteredArray,
       };
@@ -64,7 +63,7 @@ export const MaterialMultiProductListItem = ({
         : [newMaterial];
 
       const cartProductItem: IMultiCartProductItem = {
-        productId: selectedProduct.productId,
+        assetId: selectedProduct.assetId,
         name: selectedProduct.name,
         items,
       };

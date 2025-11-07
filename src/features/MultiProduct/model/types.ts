@@ -1,8 +1,11 @@
 import type { AttributeValue } from '../../swatches/model/types';
 
-export interface CartState {
+export interface MultiProductState {
   items: IProductCart[];
   activeMultiCartProduct: IProductCart | null;
+  productList: IProductListItem[];
+  selectedProduct: IProductListItem | null;
+  isLoadingProductList: boolean;
   totalCount: number;
 }
 
@@ -10,18 +13,12 @@ export interface ICartItem extends AttributeValue {
   count: number;
 }
 
-export interface IProduct {
-  attributes: AttributeValue[] | any[];
-  name: string;
-  productId: number;
-  categories: string[];
-}
-
 export interface IProductCart {
   items: ICartItem[];
   value?: string;
   name: string;
-  productId: number;
+  assetId?: string;
+  productId?: number;
 }
 
 export interface ISliderItem {
@@ -29,6 +26,7 @@ export interface ISliderItem {
   value: string;
   name: string;
   productId: number;
+  assetId?: string;
 }
 
 export interface IGetProductParameters {
@@ -41,12 +39,28 @@ export interface ISingleSelectOption {
 }
 
 export interface IMultiCartProductItem {
-  productId: number;
+  assetId: string;
   items: ICartItem[];
   name: string;
 }
 
 export interface IMultiProductCartHandleProps {
   item: ICartItem;
-  productId: number;
+  assetId: string;
+}
+
+export interface IProductListResponse {
+  count: number;
+  rows: IProductListItem[];
+}
+
+export interface IProductListItem {
+  id: number;
+  collection: string;
+  name: string;
+  assetId: string;
+  img: string;
+  hash: string;
+  createdAt: string;
+  updatedAt: string;
 }

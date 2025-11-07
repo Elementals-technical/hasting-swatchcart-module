@@ -1,14 +1,5 @@
-import type { IProduct } from '../../model/types';
 import productThumbnail from '../../../../app/assets/images/product_thumb.png';
-// import { useAppDispatch } from '../../../../app/store/store';
-// import { getSelectedProductThunk } from '../../../swatches/model/thunks';
-// import {
-//   resetSelectedMaterials,
-//   setAllMaterialsOptions,
-//   setSelectedProduct,
-// } from '../../../swatches/model/swatchesSlice';
-// import { DataAdapterServices } from '../../../DataAdapter/lib/DataAdapterServices';
-// import { EDataInputType } from '../../../DataAdapter/utils/types';
+import { IProduct } from '../../../swatches/model/types';
 
 interface IProductListItemProps {
   productListItem: IProduct;
