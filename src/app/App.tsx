@@ -31,19 +31,44 @@ function App() {
 
   return (
     <>
-      APP Is open module {isOpenModule ? 'open' : 'close'}
-      <br />
-      <button type='button' onClick={handleOpenSidebar}>
-        Open module
-      </button>
-      <br />
-      <button
-        className='p-1 m-2 rounded-sm bg-amber-300'
-        onClick={handleChangeMode}
-      >
-        change app Mode to{' '}
-        {mockDataMode === 'DATA_ALL_PRODUCT' ? 'UI' : 'DATA_ALL_PRODUCT'}
-      </button>
+      <div className='flex flex-col gap-3 m-2'>
+        <div>
+          Active type Module -{' '}
+          <span className='p-1 rounded-sm bg-amber-300'>
+            {mockDataMode === 'DATA_ALL_PRODUCT'
+              ? 'List product'
+              : 'Single product'}
+          </span>
+        </div>
+        <div>
+          Status -{' '}
+          <span className='p-1 rounded-sm bg-amber-300'>
+            {isOpenModule ? 'Open' : 'Close'}
+          </span>
+        </div>
+        <div className='mb-1'>
+          <button
+            type='button'
+            onClick={handleOpenSidebar}
+            className='px-4 py-2 rounded bg-[var(--main-accent-color)] text-white'
+          >
+            {isOpenModule ? 'Close' : 'Open'} module
+          </button>
+        </div>
+        <div>
+          <button
+            type='button'
+            onClick={handleChangeMode}
+            className='px-4 py-2 rounded bg-[var(--main-accent-color)] text-white'
+          >
+            Change type to{' '}
+            {mockDataMode === 'DATA_ALL_PRODUCT'
+              ? 'Single product'
+              : 'List product'}{' '}
+            module
+          </button>
+        </div>
+      </div>
       <SwatchModule
         isOpen={isOpenModule}
         uiDataType={mockDataMode}
