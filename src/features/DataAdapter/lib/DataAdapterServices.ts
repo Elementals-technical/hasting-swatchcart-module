@@ -83,47 +83,71 @@ export class DataAdapterServices {
     return this.getAllMaterialOptions(data);
   }
 
+  // groupName solution
   static getTransformedFetchProductData(data: IFetchProductData): any {
-    const { materials, structure } = data;
-    const optionNamesRaw = structure.flatMap((section) =>
-      section.groups.flatMap((group) =>
-        group.options
-          .filter((opt) => opt.typeComponent === ETypeComponent.MATERIAL)
-          .map((opt) => opt.optionName),
-      ),
+    const { materials = [], structure = [] } = data;
+
+    // optionName -> groupName (only MATERIAL)
+    const optionToGroup = new Map<string, string>();
+    for (const section of structure) {
+      for (const group of section.groups ?? []) {
+        for (const opt of group.options ?? []) {
+          if (
+            opt?.typeComponent === ETypeComponent.MATERIAL &&
+            opt?.optionName
+          ) {
+            optionToGroup.set(opt.optionName, group.groupName);
+          }
+        }
+      }
+    }
+
+    const materialsValues = materials.filter(
+      (m) => m.optionName && optionToGroup.has(m.optionName!),
     );
 
-    const materialsValues = materials.filter((material) => {
-      if (!material.optionName) return;
-      return optionNamesRaw.includes(material.optionName);
+    const materialsWithGroup = materialsValues.map((m) => ({
+      ...m,
+      groupName: m.optionName ? optionToGroup.get(m.optionName) : undefined,
+    }));
+
+    // flatten children; inject parentName + groupName
+    const allMaterialValues = materialsWithGroup.flatMap((item) => {
+      const { label, groupName } = item;
+      const parentName =
+        (label.toLocaleLowerCase() === 'color' ? groupName : label) ||
+        'without_name';
+      return (item.valuesArray ?? []).map((v) => ({
+        ...v,
+        parentName,
+      }));
     });
 
-    console.log('materialsValues', materialsValues);
+    // build select options (unique, sorted by label)
+    const seen = new Set<string>();
 
-    const allMaterialValues = materialsValues.flatMap((item) =>
-      item.valuesArray?.map((value) => ({
-        ...value,
-        parentName: item.option || item.label || 'without_name',
-      })),
-    );
+    const productElementOptions = materialsWithGroup
+      .map(({ label, groupName, valuesArray }) => {
+        const normalizedLabel =
+          label?.toLowerCase() === 'color' ? (groupName ?? label) : label;
 
-    const productElementOptions = materialsValues.map((material) => {
-      const { label } = material;
-      return {
-        id: label,
-        value: label,
-        label: label,
-      };
-    });
-
-    console.log('TTTT', {
-      allMaterialValues,
-      productElementOptions,
-    });
+        return {
+          id: normalizedLabel!,
+          value: normalizedLabel!,
+          label: normalizedLabel!,
+          valuesArray,
+        };
+      })
+      .filter(
+        (option) =>
+          option.label &&
+          (seen.has(option.label) ? false : (seen.add(option.label), true)),
+      )
+      .sort((a, b) => a.label.localeCompare(b.label));
 
     return {
       allMaterialValues,
-      productElementOptions: materialsValues,
+      productElementOptions,
     };
   }
 }

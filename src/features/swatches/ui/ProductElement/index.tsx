@@ -37,9 +37,9 @@ export const ProductElement = ({
 
         return { value: Name, label: Label, id: Name };
       } else {
-        const { option } = item || {};
+        const { label, value } = item || {};
 
-        return { value: option, label: option, id: option };
+        return { value, label, id: value };
       }
     });
 
@@ -49,14 +49,13 @@ export const ProductElement = ({
   const handleFilterChange = (_: string, values: string[]) => {
     if (values.length) {
       const uniqueListValue = uniqueList(values);
-
       if (uniqueListValue.length) {
         const filteredMaterialByProduct = allProductElementOptions.filter(
           (item) => {
             if (item.metadata) {
               return uniqueListValue.includes(item.metadata?.Label);
             } else {
-              return uniqueListValue.includes(item.option);
+              return uniqueListValue.includes(item.value);
             }
           },
         );
@@ -82,7 +81,6 @@ export const ProductElement = ({
             dispatch(setMaterialSelect(itemsWithoutZeroCount));
           });
         }
-
         dispatch(setPanelFilter({ attributes: filteredMaterialByProduct }));
       } else {
         dispatch(setPanelFilter({ attributes: allProductElementOptions }));
