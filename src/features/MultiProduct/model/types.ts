@@ -32,8 +32,7 @@ export interface ISliderItem {
 }
 
 export interface IGetProductParameters {
-  productId: number;
-  productName: string;
+  assetId: string;
 }
 
 export interface ISingleSelectOption {

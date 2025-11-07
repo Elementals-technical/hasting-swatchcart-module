@@ -4,6 +4,7 @@ import {
   getSelectedProductAPI,
 } from '../../MultiProduct/model/API/api';
 import type { IGetProductParameters } from '../../MultiProduct/model/types';
+import { IFetchProductData } from '../../../shared/types/fetchData';
 
 export const getProductListThunk = createAsyncThunk<
   any,
@@ -19,14 +20,19 @@ export const getProductListThunk = createAsyncThunk<
   }
 });
 
-export const getSelectedProductThunk = createAsyncThunk(
-  'multiProducts/getSelectedProductThunk',
-  async (
-    { productId, productName }: IGetProductParameters,
-    { rejectWithValue },
-  ) => {
+export const getSelectedProductThunk = createAsyncThunk<
+  IFetchProductData,
+  IGetProductParameters,
+  { rejectValue: string }
+>(
+  'swatches/getSelectedProductThunk',
+  async ({ assetId }, { rejectWithValue }) => {
     try {
-      const response = await getSelectedProductAPI({ productId, productName });
+      console.log('THUNK start');
+
+      const response = await getSelectedProductAPI({ assetId });
+
+      console.log('THUNK end');
 
       return response;
     } catch (e: any) {

@@ -32,8 +32,15 @@ export const ProductElement = ({
   useEffect(() => {
     if (!allProductElementOptions?.length) return;
     const formatProductData = allProductElementOptions.map((item) => {
-      const { Name, Label } = item.metadata || {};
-      return { value: Name, label: Label, id: Name };
+      if (item.metadata) {
+        const { Name, Label } = item.metadata || {};
+
+        return { value: Name, label: Label, id: Name };
+      } else {
+        const { option } = item || {};
+
+        return { value: option, label: option, id: option };
+      }
     });
 
     setProductOptions(formatProductData);
@@ -45,7 +52,13 @@ export const ProductElement = ({
 
       if (uniqueListValue.length) {
         const filteredMaterialByProduct = allProductElementOptions.filter(
-          (item) => uniqueListValue.includes(item.metadata?.Label),
+          (item) => {
+            if (item.metadata) {
+              return uniqueListValue.includes(item.metadata?.Label);
+            } else {
+              return uniqueListValue.includes(item.option);
+            }
+          },
         );
 
         setProductValues(uniqueListValue);
@@ -76,6 +89,7 @@ export const ProductElement = ({
       }
     } else {
       setProductValues([]);
+      dispatch(setPanelFilter({ attributes: allProductElementOptions }));
     }
   };
 

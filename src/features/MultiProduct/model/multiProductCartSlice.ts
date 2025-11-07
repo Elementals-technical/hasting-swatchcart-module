@@ -36,7 +36,7 @@ const findItemIdx = (
   productIdx === -1
     ? -1
     : state.items[productIdx].items.findIndex(
-        (i) => i.metadata.label === label && i.parentName === parentName,
+        (i) => i.metadata?.label === label && i.parentName === parentName,
       );
 
 const multiProductCartSlice = createSlice({
@@ -90,7 +90,7 @@ const multiProductCartSlice = createSlice({
       if (pIdx === -1) return;
 
       const nextItems = state.items[pIdx].items.filter(
-        (i) => !(i.metadata.label === label && i.parentName === parentName),
+        (i) => !(i.metadata?.label === label && i.parentName === parentName),
       );
 
       state.items[pIdx].items = nextItems;

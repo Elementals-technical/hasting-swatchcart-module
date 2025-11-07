@@ -84,41 +84,44 @@ export const SwatchesMultiProductList = ({
       </div>
 
       <div className='flex flex-wrap gap-2'>
-        {selectedMaterials.map((val, index) => (
-          <button
-            key={`${val.metadata.label || index}/${val.parentName}`}
-            onClick={() => handleSelect(val)}
-            className='relative w-10 h-10 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition
-            sm:w-16 sm:h-16'
-            aria-label={`Selected swatch ${val.name ?? val.assetId}`}
-            title='Click to remove'
-            onMouseEnter={(e) => {
-              setHoveredEl(e.currentTarget as HTMLElement);
-              // setText(`${val.metadata.label || val.name} <br/> (${val.parentName})`);
-              setText({
-                materialName: val.metadata.label || val.name,
-                parentName: val.parentName,
-              });
-              setIsOpen(true);
-            }}
-            onMouseLeave={() => {
-              setIsOpen(false);
-            }}
-          >
-            {AttributeHelper.getImage(val) ? (
-              <ImageGridZoom item={val} />
-            ) : (
-              <HexGridZoom item={val} />
-            )}
-
-            <div
-              className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex justify-center items-center
-                         bg-[var(--background-grey)] rounded-2xl border-none pointer-events-none'
+        {selectedMaterials.map((val, index) => {
+          const meta = val.metadata;
+          return (
+            <button
+              key={`${meta?.label || index}/${val.parentName}`}
+              onClick={() => handleSelect(val)}
+              className='relative w-10 h-10 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition
+                sm:w-16 sm:h-16'
+              aria-label={`Selected swatch ${val.name ?? val.assetId}`}
+              title='Click to remove'
+              onMouseEnter={(e) => {
+                setHoveredEl(e.currentTarget as HTMLElement);
+                setText({
+                  materialName:
+                    meta?.label || val?.name || 'empty_materialName',
+                  parentName: val.parentName,
+                });
+                setIsOpen(true);
+              }}
+              onMouseLeave={() => {
+                setIsOpen(false);
+              }}
             >
-              <CloseIconSVG className='w-2 h-2 stroke-[var(--svg-dark)]' />
-            </div>
-          </button>
-        ))}
+              {AttributeHelper.getImage(val) ? (
+                <ImageGridZoom item={val} />
+              ) : (
+                <HexGridZoom item={val} />
+              )}
+
+              <div
+                className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex justify-center items-center
+                  bg-[var(--background-grey)] rounded-2xl border-none pointer-events-none'
+              >
+                <CloseIconSVG className='w-2 h-2 stroke-[var(--svg-dark)]' />
+              </div>
+            </button>
+          );
+        })}
         <Hint open={isOpen} target={hoveredEl} side='bottom' offset={8}>
           <>
             {text.materialName}

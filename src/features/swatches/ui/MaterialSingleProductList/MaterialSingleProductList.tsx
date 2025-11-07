@@ -91,7 +91,7 @@ export const MaterialSingleProductList = ({
       <div className={gridStyles}>
         {visibleItems.map((val, i) => {
           const realIndex = startIndex + i;
-          const key = `${val.metadata.label || realIndex}/${val.parentName}`;
+          const key = `${val.metadata?.label || realIndex}/${val.parentName}`;
           const isEndOfRow =
             (realIndex + 1) % cols === 0 ||
             realIndex === filteredItems.length - 1;

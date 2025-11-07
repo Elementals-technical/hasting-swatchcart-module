@@ -32,7 +32,7 @@ export const MultiProductItemCart = ({
 
   const handleDelete = ({ item, productId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const label = metadata.label;
+    const label = metadata?.label;
     if (productId && label && parentName) {
       dispatch(removeMultiProductItem({ productId, label, parentName }));
       // DeleteSelected material from the  SwatchesList
@@ -45,7 +45,7 @@ export const MultiProductItemCart = ({
     productId,
   }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const label = metadata.label;
+    const label = metadata?.label;
 
     if (productId && label && parentName) {
       dispatch(incrementMultiProductItem({ productId, label, parentName }));
@@ -57,7 +57,7 @@ export const MultiProductItemCart = ({
     productId,
   }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const label = metadata.label;
+    const label = metadata?.label;
 
     if (productId && label && parentName) {
       dispatch(decrementMultiProductItem({ productId, label, parentName }));

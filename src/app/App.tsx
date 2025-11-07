@@ -2,11 +2,12 @@ import { useState } from 'react';
 // import { getIsOpenSidebar } from '../features/swatches/model/selectors';
 // import { toggleSidebar } from '../features/swatches/model/swatchesSlice';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule';
-import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
+// import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import { useAppDispatch, useAppSelector } from './store/store';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule'; // App
 // import { SwatchModule } from '../../dist/main'; // build module
 import { SwatchModule } from '../../lib/main'; // lib
+import { EDataInputType } from '../features/DataAdapter/utils/types';
 
 function App() {
   const [isOpenModule, setIsOpenModule] = useState(true);
@@ -46,8 +47,10 @@ function App() {
       </button>
       <SwatchModule
         isOpen={isOpenModule}
-        uiDataType={mockDataMode}
-        data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
+        uiDataType={EDataInputType.FETCH_DATA_PRODUCT}
+        // uiDataType={mockDataMode}
+        // data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
+        assetId='67119b1c-36ba-42c1-bcd1-2d21cf44df55'
         onToggleSidebar={handleOpenSidebar}
         onSendData={handleSetData}
       />
