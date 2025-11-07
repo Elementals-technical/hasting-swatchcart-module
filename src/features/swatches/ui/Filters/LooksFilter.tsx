@@ -62,9 +62,6 @@ export const LooksFilter = () => {
       values={filters.Look}
       onValueChange={(values) => handleFilterChange('Look', values)}
       placeholder='Look'
-      // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
-      // sectionName={sectionName}
-      className='max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]'
       dropdownWidth='w-80'
     />
   );

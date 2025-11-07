@@ -62,9 +62,6 @@ export const ColorsFilter = () => {
       values={filters.Color}
       onValueChange={(values) => handleFilterChange('Color', values)}
       placeholder='Color'
-      // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
-      // sectionName={sectionName}
-      className='max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]'
       dropdownWidth='w-80'
     />
   );

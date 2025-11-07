@@ -56,9 +56,6 @@ export const MaterialsFilter = () => {
       values={filters.Finish}
       onValueChange={(values) => handleFilterChange('Finish', values)}
       placeholder='Material'
-      // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
-      // sectionName={sectionName}
-      className='max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]'
       dropdownWidth='w-80'
     />
   );
