@@ -1,3 +1,5 @@
+import { IProductListItem } from '../../MultiProduct/model/types';
+
 export interface IProduct {
   attributes: AttributeValue[] | any[];
   name: string;
@@ -13,7 +15,7 @@ export interface ISwatchesSlice {
   allMaterialsValues: AttributeValue[];
   selectedMaterials: AttributeValue[];
   // productList: IProduct[];
-  selectedProduct: IProduct | null;
+  selectedProduct: IProductListItem | null;
   isLoadingSelectedProduct: boolean;
   isOpenMultiProductCart: boolean;
 }

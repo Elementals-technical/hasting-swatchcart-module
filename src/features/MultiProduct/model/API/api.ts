@@ -6,7 +6,7 @@ const { VITE_SWATH_CART_PRODUCTION_URL } = import.meta.env;
 
 export const getProductListAPI = async (): Promise<IProductListResponse> => {
   try {
-    const url = `${VITE_SWATH_CART_PRODUCTION_URL}/${SWATCHES_ROUTES.GET_PRODUCT_LIST()}`;
+    const url = `${VITE_SWATH_CART_PRODUCTION_URL}/${SWATCHES_ROUTES.GET_PRODUCT_LIST()}?pageSize=500`;
 
     const res = await fetch(url, {
       method: 'GET',

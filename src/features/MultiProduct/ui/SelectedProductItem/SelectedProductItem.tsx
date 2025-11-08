@@ -1,8 +1,12 @@
+import { useEffect } from 'react';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { deleteSelectedProduct } from '../../../swatches/model/swatchesSlice';
-import { getSelectedProduct } from '../../model/selectors';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
+import {
+  clearAllMaterialFilters,
+  deleteSelectedProduct,
+} from '../../../swatches/model/swatchesSlice';
 import { FiltersSelectedProductItem } from '../FiltersSelectedProductItem/FiltersSelectedProductItem';
 import { MaterialMultiProductList } from '../MaterialMultiProductList/MaterialMultiProductList';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
@@ -16,6 +20,12 @@ export const SelectedProductItem = ({
 }: ISelectedProductItemProps) => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getSelectedProduct);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearAllMaterialFilters());
+    };
+  }, []);
 
   const handleGoBack = () => {
     dispatch(deleteSelectedProduct());

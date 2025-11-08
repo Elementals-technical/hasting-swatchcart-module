@@ -1,6 +1,8 @@
 import { useAppSelector } from '../../../../app/store/store';
-import { getIsOpenMultiCart } from '../../../swatches/model/selectors';
-import { getSelectedProduct } from '../../model/selectors';
+import {
+  getIsOpenMultiCart,
+  getSelectedProduct,
+} from '../../../swatches/model/selectors';
 import { MultiProductItemCart } from '../MultiProductItemCart/MultiProductItemCart';
 import { ProductList } from '../ProductList/ProductList';
 import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem';

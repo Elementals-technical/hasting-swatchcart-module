@@ -4,7 +4,7 @@ import type {
   AttributeValue,
   IAttributeAsset,
   IMaterialSelectState,
-  IProduct,
+  // IProduct,
   ISetFiltersPayload,
   ISwatchesSlice,
 } from './types';
@@ -12,6 +12,7 @@ import { SwatchesServices } from '../lib/SwatchesServices';
 import { uniqueList } from '../../../shared/utils/uniqueList';
 import { type IMapUIData } from '../../DataAdapter/utils/types';
 import { getSelectedProductThunk } from './thunks';
+import { IProductListItem } from '../../MultiProduct/model/types';
 
 const initialState: ISwatchesSlice = {
   // isOpenSidebar: true,
@@ -99,7 +100,9 @@ export const swatchesSlice = createSlice({
     resetSelectedMaterials(state) {
       state.selectedMaterials = [];
     },
-    setSelectedProduct(state, action: PayloadAction<IProduct>) {
+    setSelectedProduct(state, action: PayloadAction<IProductListItem>) {
+      console.log('setSelectedProduct', action.payload);
+
       state.selectedProduct = action.payload;
     },
     deleteSelectedProduct(state) {

@@ -14,6 +14,7 @@ import { SingleSelect } from '../../../../shared/ui/SingleSelect/SingleSelect';
 import { getProductListThunk } from '../../model/thunk';
 import { getIsLoadingProductList, getProductLIst } from '../../model/selectors';
 import { Loader } from '../../../../shared/ui/Loader/Loader';
+import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'A-Z', value: 'asc' },
@@ -23,6 +24,7 @@ const SORT_OPTIONS: ISingleSelectOption[] = [
 export const ProductList = () => {
   const dispatch = useAppDispatch();
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
+  const isLoadingProduct = useAppSelector(getIsLoadingSelectedProduct);
   const productList = useAppSelector(getProductLIst);
 
   const [activeCategory, setActiveCategory] = useState<
@@ -81,7 +83,8 @@ export const ProductList = () => {
   }, [dispatch]);
 
   return (
-    <div className='flex h-full flex-col'>
+    <div className='relative flex h-full flex-col '>
+      {(isLoadingProductList || isLoadingProduct) && <Loader />}
       <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
         <span className='p-[var(--sm-padding)] text-base font-medium'>
           Swatches List
@@ -98,8 +101,7 @@ export const ProductList = () => {
         </div>
       </header>
 
-      <div className='relative flex min-h-0 flex-1 flex-col'>
-        {isLoadingProductList && <Loader />}
+      <div className='flex min-h-0 flex-1 flex-col'>
         <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
           <div className='flex h-[36px] w-full items-center justify-between gap-4 sm:max-w-90'>
             <div className='relative h-[36px] w-full max-w-[260px] sm:max-w-[240px]'>

@@ -24,4 +24,6 @@ export const getIsLoadingSelectedProduct = (state: RootState) =>
   state.swatches.isLoadingSelectedProduct;
 export const getIsOpenMultiCart = (state: RootState) =>
   state.swatches.isOpenMultiProductCart;
+export const getSelectedProduct = (state: RootState) =>
+  state.swatches.selectedProduct;
 // AllProduct
