@@ -2,7 +2,6 @@ import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { useAppDispatch } from '../../../../app/store/store';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
-import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 
 interface IMultiProductCartHeaderProps {
   totalCount: number;
@@ -41,14 +40,6 @@ export const MultiProductCartHeader = ({
           </>
         ) : null}
       </div>
-      <button
-        className='flex justify-center items-center w-[30px] h-[30px] bg-[var(--background-grey)]
-              border-none cursor-pointer rounded-full
-              [&_svg_path]:stroke-[var(--svg-dark)]'
-        // onClick={handleToggleSidebar}
-      >
-        <CloseIconSVG width={10} height={10} />
-      </button>
     </header>
   );
 };

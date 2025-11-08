@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
-import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
+// import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getSelectedProduct } from '../../../swatches/model/selectors';
 import {
@@ -11,13 +11,11 @@ import { FiltersSelectedProductItem } from '../FiltersSelectedProductItem/Filter
 import { MaterialMultiProductList } from '../MaterialMultiProductList/MaterialMultiProductList';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
 
-interface ISelectedProductItemProps {
-  onSidebarToggle: () => void;
-}
+// interface ISelectedProductItemProps {
+//   onSidebarToggle?: () => void;
+// }
 
-export const SelectedProductItem = ({
-  onSidebarToggle,
-}: ISelectedProductItemProps) => {
+export const SelectedProductItem = () => {
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getSelectedProduct);
 
@@ -47,13 +45,13 @@ export const SelectedProductItem = ({
           </h2>
         </div>
 
-        <button
+        {/* <button
           onClick={onSidebarToggle}
           className='flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[var(--background-grey)]
                      [&_svg_path]:stroke-[var(--svg-dark)]'
         >
           <CloseIconSVG width={10} height={10} />
-        </button>
+        </button> */}
       </header>
 
       {/* Body */}
