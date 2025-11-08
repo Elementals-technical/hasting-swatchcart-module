@@ -11,8 +11,8 @@ import { EDataInputType } from '../features/DataAdapter/utils/types';
 
 function App() {
   const [isOpenModule, setIsOpenModule] = useState(true);
-  const [mockDataMode, setMockDataMode] = useState<'DATA_ALL_PRODUCT' | 'UI'>(
-    'DATA_ALL_PRODUCT',
+  const [mockDataMode, setMockDataMode] = useState<EDataInputType>(
+    EDataInputType.FETCH_DATA_ALL,
   );
 
   const handleOpenSidebar = () => {
@@ -25,7 +25,10 @@ function App() {
 
   const handleChangeMode = () => {
     const newMode =
-      mockDataMode === 'DATA_ALL_PRODUCT' ? 'UI' : 'DATA_ALL_PRODUCT';
+      mockDataMode === EDataInputType.FETCH_DATA_ALL
+        ? EDataInputType.FETCH_DATA_PRODUCT
+        : EDataInputType.FETCH_DATA_ALL;
+    console.log(newMode);
 
     setMockDataMode(newMode);
   };
@@ -36,7 +39,7 @@ function App() {
         <div>
           Active type Module -{' '}
           <span className='p-1 rounded-sm bg-amber-300'>
-            {mockDataMode === 'DATA_ALL_PRODUCT'
+            {mockDataMode === EDataInputType.FETCH_DATA_ALL
               ? 'List product'
               : 'Single product'}
           </span>
@@ -63,7 +66,7 @@ function App() {
             className='px-4 py-2 rounded bg-[var(--main-accent-color)] text-white'
           >
             Change type to{' '}
-            {mockDataMode === 'DATA_ALL_PRODUCT'
+            {mockDataMode === EDataInputType.FETCH_DATA_ALL
               ? 'Single product'
               : 'List product'}{' '}
             module
@@ -72,7 +75,7 @@ function App() {
       </div>
       <SwatchModule
         isOpen={isOpenModule}
-        uiDataType={EDataInputType.FETCH_DATA_ALL}
+        uiDataType={mockDataMode}
         // uiDataType={"DATA_ALL_PRODUCT"}
         // data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         assetId='67119b1c-36ba-42c1-bcd1-2d21cf44df55'
