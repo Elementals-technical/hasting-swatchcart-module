@@ -13,6 +13,7 @@ import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../../utils/constants';
 import { SingleSelect } from '../../../../shared/ui/SingleSelect/SingleSelect';
 import { getProductListThunk } from '../../model/thunk';
 import { getIsLoadingProductList, getProductLIst } from '../../model/selectors';
+import { Loader } from '../../../../shared/ui/Loader/Loader';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'A-Z', value: 'asc' },
@@ -97,7 +98,8 @@ export const ProductList = () => {
         </div>
       </header>
 
-      <div className='flex min-h-0 flex-1 flex-col'>
+      <div className='relative flex min-h-0 flex-1 flex-col'>
+        {isLoadingProductList && <Loader />}
         <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
           <div className='flex h-[36px] w-full items-center justify-between gap-4 sm:max-w-90'>
             <div className='relative h-[36px] w-full max-w-[260px] sm:max-w-[240px]'>
@@ -149,14 +151,10 @@ export const ProductList = () => {
           className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:hidden'
         />
 
-        <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'>
+        <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)] '>
           <div className='mb-4'>Select Product</div>
 
-          {isLoadingProductList ? (
-            <div className='flex h-full min-h-0 flex-1 items-center justify-center'>
-              loading...
-            </div>
-          ) : filteredProductList.length ? (
+          {filteredProductList.length ? (
             <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
               {filteredProductList.map((productListItem: any) => (
                 <ProductListItem

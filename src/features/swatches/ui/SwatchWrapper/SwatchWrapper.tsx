@@ -55,11 +55,7 @@ export const SwatchWrapper = ({
         </button>
       </header>
       <div className='flex flex-col h-full min-h-0 relative'>
-        {isLoading && (
-          <div className='absolute inset-0 flex items-center justify-center backdrop-blur-md bg-black/2 z-50'>
-            <Loader />
-          </div>
-        )}
+        {isLoading && <Loader />}
 
         <ProductElement
           containerStyles='flex justify-between items-center shrink-0 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'
