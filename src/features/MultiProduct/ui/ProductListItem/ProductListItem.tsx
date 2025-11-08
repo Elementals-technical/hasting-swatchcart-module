@@ -1,18 +1,22 @@
 import productThumbnail from '../../../../app/assets/images/product_thumb.png';
-import { IProduct } from '../../../swatches/model/types';
+import { IProductListItem } from '../../model/types';
 
 interface IProductListItemProps {
-  productListItem: IProduct;
+  productListItem: IProductListItem;
 }
 
 export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
   // const dispatch = useAppDispatch();
-  const { name } = productListItem;
+  const { name, img } = productListItem;
+
+  const imageURL = img
+    ? `https://admin-fts.threekit.com${img}`
+    : productThumbnail;
 
   const handleSetSelectedItem = async () => {
-    const { productId, name } = productListItem;
+    const { assetId, name } = productListItem;
 
-    if (productId && name) {
+    if (assetId && name) {
       // const data = await dispatch(
       //   getSelectedProductThunk({ assetId: "c5f1aeee-d13b-41f6-98d6-75fd35c49236" }),
       // ).unwrap();
@@ -42,7 +46,7 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
     >
       <div className='mb-3 aspect-[16/9] w-ful sm:w-full'>
         <img
-          src={productThumbnail}
+          src={imageURL}
           alt='product-list-item'
           className='w-30 h-30 object-cover rounded-sm
           sm:w-40 sm:h-40
