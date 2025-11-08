@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SwatchModule via CDN (bundled)</title>
     <!-- Test locally -->
-    <!-- <link rel="stylesheet" href="../dist/cdn/main.css" /> -->
+    <link rel="stylesheet" href="../dist/cdn/main.css" />
     <!-- Test real CDN -->
-    <link
+    <!-- <link
       rel="stylesheet"
       href="https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.css"
-    />
+    /> -->
   </head>
   <body>
     <div id="root"></div>
 
     <script type="module">
       // Test locally
-      // import { mountSwatchModule } from '../dist/cdn/main.js';
+      import { mountSwatchModule } from '../dist/cdn/main.js';
 
       // Test real CDN
-      import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
+      // import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
 
       // local JSON data
       const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
@@ -35,7 +35,6 @@
       const handleSendData = (selectedData) => {
         console.log('handleSendData', selectedData);
       };
-
       // UI (attributes from outside) - single product
       // mountSwatchModule(rootElement, {
       //   isOpen: true,
@@ -46,10 +45,18 @@
       // });
 
       // Fetch product data - single product
+      // mountSwatchModule(rootElement, {
+      //   isOpen: true,
+      //   uiDataType: 'FETCH_DATA_PRODUCT',
+      //   assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+      //   onToggleSidebar: handleToggleSidebar,
+      //   onSendData: handleSendData,
+      // });
+
+      // Fetch product all data - multi product
       mountSwatchModule(rootElement, {
         isOpen: true,
-        uiDataType: 'FETCH_DATA_PRODUCT',
-        assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+        uiDataType: 'FETCH_DATA_PRODUCT_All',
         onToggleSidebar: handleToggleSidebar,
         onSendData: handleSendData,
       });

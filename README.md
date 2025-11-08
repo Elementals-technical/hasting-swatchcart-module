@@ -13,13 +13,42 @@ npm i hasting-swatchcart-module
 
 ### NPM usage
 
+### UI (attributes from outside )
+
 ```js
 import { SwatchModule } from 'hasting-swatchcart-module';
 
 <SwatchModule
   isOpen={isOpenModule}
-  uiDataType={'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT'}
+  uiDataType={'UI'}
   data={data}
+  onToggleSidebar={handleOpenSidebar}
+  onSendData={handleSetData}
+/>;
+```
+
+### Fetch product
+
+```js
+import { SwatchModule } from 'hasting-swatchcart-module';
+
+<SwatchModule
+  isOpen={isOpenModule}
+  uiDataType={'FETCH_DATA_PRODUCT'}
+  assetId={'asset_id'}
+  onToggleSidebar={handleOpenSidebar}
+  onSendData={handleSetData}
+/>;
+```
+
+### Fetch product all
+
+```js
+import { SwatchModule } from 'hasting-swatchcart-module';
+
+<SwatchModule
+  isOpen={isOpenModule}
+  uiDataType={'FETCH_DATA_PRODUCT_All'}
   onToggleSidebar={handleOpenSidebar}
   onSendData={handleSetData}
 />;
@@ -34,17 +63,22 @@ import { SwatchModule } from 'hasting-swatchcart-module';
 />
 <body>
   <div id="root"></div>
+
   <script type="module">
     import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
+
+    // local MOCK JSON data or your real data
+    const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
+    const mockData = await fetch(jsonUrl).then((r) => r.json());
 
     const rootElement = document.getElementById('root');
 
     const handleToggleSidebar = () => {
-      // handleToggleSidebar
+      console.log('handleToggleSidebar');
     };
 
     const handleSendData = (selectedData) => {
-      // handleSendData
+      console.log('handleSendData', selectedData);
     };
 
     // UI (attributes from outside) - single product
@@ -57,10 +91,18 @@ import { SwatchModule } from 'hasting-swatchcart-module';
     // });
 
     // Fetch product data - single product
+    // mountSwatchModule(rootElement, {
+    //   isOpen: true,
+    //   uiDataType: 'FETCH_DATA_PRODUCT',
+    //   assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+    //   onToggleSidebar: handleToggleSidebar,
+    //   onSendData: handleSendData,
+    // });
+
+    // Fetch product all data - multi product
     mountSwatchModule(rootElement, {
       isOpen: true,
-      uiDataType: 'FETCH_DATA_PRODUCT',
-      assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+      uiDataType: 'FETCH_DATA_PRODUCT_All',
       onToggleSidebar: handleToggleSidebar,
       onSendData: handleSendData,
     });
@@ -105,13 +147,34 @@ export interface IAttributeAsset {
 }
 ```
 
-| Prop            | Type                                                                                   | Required | Description                                                                            |
-| --------------- | -------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------- |
-| isOpen          | boolean                                                                                | Yes      | Controls visibility of the module (module state). true → module is visible.            |
-| uiDataType      | 'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT' or 'FETCH_DATA_PRODUCT' or 'FETCH_DATA_ALL' | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
-| data            | IAttributeAsset[]                                                                      | Yes      | Array of attributes data. Passed to the module to render swatch cards.                 |
-| onToggleSidebar | void                                                                                   | Yes      | This method uses for open/close this module.                                           |
-| onSendData      | () => selected materials array from a cart                                             | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
+### UI (attributes from outside )
+
+| Prop            | Type                                       | Required | Description                                                                            |
+| --------------- | ------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
+| isOpen          | boolean                                    | Yes      | Controls visibility of the module (module state). true → module is visible.            |
+| uiDataType      | 'UI'                                       | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
+| data            | IAttributeAsset[]                          | Yes      | Array of attributes data. Passed to the module to render swatch cards.                 |
+| onToggleSidebar | void                                       | Yes      | This method uses for open/close this module.                                           |
+| onSendData      | () => selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
+
+### Fetch product
+
+| Prop            | Type                                       | Required | Description                                                                            |
+| --------------- | ------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
+| isOpen          | boolean                                    | Yes      | Controls visibility of the module (module state). true → module is visible.            |
+| uiDataType      | 'FETCH_DATA_PRODUCT'                       | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
+| assetId         | string                                     | Yes      | Defined an object for getting it`s attributes                                          |
+| onToggleSidebar | void                                       | Yes      | This method uses for open/close this module.                                           |
+| onSendData      | () => selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
+
+### Fetch all product
+
+| Prop            | Type                                       | Required | Description                                                                            |
+| --------------- | ------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
+| isOpen          | boolean                                    | Yes      | Controls visibility of the module (module state). true → module is visible.            |
+| uiDataType      | 'FETCH_DATA_ALL'                           | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
+| onToggleSidebar | void                                       | Yes      | This method uses for open/close this module.                                           |
+| onSendData      | () => selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
 
 ## Development
 
@@ -180,7 +243,7 @@ npm run build:cdn
 
   mountSwatchModule(rootElement, {
     isOpen: true,
-    uiDataType: 'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT',
+    uiDataType: 'UI' or 'FETCH_DATA_PRODUCT' or 'FETCH_DATA_PRODUCT_All',
     data: mockData,
     onToggleSidebar: handleToggleSidebar,
     onSendData: handleSendData,
@@ -208,10 +271,10 @@ npm run build:cdn
 
   const rootElement = document.getElementById('root');  <script type="module">
     // Test locally
-    import { mountSwatchModule } from '../dist/cdn/main.js';
+    // import { mountSwatchModule } from '../dist/cdn/main.js';
 
     // Test real CDN
-    // import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
+    import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
 
     // local JSON data
     const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
@@ -227,20 +290,31 @@ npm run build:cdn
       console.log('handleSendData', selectedData);
     };
 
+    // Chose one of the possible options
+
     // UI (attributes from outside) - single product
-    // mountSwatchModule(rootElement, {
-    //   isOpen: true,
-    //   uiDataType: 'UI',
-    //   data: mockData, // or your data
-    //   onToggleSidebar: handleToggleSidebar,
-    //   onSendData: handleSendData,
-    // });
+    mountSwatchModule(rootElement, {
+      isOpen: true,
+      uiDataType: 'UI',
+      data: mockData, // or your data
+      onToggleSidebar: handleToggleSidebar,
+      onSendData: handleSendData,
+    });
 
     // Fetch product data - single product
     mountSwatchModule(rootElement, {
       isOpen: true,
       uiDataType: 'FETCH_DATA_PRODUCT',
       assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+      onToggleSidebar: handleToggleSidebar,
+      onSendData: handleSendData,
+    });
+
+
+    // Fetch product all data - multi product
+    mountSwatchModule(rootElement, {
+      isOpen: true,
+      uiDataType: 'FETCH_DATA_PRODUCT_All',
       onToggleSidebar: handleToggleSidebar,
       onSendData: handleSendData,
     });
@@ -265,23 +339,67 @@ import { SwatchModule } from '../../dist/main'; // build module
 
 3. **Use module**
 
+### UI (attributes from outside )
+
 ```js
-  <SwatchModule
-    isOpen={isOpenModule}
-    uiDataType={'UI' or 'DATA_INPUT' or 'DATA_ALL_PRODUCT'}
-    data={data}
-    onToggleSidebar={handleOpenSidebar}
-    onSendData={handleSetData}
-  />
+<SwatchModule
+  isOpen={isOpenModule}
+  uiDataType={'UI'}
+  data={data}
+  onToggleSidebar={handleOpenSidebar}
+  onSendData={handleSetData}
+/>
 ```
 
-## Publishing module
+### Fetch product
+
+```js
+<SwatchModule
+  isOpen={isOpenModule}
+  uiDataType={'FETCH_DATA_PRODUCT'}
+  assetId={'asset_id'}
+  onToggleSidebar={handleOpenSidebar}
+  onSendData={handleSetData}
+/>
+```
+
+### Fetch product all
+
+```js
+<SwatchModule
+  isOpen={isOpenModule}
+  uiDataType={'FETCH_DATA_PRODUCT_All'}
+  onToggleSidebar={handleOpenSidebar}
+  onSendData={handleSetData}
+/>
+```
+
+## Publishing
+
+In our app we have two envs that we need to published
+
+- web
+- module
+
+### Publishing web
+
+```bach
+npm run build
+```
+
+### Publishing module
 
 Before Publishing you need to start
 
 ```bach
 npm run build:all
 ```
+
+Then
+
+Update module version
+
+`"version": "*.*.*"`
 
 Then
 
