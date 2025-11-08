@@ -9,8 +9,9 @@ import {
   setActiveMultiCartProduct,
   setMultiCartItems,
 } from '../../model/multiProductCartSlice';
-import { getMultiCartItems, getSelectedProduct } from '../../model/selectors';
+import { getMultiCartItems } from '../../model/selectors';
 import { IMultiCartProductItem } from '../../model/types';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
 
 export const MaterialMultiProductListItem = ({
   val,
@@ -73,9 +74,8 @@ export const MaterialMultiProductListItem = ({
     }
   };
 
-  const assetId = val && val.assetId ? val.assetId : 'false';
   const isSelected = allItems.find(
-    (elem) => elem.assetId === assetId && elem.parentName === val.parentName,
+    (elem) => elem.value === val.value && elem.parentName === val.parentName,
   );
 
   return (
@@ -102,7 +102,7 @@ export const MaterialMultiProductListItem = ({
         </div>
       </button>
       <div className='flex flex-col mt-3'>
-        <span className='font-normal mb-1'>{val.metadata?.label} </span>
+        <span className='font-normal mb-1'>{val.metadata?.label}</span>
         <span className='font-medium'>{val.parentName} </span>
       </div>
     </div>

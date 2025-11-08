@@ -144,6 +144,7 @@ export interface AttributeValue {
   option?: string;
   optionName?: string;
   valuesArray?: IMaterialMetadata[];
+  value?: string;
 }
 
 export interface IMaterialMetadata {

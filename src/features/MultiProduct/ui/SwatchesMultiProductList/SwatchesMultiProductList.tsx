@@ -12,7 +12,8 @@ import {
   setActiveMultiCartProduct,
   setMultiCartItems,
 } from '../../model/multiProductCartSlice';
-import { getMultiCartItems, getSelectedProduct } from '../../model/selectors';
+import { getMultiCartItems } from '../../model/selectors';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
 
 const MockTile: React.FC = () => (
   <div
