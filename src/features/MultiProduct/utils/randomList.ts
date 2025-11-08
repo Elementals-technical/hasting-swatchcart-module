@@ -1,5 +1,5 @@
 import { MOCK_ROW_PROPS_ATTRIBUTES } from '../../../shared/constants/props';
-import type { IProduct } from '../model/types';
+import { IProduct } from '../../swatches/model/types';
 
 const TAGS = [
   'Kitchen',

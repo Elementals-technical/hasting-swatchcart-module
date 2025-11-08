@@ -1,5 +1,5 @@
 import { AttributeValue } from '../../swatches/model/types';
-import type { ICartItem, IProduct, ISliderItem } from '../model/types';
+import type { ICartItem, IProductListItem, ISliderItem } from '../model/types';
 import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../utils/constants';
 
 export class MultiProductCartService {
@@ -7,14 +7,14 @@ export class MultiProductCartService {
     return cartItems.reduce((sum, item) => sum + item.count, 0);
   }
 
-  static getUniqueCategories(productList: IProduct[]): ISliderItem[] {
-    const uniqueCategories = [
-      ...new Set(productList.flatMap((p) => p.categories)),
+  static getUniqueCategories(productList: IProductListItem[]): ISliderItem[] {
+    const uniqueCollections = [
+      ...new Set(productList.map((p) => p.collection)),
     ];
 
-    const preparedData = uniqueCategories.map((category, index) => ({
-      name: category,
-      value: category,
+    const preparedData = uniqueCollections.map((collection, index) => ({
+      name: collection,
+      value: collection,
       productId: index + 1,
       items: [],
     }));

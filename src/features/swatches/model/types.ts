@@ -1,4 +1,11 @@
-import type { IProduct } from '../../MultiProduct/model/types';
+import { IProductListItem } from '../../MultiProduct/model/types';
+
+export interface IProduct {
+  attributes: AttributeValue[] | any[];
+  name: string;
+  productId: number;
+  categories: string[];
+}
 
 export interface ISwatchesSlice {
   // isOpenSidebar: boolean;
@@ -7,9 +14,8 @@ export interface ISwatchesSlice {
   materialSelectState: IMaterialSelectState;
   allMaterialsValues: AttributeValue[];
   selectedMaterials: AttributeValue[];
-  productList: IProduct[];
-  isLoadingProductList: boolean;
-  selectedProduct: IProduct | null;
+  // productList: IProduct[];
+  selectedProduct: IProductListItem | null;
   isLoadingSelectedProduct: boolean;
   isOpenMultiProductCart: boolean;
 }
@@ -138,6 +144,7 @@ export interface AttributeValue {
   option?: string;
   optionName?: string;
   valuesArray?: IMaterialMetadata[];
+  value?: string;
 }
 
 export interface IMaterialMetadata {

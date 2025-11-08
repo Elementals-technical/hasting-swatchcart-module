@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { DataAdapterServices } from '../../src/features/DataAdapter/lib/DataAdapterServices';
 import { setAllMaterialsOptions } from '../../src/features/swatches/model/swatchesSlice';
 import { getSelectedProductThunk } from '../../src/features/swatches/model/thunks';
+import { getProductListThunk } from '../../src/features/MultiProduct/model/thunk';
 
 export interface ISwatchesModuleProps {
   isOpen: boolean;
@@ -69,8 +70,16 @@ export const SwatchModule = ({
         }
       };
       fetchProductDetails();
+    } else if (uiDataType === EDataInputType.FETCH_DATA_ALL) {
+      const fetchProductDetails = async () => {
+        try {
+          dispatch(getProductListThunk()).unwrap();
+        } catch (error) {
+          console.error('Failed to load product', error);
+        }
+      };
+      fetchProductDetails();
     }
-    // }
   }, [uiDataType, data, assetId]);
 
   return (

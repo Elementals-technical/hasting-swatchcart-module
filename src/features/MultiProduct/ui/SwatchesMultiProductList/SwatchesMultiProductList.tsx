@@ -12,8 +12,8 @@ import {
   setActiveMultiCartProduct,
   setMultiCartItems,
 } from '../../model/multiProductCartSlice';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { getMultiCartItems } from '../../model/selectors';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
 
 const MockTile: React.FC = () => (
   <div
@@ -57,7 +57,7 @@ export const SwatchesMultiProductList = ({
 
     if (productWithItem) {
       const cartProductItem: IMultiCartProductItem = {
-        productId: productWithItem.productId,
+        assetId: productWithItem.assetId || 'empty_assetId',
         name: productWithItem.name,
         items: filteredItems || [],
       };
