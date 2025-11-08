@@ -1,22 +1,59 @@
-import { MOCK_SELECTED_PRODUCT } from '../../utils/constants';
-import { generateRandomProducts } from '../../utils/randomList';
-import type { IGetProductParameters, IProduct } from '../types';
+import { IFetchProductData } from '../../../../shared/types/fetchData';
+import type { IGetProductParameters, IProductListResponse } from '../types';
+import { SWATCHES_ROUTES } from './routes';
 
-export const getProductListAPI = (): Promise<IProduct[]> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(generateRandomProducts(100));
-    }, 400);
-  });
+const { VITE_SWATH_CART_PRODUCTION_URL } = import.meta.env;
+
+export const getProductListAPI = async (): Promise<IProductListResponse> => {
+  try {
+    const url = `${VITE_SWATH_CART_PRODUCTION_URL}/${SWATCHES_ROUTES.GET_PRODUCT_LIST()}?pageSize=500`;
+
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!res.ok) {
+      throw new Error(`Request failed with status ${res.status}`);
+    }
+
+    const data = (await res.json()) as unknown;
+
+    if (Array.isArray(data)) {
+      throw new Error(
+        'API returned an array, expected IProductListResponse object',
+      );
+    }
+
+    return data as IProductListResponse;
+  } catch (error) {
+    console.error('❌ Fetch error:', error);
+    throw error;
+  }
 };
 
-export const getSelectedProductAPI = ({
-  productId,
-  productName,
-}: IGetProductParameters): Promise<IProduct> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ ...MOCK_SELECTED_PRODUCT, productId, name: productName });
-    }, 400);
-  });
+export const getSelectedProductAPI = async ({
+  assetId,
+}: IGetProductParameters): Promise<IFetchProductData> => {
+  try {
+    const url = `${VITE_SWATH_CART_PRODUCTION_URL}/${SWATCHES_ROUTES.GET_PRODUCT_DETAILS(assetId)}`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('❌ Fetch error:', error);
+    throw error;
+  }
 };

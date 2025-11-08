@@ -1,16 +1,29 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { CartState, IMultiCartProductItem, IProductCart } from './types';
+import type {
+  MultiProductState,
+  IMultiCartProductItem,
+  IProductCart,
+  IProductListResponse,
+} from './types';
+import { getProductListThunk } from './thunk';
 
-const initialState: CartState = {
+const initialState: MultiProductState = {
   items: [],
+  productList: [],
+  isLoadingProductList: false,
+  selectedProduct: null,
   activeMultiCartProduct: null,
   totalCount: 0,
 };
 
-function ensureProduct(state: CartState, productId: number, name?: string) {
-  let bucket = state.items.find((p) => p.productId === productId);
+function ensureProduct(
+  state: MultiProductState,
+  assetId: string,
+  name?: string,
+) {
+  let bucket = state.items.find((p) => p.assetId === assetId);
   if (!bucket) {
-    bucket = { productId, name: name ?? '', items: [] };
+    bucket = { assetId, name: name ?? '', items: [] };
     state.items.push(bucket);
   } else if (name && !bucket.name) {
     bucket.name = name;
@@ -19,16 +32,16 @@ function ensureProduct(state: CartState, productId: number, name?: string) {
 }
 
 type Key = {
-  productId: number;
+  assetId: string;
   label: string;
   parentName: string;
 };
 
-const findProductIdx = (state: CartState, productId: number) =>
-  state.items.findIndex((p) => p.productId === productId);
+const findProductIdx = (state: MultiProductState, assetId: string) =>
+  state.items.findIndex((p) => p.assetId === assetId);
 
 const findItemIdx = (
-  state: CartState,
+  state: MultiProductState,
   productIdx: number,
   label: string,
   parentName: string,
@@ -36,7 +49,7 @@ const findItemIdx = (
   productIdx === -1
     ? -1
     : state.items[productIdx].items.findIndex(
-        (i) => i.metadata.label === label && i.parentName === parentName,
+        (i) => i.metadata?.label === label && i.parentName === parentName,
       );
 
 const multiProductCartSlice = createSlice({
@@ -44,8 +57,8 @@ const multiProductCartSlice = createSlice({
   initialState,
   reducers: {
     setCartForProduct(state, action: PayloadAction<IProductCart>) {
-      const { productId } = action.payload;
-      const idx = state.items.findIndex((p) => p.productId === productId);
+      const { assetId } = action.payload;
+      const idx = state.items.findIndex((p) => p.assetId === assetId);
       if (idx >= 0) state.items[idx] = action.payload;
       else state.items.push(action.payload);
     },
@@ -53,21 +66,21 @@ const multiProductCartSlice = createSlice({
       state.activeMultiCartProduct = action.payload;
     },
     setMultiCartItems(state, action: PayloadAction<IMultiCartProductItem>) {
-      const { productId, items, name } = action.payload;
+      const { assetId, items, name } = action.payload;
 
       if (!items || items.length === 0) {
-        const idx = state.items.findIndex((b) => b.productId === productId);
+        const idx = state.items.findIndex((b) => b.assetId === assetId);
         if (idx !== -1) state.items.splice(idx, 1);
         return;
       }
 
-      const bucket = ensureProduct(state, productId, name);
+      const bucket = ensureProduct(state, assetId, name);
       bucket.items = items;
     },
 
     incrementMultiProductItem(state, action: PayloadAction<Key>) {
-      const { productId, label, parentName } = action.payload;
-      const pIdx = findProductIdx(state, productId);
+      const { assetId, label, parentName } = action.payload;
+      const pIdx = findProductIdx(state, assetId);
       const iIdx = findItemIdx(state, pIdx, label, parentName);
       if (iIdx !== -1) {
         state.items[pIdx].items[iIdx].count += 1;
@@ -75,8 +88,8 @@ const multiProductCartSlice = createSlice({
     },
 
     decrementMultiProductItem(state, action: PayloadAction<Key>) {
-      const { productId, label, parentName } = action.payload;
-      const pIdx = findProductIdx(state, productId);
+      const { assetId, label, parentName } = action.payload;
+      const pIdx = findProductIdx(state, assetId);
       const iIdx = findItemIdx(state, pIdx, label, parentName);
       if (iIdx !== -1) {
         const item = state.items[pIdx].items[iIdx];
@@ -85,12 +98,12 @@ const multiProductCartSlice = createSlice({
     },
 
     removeMultiProductItem(state, action: PayloadAction<Key>) {
-      const { productId, label, parentName } = action.payload;
-      const pIdx = findProductIdx(state, productId);
+      const { assetId, label, parentName } = action.payload;
+      const pIdx = findProductIdx(state, assetId);
       if (pIdx === -1) return;
 
       const nextItems = state.items[pIdx].items.filter(
-        (i) => !(i.metadata.label === label && i.parentName === parentName),
+        (i) => !(i.metadata?.label === label && i.parentName === parentName),
       );
 
       state.items[pIdx].items = nextItems;
@@ -99,6 +112,22 @@ const multiProductCartSlice = createSlice({
     clear(state) {
       state.items = [];
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getProductListThunk.pending, (state) => {
+        state.isLoadingProductList = true;
+      })
+      .addCase(
+        getProductListThunk.fulfilled,
+        (state, action: PayloadAction<IProductListResponse>) => {
+          state.productList = action.payload.rows;
+          state.isLoadingProductList = false;
+        },
+      )
+      .addCase(getProductListThunk.rejected, (state) => {
+        state.isLoadingProductList = false;
+      });
   },
 });
 

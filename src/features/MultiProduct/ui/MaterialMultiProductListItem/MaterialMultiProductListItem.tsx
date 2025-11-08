@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { CheckMarkIconSVG } from '../../../../app/assets/svg/CheckMarkIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { AttributeHelper } from '../../../swatches/lib/AttributeHelper';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
 import { AttributeValue } from '../../../swatches/model/types';
 import { HexGridZoom } from '../../../swatches/ui/HexGridZoom/HexGridZoom';
 import { ImageGridZoom } from '../../../swatches/ui/ImageGridZoom/ImageGridZoom';
@@ -12,6 +11,7 @@ import {
 } from '../../model/multiProductCartSlice';
 import { getMultiCartItems } from '../../model/selectors';
 import { IMultiCartProductItem } from '../../model/types';
+import { getSelectedProduct } from '../../../swatches/model/selectors';
 
 export const MaterialMultiProductListItem = ({
   val,
@@ -30,7 +30,7 @@ export const MaterialMultiProductListItem = ({
     if (!selectedProduct) return;
 
     const activeProduct = selectedProducts.find(
-      (product) => selectedProduct.productId === product.productId,
+      (product) => selectedProduct.assetId === product.assetId,
     );
 
     const isSame = (i: AttributeValue) =>
@@ -49,7 +49,7 @@ export const MaterialMultiProductListItem = ({
         ),
       );
       const cartProductItem: IMultiCartProductItem = {
-        productId: existProductId?.productId || selectedProduct.productId,
+        assetId: existProductId?.assetId || selectedProduct.assetId,
         name: selectedProduct.name,
         items: filteredArray,
       };
@@ -64,7 +64,7 @@ export const MaterialMultiProductListItem = ({
         : [newMaterial];
 
       const cartProductItem: IMultiCartProductItem = {
-        productId: selectedProduct.productId,
+        assetId: selectedProduct.assetId,
         name: selectedProduct.name,
         items,
       };
@@ -74,9 +74,8 @@ export const MaterialMultiProductListItem = ({
     }
   };
 
-  const assetId = val && val.assetId ? val.assetId : 'false';
   const isSelected = allItems.find(
-    (elem) => elem.assetId === assetId && elem.parentName === val.parentName,
+    (elem) => elem.value === val.value && elem.parentName === val.parentName,
   );
 
   return (
@@ -103,7 +102,7 @@ export const MaterialMultiProductListItem = ({
         </div>
       </button>
       <div className='flex flex-col mt-3'>
-        <span className='font-normal mb-1'>{val.metadata.label} </span>
+        <span className='font-normal mb-1'>{val.metadata?.label}</span>
         <span className='font-medium'>{val.parentName} </span>
       </div>
     </div>

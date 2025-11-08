@@ -30,37 +30,31 @@ export const MultiProductItemCart = ({
     return selectedProducts.flatMap((p) => p.items);
   }, [selectedProducts]);
 
-  const handleDelete = ({ item, productId }: IMultiProductCartHandleProps) => {
+  const handleDelete = ({ item, assetId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const label = metadata.label;
-    if (productId && label && parentName) {
-      dispatch(removeMultiProductItem({ productId, label, parentName }));
+    const label = metadata?.label;
+    if (assetId && label && parentName) {
+      dispatch(removeMultiProductItem({ assetId, label, parentName }));
       // DeleteSelected material from the  SwatchesList
       dispatch(setSelectedMaterial({ selectedMaterial: item }));
     }
   };
 
-  const handleIncrement = ({
-    item,
-    productId,
-  }: IMultiProductCartHandleProps) => {
+  const handleIncrement = ({ item, assetId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const label = metadata.label;
+    const label = metadata?.label;
 
-    if (productId && label && parentName) {
-      dispatch(incrementMultiProductItem({ productId, label, parentName }));
+    if (assetId && label && parentName) {
+      dispatch(incrementMultiProductItem({ assetId, label, parentName }));
     }
   };
 
-  const handleDecrement = ({
-    item,
-    productId,
-  }: IMultiProductCartHandleProps) => {
+  const handleDecrement = ({ item, assetId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
-    const label = metadata.label;
+    const label = metadata?.label;
 
-    if (productId && label && parentName) {
-      dispatch(decrementMultiProductItem({ productId, label, parentName }));
+    if (assetId && label && parentName) {
+      dispatch(decrementMultiProductItem({ assetId, label, parentName }));
     }
   };
 
@@ -74,14 +68,14 @@ export const MultiProductItemCart = ({
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>
           {selectedProducts.map((product) => {
-            const { items, name, productId } = product;
+            const { items, name, assetId } = product;
 
             if (!items.length) return null;
 
             return (
               <>
                 <div
-                  key={product.productId}
+                  key={product.assetId}
                   className='    border-b border-[var(--border)] p-[var(--padding)] pt-0
         sm:px-[var(--sm-padding)] sm:p-[var(--sm-padding)] sm:pt-0'
                 >
@@ -94,9 +88,18 @@ export const MultiProductItemCart = ({
                         key={`${item.assetId}/${item.parentName}`}
                         item={item}
                         canInc={totalCount < MAX_SLOTS}
-                        onDelete={() => handleDelete({ item, productId })}
-                        onIncrement={() => handleIncrement({ item, productId })}
-                        onDecrement={() => handleDecrement({ item, productId })}
+                        onDelete={() => {
+                          if (!assetId) return;
+                          handleDelete({ item, assetId });
+                        }}
+                        onIncrement={() => {
+                          if (!assetId) return;
+                          handleIncrement({ item, assetId });
+                        }}
+                        onDecrement={() => {
+                          if (!assetId) return;
+                          handleDecrement({ item, assetId });
+                        }}
                       />
                     );
                   })}

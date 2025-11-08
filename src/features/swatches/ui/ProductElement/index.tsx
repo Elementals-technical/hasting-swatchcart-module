@@ -32,8 +32,15 @@ export const ProductElement = ({
   useEffect(() => {
     if (!allProductElementOptions?.length) return;
     const formatProductData = allProductElementOptions.map((item) => {
-      const { Name, Label } = item.metadata || {};
-      return { value: Name, label: Label, id: Name };
+      if (item.metadata) {
+        const { Name, Label } = item.metadata || {};
+
+        return { value: Name, label: Label, id: Name };
+      } else {
+        const { label, value } = item || {};
+
+        return { value, label, id: value };
+      }
     });
 
     setProductOptions(formatProductData);
@@ -42,10 +49,15 @@ export const ProductElement = ({
   const handleFilterChange = (_: string, values: string[]) => {
     if (values.length) {
       const uniqueListValue = uniqueList(values);
-
       if (uniqueListValue.length) {
         const filteredMaterialByProduct = allProductElementOptions.filter(
-          (item) => uniqueListValue.includes(item.metadata?.Label),
+          (item) => {
+            if (item.metadata) {
+              return uniqueListValue.includes(item.metadata?.Label);
+            } else {
+              return uniqueListValue.includes(item.value);
+            }
+          },
         );
 
         setProductValues(uniqueListValue);
@@ -69,13 +81,13 @@ export const ProductElement = ({
             dispatch(setMaterialSelect(itemsWithoutZeroCount));
           });
         }
-
         dispatch(setPanelFilter({ attributes: filteredMaterialByProduct }));
       } else {
         dispatch(setPanelFilter({ attributes: allProductElementOptions }));
       }
     } else {
       setProductValues([]);
+      dispatch(setPanelFilter({ attributes: allProductElementOptions }));
     }
   };
 

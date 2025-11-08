@@ -1,11 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { SearchIconSVG } from '../../../../app/assets/svg/SearchIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { getProductListThunk } from '../../../swatches/model/thunks';
-import {
-  getIsLoadingProductList,
-  getProductLIst,
-} from '../../../swatches/model/selectors';
 import { ProductListItem } from '../ProductListItem/ProductListItem';
 import { MultiProductCartService } from '../../lib/MultiProductCartServices';
 import { Slider } from '../../../../shared/ui/Slider/Slider';
@@ -16,6 +11,10 @@ import type {
 } from '../../model/types';
 import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../../utils/constants';
 import { SingleSelect } from '../../../../shared/ui/SingleSelect/SingleSelect';
+import { getProductListThunk } from '../../model/thunk';
+import { getIsLoadingProductList, getProductLIst } from '../../model/selectors';
+import { Loader } from '../../../../shared/ui/Loader/Loader';
+import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'A-Z', value: 'asc' },
@@ -25,6 +24,8 @@ const SORT_OPTIONS: ISingleSelectOption[] = [
 export const ProductList = () => {
   const dispatch = useAppDispatch();
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
+  const isLoadingProduct = useAppSelector(getIsLoadingSelectedProduct);
+  const productList = useAppSelector(getProductLIst);
 
   const [activeCategory, setActiveCategory] = useState<
     ISliderItem | IProductCart
@@ -40,8 +41,6 @@ export const ProductList = () => {
     }, 300);
     return () => clearTimeout(id);
   }, [search]);
-
-  const productList = useAppSelector(getProductLIst);
 
   const uniqueCategories = useMemo(() => {
     return MultiProductCartService.getUniqueCategories(productList);
@@ -59,8 +58,8 @@ export const ProductList = () => {
 
     if (activeCategory?.value) {
       const target = norm(activeCategory.value);
-      list = list.filter((product) =>
-        product.categories.some((cat: string) => norm(cat) === target),
+      list = list.filter(
+        (product) => norm(product.collection ?? '') === target,
       );
     }
 
@@ -84,7 +83,8 @@ export const ProductList = () => {
   }, [dispatch]);
 
   return (
-    <div className='flex h-full flex-col'>
+    <div className='relative flex h-full flex-col '>
+      {(isLoadingProductList || isLoadingProduct) && <Loader />}
       <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
         <span className='p-[var(--sm-padding)] text-base font-medium'>
           Swatches List
@@ -140,7 +140,7 @@ export const ProductList = () => {
 
           <Slider
             items={uniqueCategories}
-            activeId={activeCategory?.productId}
+            activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
             className='hidden sm:flex sm:max-w-[680px] sm:overflow-hidden'
           />
@@ -148,19 +148,15 @@ export const ProductList = () => {
 
         <Slider
           items={uniqueCategories}
-          activeId={activeCategory?.productId}
+          activeId={activeCategory.productId}
           onSelect={(item) => setActiveCategory(item)}
           className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:hidden'
         />
 
-        <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'>
+        <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)] '>
           <div className='mb-4'>Select Product</div>
 
-          {isLoadingProductList ? (
-            <div className='flex h-full min-h-0 flex-1 items-center justify-center'>
-              loading...
-            </div>
-          ) : filteredProductList.length ? (
+          {filteredProductList.length ? (
             <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
               {filteredProductList.map((productListItem: any) => (
                 <ProductListItem

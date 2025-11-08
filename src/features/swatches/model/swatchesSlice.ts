@@ -4,14 +4,15 @@ import type {
   AttributeValue,
   IAttributeAsset,
   IMaterialSelectState,
+  // IProduct,
   ISetFiltersPayload,
   ISwatchesSlice,
 } from './types';
 import { SwatchesServices } from '../lib/SwatchesServices';
 import { uniqueList } from '../../../shared/utils/uniqueList';
 import { type IMapUIData } from '../../DataAdapter/utils/types';
-import { getProductListThunk } from './thunks';
-import type { IProduct } from '../../MultiProduct/model/types';
+import { getSelectedProductThunk } from './thunks';
+import { IProductListItem } from '../../MultiProduct/model/types';
 
 const initialState: ISwatchesSlice = {
   // isOpenSidebar: true,
@@ -20,8 +21,6 @@ const initialState: ISwatchesSlice = {
   materialSelectState: { Finish: [], Color: [], Look: [] },
   allMaterialsValues: [],
   selectedMaterials: [],
-  productList: [],
-  isLoadingProductList: false,
   selectedProduct: null,
   isLoadingSelectedProduct: false,
   isOpenMultiProductCart: false,
@@ -54,9 +53,7 @@ export const swatchesSlice = createSlice({
         const filteredAttributeList =
           SwatchesServices.getMaterialsValuesFromOptions(attributeList);
         if (filteredAttributeList?.length) {
-          state.allMaterialsValues = SwatchesServices.getUniqueByAssetId(
-            filteredAttributeList as any[],
-          );
+          state.allMaterialsValues = filteredAttributeList;
         }
       }
     },
@@ -103,7 +100,9 @@ export const swatchesSlice = createSlice({
     resetSelectedMaterials(state) {
       state.selectedMaterials = [];
     },
-    setSelectedProduct(state, action: PayloadAction<IProduct>) {
+    setSelectedProduct(state, action: PayloadAction<IProductListItem>) {
+      console.log('setSelectedProduct', action.payload);
+
       state.selectedProduct = action.payload;
     },
     deleteSelectedProduct(state) {
@@ -115,26 +114,15 @@ export const swatchesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getProductListThunk.pending, (state) => {
-        state.isLoadingProductList = true;
+      .addCase(getSelectedProductThunk.pending, (state) => {
+        state.isLoadingSelectedProduct = true;
       })
-      .addCase(getProductListThunk.fulfilled, (state, action) => {
-        state.productList = action.payload;
-        state.isLoadingProductList = false;
+      .addCase(getSelectedProductThunk.fulfilled, (state) => {
+        state.isLoadingSelectedProduct = false;
       })
-      .addCase(getProductListThunk.rejected, (state) => {
-        state.isLoadingProductList = false;
+      .addCase(getSelectedProductThunk.rejected, (state) => {
+        state.isLoadingSelectedProduct = false;
       });
-    // .addCase(getSelectedProductThunk.pending, (state) => {
-    //   state.isLoadingSelectedProduct = true;
-    // })
-    // .addCase(getSelectedProductThunk.fulfilled, (state, action) => {
-    //   state.selectedProduct = action.payload;
-    //   state.isLoadingSelectedProduct = false;
-    // })
-    // .addCase(getSelectedProductThunk.rejected, (state) => {
-    //   state.isLoadingSelectedProduct = false;
-    // });
   },
 });
 

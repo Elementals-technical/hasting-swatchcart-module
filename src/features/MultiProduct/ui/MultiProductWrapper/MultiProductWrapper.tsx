@@ -9,19 +9,18 @@ import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem'
 
 interface IMultiProductWrapperProps {
   onSendData: (data: unknown) => void;
-  onToggleSidebar: () => void;
+  onToggleSidebar?: () => void;
 }
 
 export const MultiProductWrapper = ({
   onSendData,
-  onToggleSidebar,
 }: IMultiProductWrapperProps) => {
   const isOpenMultiProductCart = useAppSelector(getIsOpenMultiCart);
   const selectedProduct = useAppSelector(getSelectedProduct);
 
-  const handleToggleSidebar = () => {
-    onToggleSidebar();
-  };
+  // const handleToggleSidebar = () => {
+  //   onToggleSidebar();
+  // };
 
   return (
     // Simulate a parent height block delete before pushing to the module
@@ -32,7 +31,7 @@ export const MultiProductWrapper = ({
           // onToggleSidebar={onToggleSidebar}
         />
       ) : selectedProduct ? (
-        <SelectedProductItem onSidebarToggle={handleToggleSidebar} />
+        <SelectedProductItem />
       ) : (
         <ProductList />
       )}

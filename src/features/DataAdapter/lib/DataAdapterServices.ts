@@ -1,3 +1,4 @@
+import { IFetchProductData } from '../../../shared/types/fetchData';
 import { SwatchesServices } from '../../swatches/lib/SwatchesServices';
 import {
   ETypeComponent,
@@ -14,7 +15,7 @@ export class DataAdapterServices {
     data,
   }: {
     dataType: EDataInputType;
-    data: any[];
+    data: IFetchProductData | any;
   }) {
     switch (dataType) {
       case EDataInputType.UI:
@@ -23,6 +24,8 @@ export class DataAdapterServices {
         return console.log(EDataInputType.DATA_INPUT);
       case EDataInputType.DATA_ALL_PRODUCT:
         return console.log(EDataInputType.DATA_ALL_PRODUCT);
+      case EDataInputType.FETCH_DATA_PRODUCT:
+        return this.getTransformedFetchProductData(data);
       default:
         throw new Error('Unsupported format');
     }
@@ -80,5 +83,71 @@ export class DataAdapterServices {
     return this.getAllMaterialOptions(data);
   }
 
-  // EDataInputType.UI DATA
+  // groupName solution
+  static getTransformedFetchProductData(data: IFetchProductData): any {
+    const { materials = [], structure = [] } = data;
+
+    // optionName -> groupName (only MATERIAL)
+    const optionToGroup = new Map<string, string>();
+    for (const section of structure) {
+      for (const group of section.groups ?? []) {
+        for (const opt of group.options ?? []) {
+          if (
+            opt?.typeComponent === ETypeComponent.MATERIAL &&
+            opt?.optionName
+          ) {
+            optionToGroup.set(opt.optionName, group.groupName);
+          }
+        }
+      }
+    }
+
+    const materialsValues = materials.filter(
+      (m) => m.optionName && optionToGroup.has(m.optionName!),
+    );
+
+    const materialsWithGroup = materialsValues.map((m) => ({
+      ...m,
+      groupName: m.optionName ? optionToGroup.get(m.optionName) : undefined,
+    }));
+
+    // flatten children; inject parentName + groupName
+    const allMaterialValues = materialsWithGroup.flatMap((item) => {
+      const { label, groupName } = item;
+      const parentName =
+        (label.toLocaleLowerCase() === 'color' ? groupName : label) ||
+        'without_name';
+      return (item.valuesArray ?? []).map((v) => ({
+        ...v,
+        parentName,
+      }));
+    });
+
+    // build select options (unique, sorted by label)
+    const seen = new Set<string>();
+
+    const productElementOptions = materialsWithGroup
+      .map(({ label, groupName, valuesArray }) => {
+        const normalizedLabel =
+          label?.toLowerCase() === 'color' ? (groupName ?? label) : label;
+
+        return {
+          id: normalizedLabel!,
+          value: normalizedLabel!,
+          label: normalizedLabel!,
+          valuesArray,
+        };
+      })
+      .filter(
+        (option) =>
+          option.label &&
+          (seen.has(option.label) ? false : (seen.add(option.label), true)),
+      )
+      .sort((a, b) => a.label.localeCompare(b.label));
+
+    return {
+      allMaterialValues,
+      productElementOptions,
+    };
+  }
 }

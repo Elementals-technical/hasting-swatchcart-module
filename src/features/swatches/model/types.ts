@@ -1,4 +1,11 @@
-import type { IProduct } from '../../MultiProduct/model/types';
+import { IProductListItem } from '../../MultiProduct/model/types';
+
+export interface IProduct {
+  attributes: AttributeValue[] | any[];
+  name: string;
+  productId: number;
+  categories: string[];
+}
 
 export interface ISwatchesSlice {
   // isOpenSidebar: boolean;
@@ -7,9 +14,8 @@ export interface ISwatchesSlice {
   materialSelectState: IMaterialSelectState;
   allMaterialsValues: AttributeValue[];
   selectedMaterials: AttributeValue[];
-  productList: IProduct[];
-  isLoadingProductList: boolean;
-  selectedProduct: IProduct | null;
+  // productList: IProduct[];
+  selectedProduct: IProductListItem | null;
   isLoadingSelectedProduct: boolean;
   isOpenMultiProductCart: boolean;
 }
@@ -57,6 +63,10 @@ export interface IAttributeAsset {
   };
   values: IAttributeAssetValues[];
   visible: boolean;
+
+  // fetchProduct values
+  valuesArray?: IMaterialMetadata[];
+  option?: string;
 }
 
 export interface IAttributeAssetValues {
@@ -119,17 +129,22 @@ export type ETypeComponent =
   (typeof ETypeComponent)[keyof typeof ETypeComponent];
 
 export interface AttributeValue {
-  assetId: string;
-  name: string;
-  tags: string[];
-  metadata: IMaterialMetadata;
+  assetId?: string;
+  name?: string;
+  tags?: string[];
+  metadata?: IMaterialMetadata;
   parentName: string;
-  fileSize: number;
-  tagids: string[];
-  type: 'item' | string;
+  fileSize?: number;
+  tagids?: string[];
+  type?: 'item' | string;
   label: string;
-  visible: boolean;
-  enabled: boolean;
+  visible?: boolean;
+  enabled?: boolean;
+  // fetch properties
+  option?: string;
+  optionName?: string;
+  valuesArray?: IMaterialMetadata[];
+  value?: string;
 }
 
 export interface IMaterialMetadata {

@@ -31,7 +31,7 @@ export const CartListItem = ({
         </div>
         <div className='flex flex-col justify-between'>
           <div className='flex flex-col'>
-            <span className='mb-1 font-medium'>{item.metadata.label}</span>
+            <span className='mb-1 font-medium'>{item.metadata?.label}</span>
             <span className='mb-1 font-semibold'>{item.parentName}</span>
           </div>
           <Counter

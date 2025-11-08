@@ -34,7 +34,7 @@ const MultiSelect = React.forwardRef<
       values,
       onValueChange,
       placeholder = 'Select options...',
-      className,
+      className = 'max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]',
       dropdownWidth,
       align = 'start',
       getTooltipByMaterialAndSection,
@@ -110,6 +110,8 @@ const MultiSelect = React.forwardRef<
           </span>
         </div>
       );
+
+    if (!options.length) return;
 
     return (
       <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
