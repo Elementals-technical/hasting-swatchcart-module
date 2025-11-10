@@ -14,7 +14,7 @@ export const SwatchModule = ({
     <>
       {isOpen ? (
         <>
-          {uiDataType === EDataInputType.DATA_ALL_PRODUCT ? (
+          {uiDataType === EDataInputType.FETCH_DATA_ALL ? (
             <MultiProductWrapper
               onSendData={onSendData}
               onToggleSidebar={onToggleSidebar}

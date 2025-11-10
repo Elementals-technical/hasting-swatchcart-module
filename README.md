@@ -16,11 +16,11 @@ npm i hasting-swatchcart-module
 ### UI (attributes from outside )
 
 ```js
-import { SwatchModule } from 'hasting-swatchcart-module';
+import { SwatchModule, EDataInputType } from 'hasting-swatchcart-module';
 
 <SwatchModule
   isOpen={isOpenModule}
-  uiDataType={'UI'}
+  uiDataType={EDataInputType.UI}
   data={data}
   onToggleSidebar={handleOpenSidebar}
   onSendData={handleSetData}
@@ -30,11 +30,11 @@ import { SwatchModule } from 'hasting-swatchcart-module';
 ### Fetch product
 
 ```js
-import { SwatchModule } from 'hasting-swatchcart-module';
+import { SwatchModule, EDataInputType } from 'hasting-swatchcart-module';
 
 <SwatchModule
   isOpen={isOpenModule}
-  uiDataType={'FETCH_DATA_PRODUCT'}
+  uiDataType={EDataInputType.FETCH_DATA_PRODUCT}
   assetId={'asset_id'}
   onToggleSidebar={handleOpenSidebar}
   onSendData={handleSetData}
@@ -44,11 +44,11 @@ import { SwatchModule } from 'hasting-swatchcart-module';
 ### Fetch product all
 
 ```js
-import { SwatchModule } from 'hasting-swatchcart-module';
+import { SwatchModule, EDataInputType } from 'hasting-swatchcart-module';
 
 <SwatchModule
   isOpen={isOpenModule}
-  uiDataType={'FETCH_DATA_PRODUCT_All'}
+  uiDataType={EDataInputType.FETCH_DATA_ALL}
   onToggleSidebar={handleOpenSidebar}
   onSendData={handleSetData}
 />;
@@ -65,7 +65,10 @@ import { SwatchModule } from 'hasting-swatchcart-module';
   <div id="root"></div>
 
   <script type="module">
-    import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
+    import {
+      mountSwatchModule,
+      EDataInputType,
+    } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
 
     // local MOCK JSON data or your real data
     const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
@@ -82,27 +85,27 @@ import { SwatchModule } from 'hasting-swatchcart-module';
     };
 
     // UI (attributes from outside) - single product
-    // mountSwatchModule(rootElement, {
-    //   isOpen: true,
-    //   uiDataType: 'UI',
-    //   data: mockData, // or your data
-    //   onToggleSidebar: handleToggleSidebar,
-    //   onSendData: handleSendData,
-    // });
+    mountSwatchModule(rootElement, {
+      isOpen: true,
+      uiDataType: EDataInputType.UI,
+      data: mockData, // or your data
+      onToggleSidebar: handleToggleSidebar,
+      onSendData: handleSendData,
+    });
 
     // Fetch product data - single product
-    // mountSwatchModule(rootElement, {
-    //   isOpen: true,
-    //   uiDataType: 'FETCH_DATA_PRODUCT',
-    //   assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
-    //   onToggleSidebar: handleToggleSidebar,
-    //   onSendData: handleSendData,
-    // });
+    mountSwatchModule(rootElement, {
+      isOpen: true,
+      uiDataType: EDataInputType.FETCH_DATA_PRODUCT,
+      assetId: 'assetId',
+      onToggleSidebar: handleToggleSidebar,
+      onSendData: handleSendData,
+    });
 
     // Fetch product all data - multi product
     mountSwatchModule(rootElement, {
       isOpen: true,
-      uiDataType: 'FETCH_DATA_PRODUCT_All',
+      uiDataType: EDataInputType.FETCH_DATA_ALL,
       onToggleSidebar: handleToggleSidebar,
       onSendData: handleSendData,
     });
@@ -227,24 +230,44 @@ npm run build:cdn
 <link rel="stylesheet" href="../dist/cdn/main.css" />
 <script type="module">
   // Test locally
-  import { mountSwatchModule } from '../dist/cdn/main.js';
+  import { mountSwatchModule, EDataInputType } from '../dist/cdn/main.js';
 
   const rootElement = document.getElementById('root');
   const jsonUrl = new URL('./mockAttribute.json', import.meta.url);
   const mockData = await fetch(jsonUrl).then((r) => r.json());
 
   const handleToggleSidebar = () => {
-    console.log("handleToggleSidebar is working");
-  }
+    console.log('handleToggleSidebar is working');
+  };
 
   const handleSendData = (selectedData) => {
-    console.log("handleSendData  is working", selectedData);
-  }
+    console.log('handleSendData  is working', selectedData);
+  };
 
+  // Chose one of these possible options
+
+  // UI (attributes from outside) - single product
   mountSwatchModule(rootElement, {
     isOpen: true,
-    uiDataType: 'UI' or 'FETCH_DATA_PRODUCT' or 'FETCH_DATA_PRODUCT_All',
-    data: mockData,
+    uiDataType: EDataInputType.UI,
+    data: mockData, // or your data
+    onToggleSidebar: handleToggleSidebar,
+    onSendData: handleSendData,
+  });
+
+  // Fetch product data - single product
+  mountSwatchModule(rootElement, {
+    isOpen: true,
+    uiDataType: EDataInputType.FETCH_DATA_PRODUCT,
+    assetId: 'assetId',
+    onToggleSidebar: handleToggleSidebar,
+    onSendData: handleSendData,
+  });
+
+  // Fetch product all data - multi product
+  mountSwatchModule(rootElement, {
+    isOpen: true,
+    uiDataType: EDataInputType.FETCH_DATA_ALL,
     onToggleSidebar: handleToggleSidebar,
     onSendData: handleSendData,
   });
@@ -290,12 +313,12 @@ npm run build:cdn
       console.log('handleSendData', selectedData);
     };
 
-    // Chose one of the possible options
+    // Chose one of these possible options
 
     // UI (attributes from outside) - single product
     mountSwatchModule(rootElement, {
       isOpen: true,
-      uiDataType: 'UI',
+      uiDataType: EDataInputType.UI,
       data: mockData, // or your data
       onToggleSidebar: handleToggleSidebar,
       onSendData: handleSendData,
@@ -304,17 +327,16 @@ npm run build:cdn
     // Fetch product data - single product
     mountSwatchModule(rootElement, {
       isOpen: true,
-      uiDataType: 'FETCH_DATA_PRODUCT',
-      assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
+      uiDataType: EDataInputType.FETCH_DATA_PRODUCT,
+      assetId: 'assetId',
       onToggleSidebar: handleToggleSidebar,
       onSendData: handleSendData,
     });
 
-
     // Fetch product all data - multi product
     mountSwatchModule(rootElement, {
       isOpen: true,
-      uiDataType: 'FETCH_DATA_PRODUCT_All',
+      uiDataType: EDataInputType.FETCH_DATA_ALL,
       onToggleSidebar: handleToggleSidebar,
       onSendData: handleSendData,
     });

@@ -13,11 +13,11 @@
     /> -->
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" style="height: 600px"></div>
 
     <script type="module">
       // Test locally
-      import { mountSwatchModule } from '../dist/cdn/main.js';
+      import { mountSwatchModule, EDataInputType } from '../dist/cdn/main.js';
 
       // Test real CDN
       // import { mountSwatchModule } from 'https://unpkg.com/hasting-swatchcart-module/dist/cdn/main.js';
@@ -38,28 +38,28 @@
       // UI (attributes from outside) - single product
       // mountSwatchModule(rootElement, {
       //   isOpen: true,
-      //   uiDataType: 'UI',
+      //   uiDataType: EDataInputType.UI,
       //   data: mockData, // or your data
       //   onToggleSidebar: handleToggleSidebar,
       //   onSendData: handleSendData,
       // });
 
       // Fetch product data - single product
-      // mountSwatchModule(rootElement, {
-      //   isOpen: true,
-      //   uiDataType: 'FETCH_DATA_PRODUCT',
-      //   assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
-      //   onToggleSidebar: handleToggleSidebar,
-      //   onSendData: handleSendData,
-      // });
-
-      // Fetch product all data - multi product
       mountSwatchModule(rootElement, {
         isOpen: true,
-        uiDataType: 'FETCH_DATA_PRODUCT_All',
+        uiDataType: EDataInputType.FETCH_DATA_PRODUCT,
+        assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
         onToggleSidebar: handleToggleSidebar,
         onSendData: handleSendData,
       });
+
+      // Fetch product all data - multi product
+      // mountSwatchModule(rootElement, {
+      //   isOpen: true,
+      //   uiDataType: EDataInputType.FETCH_DATA_ALL,
+      //   onToggleSidebar: handleToggleSidebar,
+      //   onSendData: handleSendData,
+      // });
     </script>
   </body>
 </html>
