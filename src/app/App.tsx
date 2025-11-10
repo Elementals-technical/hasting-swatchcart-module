@@ -5,10 +5,10 @@ import { useState } from 'react';
 // import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import { useAppDispatch, useAppSelector } from './store/store';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule'; // App
-// import { SwatchModule } from '../../dist/main'; // build module
-import { SwatchModule } from '../../lib/main'; // lib
+import { SwatchModule } from '../../dist/main'; // build module
+// import { SwatchModule } from '../../lib/main'; // lib
 import { EDataInputType } from '../features/DataAdapter/utils/types';
-
+// import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 function App() {
   const [isOpenModule, setIsOpenModule] = useState(true);
   const [mockDataMode, setMockDataMode] = useState<EDataInputType>(
@@ -76,7 +76,7 @@ function App() {
       <SwatchModule
         isOpen={isOpenModule}
         uiDataType={mockDataMode}
-        // uiDataType={"DATA_ALL_PRODUCT"}
+        // uiDataType={EDataInputType.UI}
         // data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
         assetId='9aa4a6cc-05a2-4de0-b376-ef3ef2271bfe'
         onToggleSidebar={handleOpenSidebar}
