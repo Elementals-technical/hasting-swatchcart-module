@@ -20,10 +20,10 @@ export class DataAdapterServices {
     switch (dataType) {
       case EDataInputType.UI:
         return this.getMapUIData(data);
-      case EDataInputType.DATA_INPUT:
-        return console.log(EDataInputType.DATA_INPUT);
-      case EDataInputType.DATA_ALL_PRODUCT:
-        return console.log(EDataInputType.DATA_ALL_PRODUCT);
+      // case EDataInputType.DATA_INPUT:
+      //   return console.log(EDataInputType.DATA_INPUT);
+      // case EDataInputType.DATA_ALL_PRODUCT:
+      //   return console.log(EDataInputType.DATA_ALL_PRODUCT);
       case EDataInputType.FETCH_DATA_PRODUCT:
         return this.getTransformedFetchProductData(data);
       default:
