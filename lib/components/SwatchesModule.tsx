@@ -10,6 +10,7 @@ import { DataAdapterServices } from '../../src/features/DataAdapter/lib/DataAdap
 import { setAllMaterialsOptions } from '../../src/features/swatches/model/swatchesSlice';
 import { getSelectedProductThunk } from '../../src/features/swatches/model/thunks';
 import { getProductListThunk } from '../../src/features/MultiProduct/model/thunk';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 export interface ISwatchesModuleProps {
   isOpen: boolean;
@@ -84,6 +85,19 @@ export const SwatchModule = ({
 
   return (
     <LibraryProvider>
+      <ToastContainer
+        position='top-center'
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='dark'
+        transition={Bounce}
+      />
       {isOpen ? (
         <>
           {!isSingleProduct ? (

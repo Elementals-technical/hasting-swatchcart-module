@@ -60,6 +60,7 @@
     "react-dom": ">=18",
     "react-markdown": "^10.1.0",
     "react-redux": ">=9",
+    "react-toastify": "^11.0.5",
     "rehype-raw": "^7.0.0",
     "tailwind-merge": "^3.3.0",
     "terser": "^5.44.0"

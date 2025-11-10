@@ -45,21 +45,21 @@
       // });
 
       // Fetch product data - single product
-      mountSwatchModule(rootElement, {
-        isOpen: true,
-        uiDataType: EDataInputType.FETCH_DATA_PRODUCT,
-        assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
-        onToggleSidebar: handleToggleSidebar,
-        onSendData: handleSendData,
-      });
-
-      // Fetch product all data - multi product
       // mountSwatchModule(rootElement, {
       //   isOpen: true,
-      //   uiDataType: EDataInputType.FETCH_DATA_ALL,
+      //   uiDataType: EDataInputType.FETCH_DATA_PRODUCT,
+      //   assetId: '67119b1c-36ba-42c1-bcd1-2d21cf44df55',
       //   onToggleSidebar: handleToggleSidebar,
       //   onSendData: handleSendData,
       // });
+
+      // Fetch product all data - multi product
+      mountSwatchModule(rootElement, {
+        isOpen: true,
+        uiDataType: EDataInputType.FETCH_DATA_ALL,
+        onToggleSidebar: handleToggleSidebar,
+        onSendData: handleSendData,
+      });
     </script>
   </body>
 </html>

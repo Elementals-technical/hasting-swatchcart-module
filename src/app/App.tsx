@@ -9,7 +9,6 @@ import { SwatchModule } from '../../dist/main'; // build module
 // import { SwatchModule } from '../../lib/main'; // lib
 import { EDataInputType } from '../features/DataAdapter/utils/types';
 // import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
-
 function App() {
   const [isOpenModule, setIsOpenModule] = useState(true);
   const [mockDataMode, setMockDataMode] = useState<EDataInputType>(
