@@ -95,7 +95,7 @@ export const SwatchesList = ({
             </button>
           );
         })}
-        <Hint open={isOpen} target={hoveredEl} side='bottom' offset={8}>
+        <Hint open={isOpen} target={hoveredEl} offset={8}>
           <>
             {text.materialName}
             <br />({text.parentName})
