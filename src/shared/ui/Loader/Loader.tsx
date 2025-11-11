@@ -10,7 +10,7 @@ interface ILoaderProps {
 
 export const Loader: React.FC<ILoaderProps> = ({
   size = 80,
-  trackClassName = 'text-gray-200',
+  trackClassName = 'text-white',
   accentClassName = 'text-amber-700',
   className = '',
   isOverlay = true,
@@ -19,7 +19,7 @@ export const Loader: React.FC<ILoaderProps> = ({
     <div
       className={
         isOverlay
-          ? 'absolute inset-0 flex items-center justify-center backdrop-blur-md bg-black/10 z-50'
+          ? 'absolute inset-0 flex items-center justify-center backdrop-blur bg-black/30 z-50'
           : 'inline-flex items-center justify-center'
       }
     >
