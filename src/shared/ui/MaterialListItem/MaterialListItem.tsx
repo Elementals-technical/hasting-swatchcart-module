@@ -1,22 +1,34 @@
-import { AttributeHelper } from '../../lib/AttributeHelper';
-import { ImageGridZoom } from '../ImageGridZoom/ImageGridZoom';
-import { HexGridZoom } from '../HexGridZoom/HexGridZoom';
-import type { AttributeValue } from '../../model/types';
-import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
-import { getSelectedMaterials } from '../../model/selectors';
-import { CheckMarkIconSVG } from '../../../../app/assets/svg/CheckMarkIconSVG';
-import { setSelectedMaterial } from '../../model/swatchesSlice';
+import { AttributeHelper } from '../../../features/swatches/lib/AttributeHelper';
+import { ImageGridZoom } from '../../../features/swatches/ui/ImageGridZoom/ImageGridZoom';
+import { HexGridZoom } from '../../../features/swatches/ui/HexGridZoom/HexGridZoom';
+import type { AttributeValue } from '../../../features/swatches/model/types';
+import { useAppSelector } from '../../../app/store/store';
+import { getSelectedMaterials } from '../../../features/swatches/model/selectors';
+import { CheckMarkIconSVG } from '../../../app/assets/svg/CheckMarkIconSVG';
+import { getMultiCartItems } from '../../../features/MultiProduct/model/selectors';
+import { useMemo } from 'react';
 
-export const MaterialListItem = ({ val }: { val: AttributeValue }) => {
-  const dispatch = useAppDispatch();
+interface IMaterialListItemProps {
+  val: AttributeValue;
+  onClick: (item: AttributeValue) => void;
+}
+
+export const MaterialListItem = ({ val, onClick }: IMaterialListItemProps) => {
   const selected = useAppSelector(getSelectedMaterials);
+  const selectedProducts = useAppSelector(getMultiCartItems);
+
+  const allItems = useMemo(() => {
+    return selectedProducts.flatMap((p) => p.items);
+  }, [selectedProducts]);
+
+  const source = allItems.length ? allItems : selected;
 
   const handleSelect = (item: AttributeValue) => {
-    dispatch(setSelectedMaterial({ selectedMaterial: item }));
+    onClick(item);
   };
 
   const value = val && val.metadata?.value;
-  const isSelected = selected.find(
+  const isSelected = source.find(
     (elem) =>
       elem.metadata?.value === value && elem.parentName === val.parentName,
   );

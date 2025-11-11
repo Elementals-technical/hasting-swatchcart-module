@@ -1,11 +1,21 @@
 import { useMemo, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useAppSelector } from '../../../../app/store/store';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import {
   getAllMaterialValues,
   getMaterialSelectStateFilters,
+  getSelectedProduct,
 } from '../../../swatches/model/selectors';
-import { MaterialMultiProductListItem } from '../MaterialMultiProductListItem/MaterialMultiProductListItem';
+import { AttributeValue } from '../../../swatches/model/types';
+import {
+  setActiveMultiCartProduct,
+  setMultiCartItems,
+} from '../../model/multiProductCartSlice';
+import { IMultiCartProductItem } from '../../model/types';
+import { getMultiCartItems } from '../../model/selectors';
+import { MaterialListItem } from '../../../../shared/ui/MaterialListItem/MaterialListItem';
+import { toast } from 'react-toastify';
+import { LIMIT_MESSAGE } from '../../../../shared/constants/constants';
 
 interface IMaterialListProps {
   containerStyles?: string;
@@ -18,9 +28,16 @@ export const MaterialMultiProductList = ({
   gridStyles = 'grid grid-cols-1 gap-[8px] sm:grid-cols-3',
   desktopColumnsCount = 3,
 }: IMaterialListProps) => {
+  const dispatch = useAppDispatch();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const allMaterialsValues = useAppSelector(getAllMaterialValues);
   const filters = useAppSelector(getMaterialSelectStateFilters);
+  const selectedProduct = useAppSelector(getSelectedProduct);
+  const selectedProducts = useAppSelector(getMultiCartItems);
+
+  const allItems = useMemo(() => {
+    return selectedProducts.flatMap((p) => p.items);
+  }, [selectedProducts]);
 
   const filteredItems = useMemo(() => {
     return allMaterialsValues.filter((item) => {
@@ -84,6 +101,54 @@ export const MaterialMultiProductList = ({
   const padTop = virtualRows[0]?.start ?? 0;
   const padBottom = totalSize - (virtualRows[virtualRows.length - 1]?.end ?? 0);
 
+  const handleSelect = (item: AttributeValue) => {
+    if (!selectedProduct) return;
+
+    const activeProduct = selectedProducts.find(
+      (product) => selectedProduct.assetId === product.assetId,
+    );
+
+    const isSame = (i: AttributeValue) =>
+      i.metadata?.label === item.metadata?.label &&
+      i.parentName === item.parentName;
+
+    const exists = allItems.some(isSame);
+    if (!exists && allItems.length >= 5) toast(LIMIT_MESSAGE);
+    if (exists) {
+      const filteredArray = allItems.filter((item) => !isSame(item));
+      const existProductId = selectedProducts.find((p) =>
+        p.items.some(
+          (i) =>
+            i.metadata?.label === item.metadata?.label &&
+            i.parentName === item.parentName,
+        ),
+      );
+      const cartProductItem: IMultiCartProductItem = {
+        assetId: existProductId?.assetId || selectedProduct.assetId,
+        name: selectedProduct.name,
+        items: filteredArray,
+      };
+
+      dispatch(setMultiCartItems(cartProductItem));
+      dispatch(setActiveMultiCartProduct(cartProductItem));
+    } else if (allItems.length < 5) {
+      const newMaterial = { ...item, count: 1 };
+
+      const items = activeProduct
+        ? [...activeProduct.items, newMaterial]
+        : [newMaterial];
+
+      const cartProductItem: IMultiCartProductItem = {
+        assetId: selectedProduct.assetId,
+        name: selectedProduct.name,
+        items,
+      };
+
+      dispatch(setMultiCartItems(cartProductItem));
+      dispatch(setActiveMultiCartProduct(cartProductItem));
+    }
+  };
+
   return (
     <div ref={scrollRef} className={containerStyles}>
       <div style={{ height: padTop }} aria-hidden />
@@ -99,11 +164,13 @@ export const MaterialMultiProductList = ({
           if (isEndOfRow) {
             return (
               <div key={key} ref={rowVirtualizer.measureElement as any}>
-                <MaterialMultiProductListItem val={val} />
+                <MaterialListItem val={val} onClick={handleSelect} />
               </div>
             );
           }
-          return <MaterialMultiProductListItem key={key} val={val} />;
+          return (
+            <MaterialListItem key={key} val={val} onClick={handleSelect} />
+          );
         })}
       </div>
 

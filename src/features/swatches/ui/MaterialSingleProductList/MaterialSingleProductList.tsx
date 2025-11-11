@@ -6,7 +6,10 @@ import {
   getAllMaterialValues,
   getMaterialSelectStateFilters,
 } from '../../model/selectors';
-import { MaterialListItem } from '../MaterialListItem/MaterialListItem';
+import { MaterialListItem } from '../../../../shared/ui/MaterialListItem/MaterialListItem';
+import { AttributeValue } from '../../model/types';
+import { setSelectedMaterial } from '../../model/swatchesSlice';
+import { useDispatch } from 'react-redux';
 
 interface IMaterialListProps {
   containerStyles?: string;
@@ -19,6 +22,7 @@ export const MaterialSingleProductList = ({
   gridStyles = 'grid grid-cols-2 gap-[8px] sm:grid-cols-3 sm:gap-[var(--sm-padding)]',
   desktopColumnsCount = 3,
 }: IMaterialListProps) => {
+  const dispatch = useDispatch();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const allMaterialsValues = useAppSelector(getAllMaterialValues);
   const filters = useAppSelector(getMaterialSelectStateFilters);
@@ -84,6 +88,10 @@ export const MaterialSingleProductList = ({
   const padTop = virtualRows[0]?.start ?? 0;
   const padBottom = totalSize - (virtualRows[virtualRows.length - 1]?.end ?? 0);
 
+  const handleSelect = (item: AttributeValue) => {
+    dispatch(setSelectedMaterial({ selectedMaterial: item }));
+  };
+
   return (
     <div ref={scrollRef} className={containerStyles}>
       <div style={{ height: padTop }} aria-hidden />
@@ -99,11 +107,13 @@ export const MaterialSingleProductList = ({
           if (isEndOfRow) {
             return (
               <div key={key} ref={rowVirtualizer.measureElement as any}>
-                <MaterialListItem val={val} />
+                <MaterialListItem val={val} onClick={handleSelect} />
               </div>
             );
           }
-          return <MaterialListItem key={key} val={val} />;
+          return (
+            <MaterialListItem key={key} val={val} onClick={handleSelect} />
+          );
         })}
       </div>
 
