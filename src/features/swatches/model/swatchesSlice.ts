@@ -13,6 +13,8 @@ import { uniqueList } from '../../../shared/utils/uniqueList';
 import { type IMapUIData } from '../../DataAdapter/utils/types';
 import { getSelectedProductThunk } from './thunks';
 import { IProductListItem } from '../../MultiProduct/model/types';
+import { toast } from 'react-toastify';
+import { LIMIT_MESSAGE } from '../../../shared/constants/constants';
 
 const initialState: ISwatchesSlice = {
   // isOpenSidebar: true,
@@ -91,6 +93,8 @@ export const swatchesSlice = createSlice({
 
       const exists = selected.some(isSame);
 
+      if (!exists && selected.length >= 5) toast(LIMIT_MESSAGE);
+
       if (exists) {
         state.selectedMaterials = selected.filter((i) => !isSame(i));
       } else if (selected.length < 5) {
@@ -101,8 +105,6 @@ export const swatchesSlice = createSlice({
       state.selectedMaterials = [];
     },
     setSelectedProduct(state, action: PayloadAction<IProductListItem>) {
-      console.log('setSelectedProduct', action.payload);
-
       state.selectedProduct = action.payload;
     },
     deleteSelectedProduct(state) {
