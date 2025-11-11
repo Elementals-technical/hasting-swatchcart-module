@@ -57,10 +57,12 @@ export const MaterialListItem = ({ val, onClick }: IMaterialListItemProps) => {
         </div>
       </button>
       <div className='flex flex-col mt-3'>
-        <span className='font-normal mb-1'>
+        <span className='font-xs font-semibold leading-[14px] mb-1'>
           {val.metadata?.label || val.label}{' '}
         </span>
-        <span className='font-medium'>{val.parentName} </span>
+        <span className='text-[10px] font-medium leading-[12px]'>
+          {val.parentName}{' '}
+        </span>
       </div>
     </div>
   );
