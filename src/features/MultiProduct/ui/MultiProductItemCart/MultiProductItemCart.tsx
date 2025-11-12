@@ -75,7 +75,7 @@ export const MultiProductItemCart = ({
             return (
               <>
                 <div
-                  key={product.assetId}
+                  key={product.value}
                   className='    border-b border-[var(--border)] p-[var(--padding)] pt-0
         sm:px-[var(--sm-padding)] sm:p-[var(--sm-padding)] sm:pt-0'
                 >
@@ -85,7 +85,7 @@ export const MultiProductItemCart = ({
                   {items?.map((item) => {
                     return (
                       <CartListItem
-                        key={`${item.assetId}/${item.parentName}`}
+                        key={`${item.value}/${item.parentName}`}
                         item={item}
                         canInc={totalCount < MAX_SLOTS}
                         onDelete={() => {

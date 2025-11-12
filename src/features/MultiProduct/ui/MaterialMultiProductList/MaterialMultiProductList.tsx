@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import {
@@ -14,8 +14,7 @@ import {
 import { IMultiCartProductItem } from '../../model/types';
 import { getMultiCartItems } from '../../model/selectors';
 import { MaterialListItem } from '../../../../shared/ui/MaterialListItem/MaterialListItem';
-import { toast } from 'react-toastify';
-import { LIMIT_MESSAGE } from '../../../../shared/constants/constants';
+import { SwatchLimitModal } from '../../../../shared/ui/SwatchLimitModal/SwatchLimitModal';
 
 interface IMaterialListProps {
   containerStyles?: string;
@@ -34,6 +33,7 @@ export const MaterialMultiProductList = ({
   const filters = useAppSelector(getMaterialSelectStateFilters);
   const selectedProduct = useAppSelector(getSelectedProduct);
   const selectedProducts = useAppSelector(getMultiCartItems);
+  const [isShowSwatchLimit, setIsShowSwatchLImit] = useState(false);
 
   const allItems = useMemo(() => {
     return selectedProducts.flatMap((p) => p.items);
@@ -113,7 +113,8 @@ export const MaterialMultiProductList = ({
       i.parentName === item.parentName;
 
     const exists = allItems.some(isSame);
-    if (!exists && allItems.length >= 5) toast(LIMIT_MESSAGE);
+    // if (!exists && allItems.length >= 5) toast(LIMIT_MESSAGE);
+    if (!exists && allItems.length >= 5) setIsShowSwatchLImit(true);
     if (exists) {
       const filteredArray = allItems.filter((item) => !isSame(item));
       const existProductId = selectedProducts.find((p) =>
@@ -151,6 +152,10 @@ export const MaterialMultiProductList = ({
 
   return (
     <div ref={scrollRef} className={containerStyles}>
+      <SwatchLimitModal
+        isOpen={isShowSwatchLimit}
+        onClose={() => setIsShowSwatchLImit(false)}
+      />
       <div style={{ height: padTop }} aria-hidden />
 
       <div className={gridStyles}>

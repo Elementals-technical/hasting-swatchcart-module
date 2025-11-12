@@ -1,5 +1,4 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { current } from '@reduxjs/toolkit';
+import { createSlice, current, type PayloadAction } from '@reduxjs/toolkit';
 import type {
   AttributeValue,
   IAttributeAsset,
@@ -13,8 +12,6 @@ import { uniqueList } from '../../../shared/utils/uniqueList';
 import { type IMapUIData } from '../../DataAdapter/utils/types';
 import { getSelectedProductThunk } from './thunks';
 import { IProductListItem } from '../../MultiProduct/model/types';
-import { toast } from 'react-toastify';
-import { LIMIT_MESSAGE } from '../../../shared/constants/constants';
 
 const initialState: ISwatchesSlice = {
   // isOpenSidebar: true,
@@ -81,9 +78,12 @@ export const swatchesSlice = createSlice({
     },
     setSelectedMaterial(
       state,
-      action: PayloadAction<{ selectedMaterial: AttributeValue }>,
+      action: PayloadAction<{
+        selectedMaterial: AttributeValue;
+        limitCb?: () => void;
+      }>,
     ) {
-      const { selectedMaterial } = action.payload;
+      const { selectedMaterial, limitCb } = action.payload;
       if (!selectedMaterial) return;
       const selected = current(state.selectedMaterials);
 
@@ -93,7 +93,7 @@ export const swatchesSlice = createSlice({
 
       const exists = selected.some(isSame);
 
-      if (!exists && selected.length >= 5) toast(LIMIT_MESSAGE);
+      if (!exists && selected.length >= 5 && limitCb) limitCb();
 
       if (exists) {
         state.selectedMaterials = selected.filter((i) => !isSame(i));
