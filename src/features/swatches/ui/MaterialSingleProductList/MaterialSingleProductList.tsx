@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
 import { useAppSelector } from '../../../../app/store/store';
@@ -10,6 +10,7 @@ import { MaterialListItem } from '../../../../shared/ui/MaterialListItem/Materia
 import { AttributeValue } from '../../model/types';
 import { setSelectedMaterial } from '../../model/swatchesSlice';
 import { useDispatch } from 'react-redux';
+import { SwatchLimitModal } from '../../../../shared/ui/SwatchLimitModal/SwatchLimitModal';
 
 interface IMaterialListProps {
   containerStyles?: string;
@@ -26,6 +27,7 @@ export const MaterialSingleProductList = ({
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const allMaterialsValues = useAppSelector(getAllMaterialValues);
   const filters = useAppSelector(getMaterialSelectStateFilters);
+  const [isShowLimitMessage, setIsShowLimitMessage] = useState(false);
 
   const filteredItems = useMemo(() => {
     return allMaterialsValues.filter((item) => {
@@ -89,11 +91,20 @@ export const MaterialSingleProductList = ({
   const padBottom = totalSize - (virtualRows[virtualRows.length - 1]?.end ?? 0);
 
   const handleSelect = (item: AttributeValue) => {
-    dispatch(setSelectedMaterial({ selectedMaterial: item }));
+    dispatch(
+      setSelectedMaterial({
+        selectedMaterial: item,
+        limitCb: () => setIsShowLimitMessage(true),
+      }),
+    );
   };
 
   return (
     <div ref={scrollRef} className={containerStyles}>
+      <SwatchLimitModal
+        isOpen={isShowLimitMessage}
+        onClose={() => setIsShowLimitMessage(false)}
+      />
       <div style={{ height: padTop }} aria-hidden />
 
       <div className={gridStyles}>

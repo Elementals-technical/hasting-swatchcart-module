@@ -6,7 +6,14 @@ const { NODE_ENV } = import.meta.env;
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: true }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: true,
+      serializableCheck: {
+        ignoredActionPaths: ['meta.limitCb', 'payload.limitCb'],
+        ignoredPaths: [],
+      },
+    }),
   devTools: NODE_ENV !== 'production',
 });
 
