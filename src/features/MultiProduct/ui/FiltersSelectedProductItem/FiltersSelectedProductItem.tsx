@@ -15,7 +15,7 @@ export const FiltersSelectedProductItem = () => {
         '
         selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[160px] font-normal'
       />
-      <Filters containerStyles='flex justify-between items-center gap-1 p-[var(--sm-padding)] sm:gap-4' />
+      <Filters containerStyles='flex justify-between items-center gap-4 p-[var(--sm-padding)]' />
     </div>
   );
 };

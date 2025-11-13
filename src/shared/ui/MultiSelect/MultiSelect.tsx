@@ -34,7 +34,7 @@ const MultiSelect = React.forwardRef<
       values,
       onValueChange,
       placeholder = 'Select options...',
-      className = 'max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]',
+      className = 'min-w-[80px] 2xs:min-w-[100px] xs:min-w-[110px]  sm:max-w-[auto] sm:min-w-[130px] lg:min-w-[160px]',
       dropdownWidth,
       align = 'start',
       getTooltipByMaterialAndSection,
