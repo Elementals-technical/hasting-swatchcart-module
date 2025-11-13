@@ -34,30 +34,38 @@ export const MaterialListItem = ({ val, onClick }: IMaterialListItemProps) => {
   );
 
   return (
-    <div className='w-31 rounded mb-[20px] sm:w-40'>
+    <div className='flex flex-col'>
       <button
         key={val.assetId}
         onClick={() => handleSelect(val)}
-        className={`w-37 h-37 rounded sm:w-40 sm:h-40 relative aspect-square overflow-hidden transition ${
-          isSelected ? 'border-amber-700' : 'border-transparent'
-        }`}
+        className={`
+        relative w-full aspect-square overflow-hidden rounded
+        border transition
+        ${isSelected ? 'border-amber-700' : 'border-transparent'}
+      `}
       >
-        {AttributeHelper.getImage(val) ? (
-          <ImageGridZoom item={val} />
-        ) : (
-          <HexGridZoom item={val} />
-        )}
+        <div className='absolute inset-0'>
+          {AttributeHelper.getImage(val) ? (
+            <ImageGridZoom item={val} />
+          ) : (
+            <HexGridZoom item={val} />
+          )}
+        </div>
+
         <div
-          className={`absolute top-0 right-0 m-2 w-[30px] h-[30px] flex justify-center items-center
-            bg-[var(--background-grey)] rounded-2xl
-            border-none pointer-events-none
-            ${isSelected ? 'bg-[var(--main-accent-color)]' : ''}`}
+          className={`
+          absolute top-0 right-0 m-2 h-[30px] w-[30px]
+          flex items-center justify-center rounded-2xl border-none
+          bg-[var(--background-grey)] pointer-events-none
+          ${isSelected ? 'bg-[var(--main-accent-color)]' : ''}
+        `}
         >
           <CheckMarkIconSVG />
         </div>
       </button>
-      <div className='flex flex-col mt-3'>
-        <span className='font-xs font-semibold leading-[14px] mb-1'>
+
+      <div className='mt-3 flex flex-col'>
+        <span className='mb-1 text-xs font-semibold leading-[14px]'>
           {val.metadata?.label || val.label}{' '}
         </span>
         <span className='text-[10px] font-medium leading-[12px]'>

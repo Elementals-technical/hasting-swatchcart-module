@@ -23,7 +23,7 @@ interface IMaterialListProps {
 }
 
 export const MaterialMultiProductList = ({
-  containerStyles = 'flex-1 min-h-0 overflow-y-auto p-[var(--padding)] sm:p-[var(--sm-padding)]',
+  containerStyles = 'flex-1 min-h-0 overflow-y-auto p-[var(--padding)] sm:p-[var(--sm-padding)] ',
   gridStyles = 'grid grid-cols-1 gap-[8px] sm:grid-cols-3',
   desktopColumnsCount = 3,
 }: IMaterialListProps) => {
