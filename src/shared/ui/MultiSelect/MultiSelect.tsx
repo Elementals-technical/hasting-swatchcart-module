@@ -136,7 +136,7 @@ const MultiSelect = React.forwardRef<
         <PopoverPrimitive.Content
           ref={popoverContentRef}
           className={cn(
-            'bg-white border rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto overscroll-behavior-y-contain touch-pan-y p-2',
+            'bg-white border rounded-lg shadow-lg z-50 max-h-75 text-sm overflow-y-auto overscroll-behavior-y-contain touch-pan-y p-2',
             dropdownWidth
               ? dropdownWidth
               : 'w-[var(--radix-popover-trigger-width)]',
@@ -161,7 +161,7 @@ const MultiSelect = React.forwardRef<
             <div className='flex flex-row gap-2 items-center justify-between px-2 py-1 mb-2 border-b'>
               <button
                 onClick={handleClearAll}
-                className='text-[1.2rem] text-black hover:text-primary transition-color cursor-pointer duration-200 flex flex-row items-center gap-1'
+                className='text-sm text-black hover:text-primary transition-color cursor-pointer duration-200 flex flex-row items-center gap-1'
               >
                 <XIcon className='h-3 w-3' />
                 Clear all
@@ -185,9 +185,9 @@ const MultiSelect = React.forwardRef<
                       handleSelectOption(option.value, checked as boolean)
                     }
                   />
-                  <div className='flex-1 flex flex-row items-start justify-between'>
+                  <div className='flex-1 flex flex-row items-center justify-between'>
                     <div className='flex flex-row items-center gap-2'>
-                      <span className='text-[1.2rem]'>{option.label}</span>
+                      <span className='text-sm'>{option.label}</span>
                       {(() => {
                         if (!getTooltipByMaterialAndSection || !sectionName)
                           return null;
@@ -204,7 +204,7 @@ const MultiSelect = React.forwardRef<
                       })()}
                     </div>
                     {option.count !== undefined && (
-                      <span className='text-[1rem] text-gray-800 bg-gray-100 px-2 py-0.5 ml-2 rounded-full whitespace-nowrap'>
+                      <span className='text-sm text-gray-800 bg-gray-100 px-2 py-0.5 ml-2 rounded-full whitespace-nowrap'>
                         {option.count}
                       </span>
                     )}

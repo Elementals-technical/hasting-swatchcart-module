@@ -31,7 +31,7 @@ export const CartWrapper = ({
       <div className='flex flex-col h-full min-h-0'>
         <CartList />
         <CartPrice materials={selectedMaterials} />
-        <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0'>
+        <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
             className='w-full bg-[var(--main-accent-color)] text-white py-3 rounded-full font-bold cursor-pointer'
             onClick={() => onSendData(cartItems)}
