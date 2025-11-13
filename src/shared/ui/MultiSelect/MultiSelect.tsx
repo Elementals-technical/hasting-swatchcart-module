@@ -118,7 +118,7 @@ const MultiSelect = React.forwardRef<
         <PopoverPrimitive.Trigger
           ref={ref}
           className={cn(
-            'flex flex-row items-center justify-between rounded-full border border-[var(--main-accent-color)] px-3 sm:px-4 py-2 bg-white cursor-pointer hover:bg-gray-50 data-[state=open]:border-primary hover:border-primary focus:border-primary  min-h-9',
+            'flex flex-row items-center justify-between rounded-full border border-[var(--main-accent-color)] px-2 sm:px-4 py-2 bg-white cursor-pointer hover:bg-gray-50 data-[state=open]:border-primary hover:border-primary focus:border-primary  min-h-9',
             className,
           )}
         >
@@ -127,7 +127,7 @@ const MultiSelect = React.forwardRef<
           </div>
           <ChevronDownIcon
             className={cn(
-              'ml-2 h-4 w-4 transition-transform',
+              'h-4 w-4 transition-transform',
               isOpen && 'rotate-180',
             )}
           />

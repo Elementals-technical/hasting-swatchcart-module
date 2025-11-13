@@ -4,7 +4,7 @@ import { Filters } from '../../../swatches/ui/Filters';
 export const FiltersSelectedProductItem = () => {
   return (
     <div
-      className='flex flex-col justify-between items-center border-b border-[var(--border)]
+      className='flex flex-col justify-between border-b border-[var(--border)]
       sm:flex-row
     '
     >

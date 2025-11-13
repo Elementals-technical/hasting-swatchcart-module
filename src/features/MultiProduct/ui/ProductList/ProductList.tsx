@@ -100,28 +100,30 @@ export const ProductList = () => {
           </span>
         </div>
       </header>
-
+      {/* <div className="3xs:bg-amber-700 2xs:bg-yellow-200 xs:bg-blue-400 sm:bg-amber-700">
+        Responsive Box
+      </div> */}
       <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
-          <div className='flex h-[36px] w-full items-center justify-between gap-4 sm:max-w-90'>
-            <div className='relative h-[36px] w-full max-w-[260px] sm:max-w-[240px]'>
+        <div className='flex w-full items-center gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
+          <div className='flex h-[36px] items-center gap-4 shrink-0'>
+            <div className='relative h-[36px] w-full max-w-[180px] sm:max-w-[260px]'>
               <input
                 type='text'
                 placeholder='Search'
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className='
-                  h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
-                  px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
-                  transition focus:border-[var(--main-accent-color)] focus:outline-none
-                '
+                h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
+                px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
+                transition focus:border-[var(--main-accent-color)] focus:outline-none
+              '
               />
 
               <div
                 className='
-                  pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 sm:right-4
-                  [&_svg_path]:stroke-[var(--svg-dark)]
-                '
+                pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 sm:right-4
+                [&_svg_path]:stroke-[var(--svg-dark)]
+              '
               >
                 <SearchIconSVG width={20} height={20} />
               </div>
@@ -133,7 +135,7 @@ export const ProductList = () => {
               values={SORT_OPTIONS}
               value={sortValue}
               onValueChange={setSortValue}
-              className='w-full max-w-[94px] bg-[var(--label-bg)]'
+              className='w-full max-w-[90px] bg-[var(--label-bg)]'
               dropdownWidth='w-64'
             />
           </div>
@@ -142,7 +144,7 @@ export const ProductList = () => {
             items={uniqueCategories}
             activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
-            className='hidden sm:flex sm:max-w-[680px] sm:overflow-hidden'
+            className='hidden sm:flex w-max shrink-0 overflow-x-auto'
           />
         </div>
 
