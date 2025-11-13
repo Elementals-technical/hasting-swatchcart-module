@@ -34,7 +34,7 @@ const MultiSelect = React.forwardRef<
       values,
       onValueChange,
       placeholder = 'Select options...',
-      className = 'max-w-[100px] sm:max-w-[auto] sm:min-w-[160px]',
+      className = 'w-full min-w-[80px] 2xs:min-w-[100px] xs:min-w-[110px]  sm:max-w-[auto] sm:min-w-[130px] lg:min-w-[160px]',
       dropdownWidth,
       align = 'start',
       getTooltipByMaterialAndSection,
@@ -105,7 +105,17 @@ const MultiSelect = React.forwardRef<
       ) : (
         <div className='flex flex-row items-center w-full'>
           <span className='truncate mr-1'>{placeholder}</span>
-          <span className='flex justify-center items-center text-white bg-[var(--main-accent-color)] w-[20px] h-[20px] rounded-full whitespace-nowrap'>
+
+          <span
+            className='
+              flex-none flex justify-center items-center
+              w-5 h-5 rounded-full
+              bg-[var(--main-accent-color)] text-white
+              text-[10px] leading-none
+              select-none pointer-events-none
+              overflow-hidden
+            '
+          >
             {selectedCount}
           </span>
         </div>
@@ -118,7 +128,7 @@ const MultiSelect = React.forwardRef<
         <PopoverPrimitive.Trigger
           ref={ref}
           className={cn(
-            'flex flex-row items-center justify-between rounded-full border border-[var(--main-accent-color)] px-3 sm:px-4 py-2 bg-white cursor-pointer hover:bg-gray-50 data-[state=open]:border-primary hover:border-primary focus:border-primary  min-h-9',
+            'flex flex-row items-center justify-between rounded-full border border-[var(--main-accent-color)] px-2 sm:px-4 py-2 bg-white cursor-pointer hover:bg-gray-50 data-[state=open]:border-primary hover:border-primary focus:border-primary  min-h-9',
             className,
           )}
         >
@@ -127,7 +137,7 @@ const MultiSelect = React.forwardRef<
           </div>
           <ChevronDownIcon
             className={cn(
-              'ml-2 h-4 w-4 transition-transform',
+              'h-4 w-4 transition-transform',
               isOpen && 'rotate-180',
             )}
           />

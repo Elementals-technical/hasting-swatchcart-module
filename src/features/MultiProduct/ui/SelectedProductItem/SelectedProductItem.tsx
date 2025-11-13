@@ -51,11 +51,11 @@ export const SelectedProductItem = () => {
 
         <MaterialMultiProductList
           containerStyles='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'
-          gridStyles='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9'
+          gridStyles='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9'
           desktopColumnsCount={6}
         />
 
-        <div className='shrink-0 border-t border-[var(--border)]'>
+        <div className='shrink-0 border-t border-[var(--border)] shadow-[0_-2px_10px_rgba(40,40,40,0.10)]'>
           <SwatchContentContainer />
         </div>
       </div>

@@ -22,7 +22,7 @@ interface ISwatchesListProps {
 
 export const SwatchesList = ({
   selectedMaterials,
-  containerStyles = 'p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0',
+  containerStyles = 'p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 shadow-[0_-2px_10px_rgba(40,40,40,0.10)]',
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
 

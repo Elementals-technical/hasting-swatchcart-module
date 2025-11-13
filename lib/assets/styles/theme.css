@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -5,7 +7,9 @@
 }
 
 @theme inline {
-  --breakpoint-xs: 480px;
+  --breakpoint-3xs: 320px;
+  --breakpoint-2xs: 375px;
+  --breakpoint-xs: 425px;
   --default-transition-duration: 0.2s;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

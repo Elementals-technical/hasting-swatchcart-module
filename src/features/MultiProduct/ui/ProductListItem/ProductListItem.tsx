@@ -45,13 +45,11 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
       tabIndex={0}
       onClick={handleSetSelectedItem}
     >
-      <div className='mb-3 aspect-[16/9] w-ful sm:w-full'>
+      <div className='mb-3 w-full aspect-square relative overflow-hidden rounded-sm'>
         <img
           src={imageURL}
           alt='product-list-item'
-          className='w-30 h-30 object-cover rounded-sm grayscale
-          sm:w-40 sm:h-40
-          '
+          className='absolute inset-0 w-full h-full object-cover grayscale'
         />
       </div>
       {name}

@@ -81,7 +81,7 @@ const SingleSelect = React.forwardRef<
           aria-expanded={isOpen}
           className={cn(
             'inline-flex items-center justify-between gap-2 rounded-full bg-[var(--label-bg, #f5f5f5)] ' +
-              'px-3 py-2 text-xs font-medium h-9 text-black' +
+              'px-2 py-2 text-xs font-medium h-9 text-black' +
               'border border-transparent hover:bg-gray-100 ' +
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--main-accent-color)]' +
               'sm:w-[102px]',
