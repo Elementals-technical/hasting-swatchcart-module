@@ -22,8 +22,8 @@ export const CartListItem = ({
     <li
       key={item.assetId}
       className='
-        border-b border-[var(--border)] p-[var(--padding)]
-        sm:px-[var(--sm-padding)] sm:p-[var(--sm-padding)]'
+        border-b border-[var(--border)]
+        px-[var(--sm-padding)] p-[var(--sm-padding)]'
     >
       <div className='relative flex gap-4 '>
         <div>
@@ -31,8 +31,12 @@ export const CartListItem = ({
         </div>
         <div className='flex flex-col justify-between'>
           <div className='flex flex-col'>
-            <span className='mb-1 font-medium'>{item.metadata?.label}</span>
-            <span className='mb-1 font-semibold'>{item.parentName}</span>
+            <span className='mb-1 font-semibold text-xs'>
+              {item.metadata?.label}
+            </span>
+            <span className='mb-1 font-bold text-[10px]'>
+              {item.parentName}
+            </span>
           </div>
           <Counter
             value={item.count}
@@ -42,7 +46,7 @@ export const CartListItem = ({
             onDelete={onDelete}
           />
         </div>
-        <div className='absolute top-0 right-0'>
+        <div className=' absolute text-xs top-0 right-0 font-bold'>
           ${item.count * MATERIAL_PRICE}
         </div>
       </div>

@@ -16,7 +16,7 @@ export const MultiProductCartHeader = ({
     dispatch(setIsOpenMultiProductCart(false));
   };
   return (
-    <header className='flex p-[var(--padding)] justify-between items-center border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
+    <header className='flex p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
       <div className='flex items-center flex-row  gap-[4px]'>
         <div className='flex items-center gap-2'>
           <button

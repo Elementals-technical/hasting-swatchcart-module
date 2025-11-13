@@ -66,7 +66,7 @@ export const MultiProductItemCart = ({
     <div className='flex h-full flex-col '>
       <MultiProductCartHeader totalCount={totalCount} />
       <div className='flex flex-col h-full min-h-0'>
-        <ul className='flex flex-col gap-3 flex-1 min-h-0 overflow-y-auto py-[var(--sm-padding)] sm:gap-5'>
+        <ul className='flex flex-col flex-1 min-h-0 overflow-y-auto'>
           {selectedProducts.map((product) => {
             const { items, name, assetId } = product;
 
@@ -76,8 +76,8 @@ export const MultiProductItemCart = ({
               <>
                 <div
                   key={product.value}
-                  className='    border-b border-[var(--border)] p-[var(--padding)] pt-0
-        sm:px-[var(--sm-padding)] sm:p-[var(--sm-padding)] sm:pt-0'
+                  className=' p-[var(--sm-padding)] border-b border-[var(--border)]
+        sm:px-[var(--sm-padding)]'
                 >
                   {name}
                 </div>
@@ -117,10 +117,10 @@ export const MultiProductItemCart = ({
           <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
             <CartPrice
               materials={allItems}
-              containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:p-[var(--sm-padding)] sm:border-none'
+              containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:border-none'
             />
           </div>
-          <div className='p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
+          <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
             <CustomButton
               onClick={() => onSendData && onSendData(selectedProducts)}
               disabled={allItems.length > MAX_SLOTS + 1}

@@ -31,7 +31,6 @@ export const SelectedProductItem = () => {
 
   return (
     <div className='flex h-full flex-col'>
-      {/* Header (pinned) */}
       <header className='flex shrink-0 items-center justify-between border-b border-[var(--border)] p-[var(--sm-padding)]'>
         <div className='flex items-center gap-2'>
           <button
@@ -44,31 +43,18 @@ export const SelectedProductItem = () => {
             {selectedProduct?.name}
           </h2>
         </div>
-
-        {/* <button
-          onClick={onSidebarToggle}
-          className='flex h-[30px] w-[30px] items-center justify-center rounded-full bg-[var(--background-grey)]
-                     [&_svg_path]:stroke-[var(--svg-dark)]'
-        >
-          <CloseIconSVG width={10} height={10} />
-        </button> */}
       </header>
-
-      {/* Body */}
       <div className='flex min-h-0 flex-1 flex-col'>
-        {/* Top controls (pinned row) */}
         <div className='shrink-0 border-b border-[var(--border)]'>
           <FiltersSelectedProductItem />
         </div>
 
-        {/* Scrollable list only */}
         <MaterialMultiProductList
           containerStyles='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'
           gridStyles='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9'
           desktopColumnsCount={6}
         />
 
-        {/* Bottom container (pinned) */}
         <div className='shrink-0 border-t border-[var(--border)]'>
           <SwatchContentContainer />
         </div>

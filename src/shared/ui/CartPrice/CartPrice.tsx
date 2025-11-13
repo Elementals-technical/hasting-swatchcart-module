@@ -9,7 +9,7 @@ interface ICartPriceProps {
 
 export const CartPrice = ({
   materials,
-  containerStyles = 'flex flex-col gap-2 text-xs/snug p-[var(--padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:p-[var(--sm-padding)]',
+  containerStyles = 'flex flex-col gap-2 text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)] sm:gap-3',
 }: ICartPriceProps) => {
   const COMMON_STYLES = 'flex justify-between items-center';
 
