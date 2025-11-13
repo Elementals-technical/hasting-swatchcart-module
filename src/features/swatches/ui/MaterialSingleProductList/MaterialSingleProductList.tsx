@@ -19,8 +19,8 @@ interface IMaterialListProps {
 }
 
 export const MaterialSingleProductList = ({
-  containerStyles = 'flex-1 min-h-0 overflow-y-auto p-[var(--padding)] sm:p-[var(--sm-padding)]',
-  gridStyles = 'grid grid-cols-2 gap-[8px] sm:grid-cols-3 sm:gap-[var(--sm-padding)]',
+  containerStyles = 'flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]',
+  gridStyles = 'grid grid-cols-2 gap-[var(--sm-padding)] sm:grid-cols-3 ',
   desktopColumnsCount = 3,
 }: IMaterialListProps) => {
   const dispatch = useDispatch();

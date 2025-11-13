@@ -4,7 +4,7 @@ import { Filters } from '../../../swatches/ui/Filters';
 export const FiltersSelectedProductItem = () => {
   return (
     <div
-      className='flex flex-col justify-between items-center border-b border-[var(--border)]
+      className='flex flex-col justify-between border-b border-[var(--border)]
       sm:flex-row
     '
     >
@@ -15,7 +15,7 @@ export const FiltersSelectedProductItem = () => {
         '
         selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[160px] font-normal'
       />
-      <Filters containerStyles='flex justify-between items-center gap-1 p-[var(--sm-padding)] sm:gap-4' />
+      <Filters />
     </div>
   );
 };

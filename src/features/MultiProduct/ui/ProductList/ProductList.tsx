@@ -100,11 +100,13 @@ export const ProductList = () => {
           </span>
         </div>
       </header>
-
+      {/* <div className="3xs:bg-amber-700 2xs:bg-yellow-200 xs:bg-blue-400 sm:bg-amber-700">
+        Responsive Box
+      </div> */}
       <div className='flex min-h-0 flex-1 flex-col'>
         <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
-          <div className='flex h-[36px] w-full items-center justify-between gap-4 sm:max-w-90'>
-            <div className='relative h-[36px] w-full max-w-[260px] sm:max-w-[240px]'>
+          <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
+            <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
               <input
                 type='text'
                 placeholder='Search'
@@ -133,7 +135,7 @@ export const ProductList = () => {
               values={SORT_OPTIONS}
               value={sortValue}
               onValueChange={setSortValue}
-              className='w-full max-w-[94px] bg-[var(--label-bg)]'
+              className='shrink-0 w-[90px] xxs:w-[100px] bg-[var(--label-bg)] sm:py-2 sm:px-4 sm:w-[102px]'
               dropdownWidth='w-64'
             />
           </div>
@@ -142,7 +144,7 @@ export const ProductList = () => {
             items={uniqueCategories}
             activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
-            className='hidden sm:flex sm:max-w-[680px] sm:overflow-hidden'
+            className='hidden lg:flex shrink-0 overflow-x-auto'
           />
         </div>
 
@@ -150,7 +152,7 @@ export const ProductList = () => {
           items={uniqueCategories}
           activeId={activeCategory.productId}
           onSelect={(item) => setActiveCategory(item)}
-          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:hidden'
+          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] lg:hidden'
         />
 
         <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)] '>
