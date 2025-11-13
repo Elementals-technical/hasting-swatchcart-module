@@ -179,7 +179,6 @@ export const MaterialMultiProductList = ({
         })}
       </div>
 
-      {/* bottom spacer */}
       <div style={{ height: padBottom }} aria-hidden />
     </div>
   );

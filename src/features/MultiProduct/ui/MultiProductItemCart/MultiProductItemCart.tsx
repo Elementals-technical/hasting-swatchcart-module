@@ -117,7 +117,7 @@ export const MultiProductItemCart = ({
           <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
             <CartPrice
               materials={allItems}
-              containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:border-none'
+              containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:border-none shadow-[0_-2px_10px_rgba(40,40,40,0.10)]'
             />
           </div>
           <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
