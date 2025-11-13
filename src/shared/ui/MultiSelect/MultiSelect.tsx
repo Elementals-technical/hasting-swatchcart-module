@@ -34,7 +34,7 @@ const MultiSelect = React.forwardRef<
       values,
       onValueChange,
       placeholder = 'Select options...',
-      className = 'min-w-[80px] 2xs:min-w-[100px] xs:min-w-[110px]  sm:max-w-[auto] sm:min-w-[130px] lg:min-w-[160px]',
+      className = 'w-full min-w-[80px] 2xs:min-w-[100px] xs:min-w-[110px]  sm:max-w-[auto] sm:min-w-[130px] lg:min-w-[160px]',
       dropdownWidth,
       align = 'start',
       getTooltipByMaterialAndSection,
@@ -105,7 +105,17 @@ const MultiSelect = React.forwardRef<
       ) : (
         <div className='flex flex-row items-center w-full'>
           <span className='truncate mr-1'>{placeholder}</span>
-          <span className='flex justify-center items-center text-white bg-[var(--main-accent-color)] w-[20px] h-[20px] rounded-full whitespace-nowrap'>
+
+          <span
+            className='
+              flex-none flex justify-center items-center
+              w-5 h-5 rounded-full
+              bg-[var(--main-accent-color)] text-white
+              text-[10px] leading-none
+              select-none pointer-events-none
+              overflow-hidden
+            '
+          >
             {selectedCount}
           </span>
         </div>
