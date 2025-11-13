@@ -104,26 +104,26 @@ export const ProductList = () => {
         Responsive Box
       </div> */}
       <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='flex w-full items-center gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
-          <div className='flex h-[36px] items-center gap-4 shrink-0'>
-            <div className='relative h-[36px] w-full max-w-[180px] sm:max-w-[260px]'>
+        <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
+          <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
+            <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
               <input
                 type='text'
                 placeholder='Search'
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className='
-                h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
-                px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
-                transition focus:border-[var(--main-accent-color)] focus:outline-none
-              '
+                  h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
+                  px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
+                  transition focus:border-[var(--main-accent-color)] focus:outline-none
+                '
               />
 
               <div
                 className='
-                pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 sm:right-4
-                [&_svg_path]:stroke-[var(--svg-dark)]
-              '
+                  pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 sm:right-4
+                  [&_svg_path]:stroke-[var(--svg-dark)]
+                '
               >
                 <SearchIconSVG width={20} height={20} />
               </div>
@@ -135,7 +135,7 @@ export const ProductList = () => {
               values={SORT_OPTIONS}
               value={sortValue}
               onValueChange={setSortValue}
-              className='w-full max-w-[90px] bg-[var(--label-bg)]'
+              className='shrink-0 w-[90px] xxs:w-[100px] bg-[var(--label-bg)] sm:py-2 sm:px-4 sm:w-[102px]'
               dropdownWidth='w-64'
             />
           </div>
@@ -144,7 +144,7 @@ export const ProductList = () => {
             items={uniqueCategories}
             activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
-            className='hidden sm:flex w-max shrink-0 overflow-x-auto'
+            className='hidden lg:flex shrink-0 overflow-x-auto'
           />
         </div>
 
@@ -152,7 +152,7 @@ export const ProductList = () => {
           items={uniqueCategories}
           activeId={activeCategory.productId}
           onSelect={(item) => setActiveCategory(item)}
-          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] sm:hidden'
+          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] lg:hidden'
         />
 
         <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)] '>
