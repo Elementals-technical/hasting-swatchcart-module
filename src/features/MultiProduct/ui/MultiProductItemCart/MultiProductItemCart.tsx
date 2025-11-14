@@ -77,7 +77,7 @@ export const MultiProductItemCart = ({
                 <div
                   key={product.value}
                   className=' p-[var(--sm-padding)] border-b border-[var(--border)]
-        sm:px-[var(--sm-padding)]'
+                  sm:px-[var(--sm-padding)]'
                 >
                   {name}
                 </div>
@@ -111,22 +111,24 @@ export const MultiProductItemCart = ({
         <div
           className='flex flex-col 
           sm:flex-row sm:w-full sm:justify-between sm:items-center
-          sm:border-t sm:border-solid sm:border-[var(--border)]
+          sm:border-t sm:border-[var(--border)] shadow-[0_-2px_10px_rgba(40,40,40,0.10)]
         '
         >
           <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
             <CartPrice
               materials={allItems}
-              containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:border-none shadow-[0_-2px_10px_rgba(40,40,40,0.10)]'
+              containerStyles='flex flex-col gap-2 text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-3 sm:border-none s'
             />
           </div>
-          <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none'>
-            <CustomButton
-              onClick={() => onSendData && onSendData(selectedProducts)}
-              disabled={allItems.length > MAX_SLOTS + 1}
-            >
-              GO TO SHIPPING
-            </CustomButton>
+          <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex sm:justify-end sm:items-end sm:h-full'>
+            <div className='sm:w-[50%]'>
+              <CustomButton
+                onClick={() => onSendData && onSendData(selectedProducts)}
+                disabled={allItems.length > MAX_SLOTS + 1}
+              >
+                GO TO SHIPPING
+              </CustomButton>
+            </div>
           </div>
         </div>
       </div>

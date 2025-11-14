@@ -45,7 +45,7 @@ export const SelectedProductItem = () => {
         </div>
       </header>
       <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='shrink-0 border-b border-[var(--border)]'>
+        <div className='shrink-0'>
           <FiltersSelectedProductItem />
         </div>
 
@@ -55,7 +55,7 @@ export const SelectedProductItem = () => {
           desktopColumnsCount={6}
         />
 
-        <div className='shrink-0 border-t border-[var(--border)] shadow-[0_-2px_10px_rgba(40,40,40,0.10)]'>
+        <div className='shrink-0 shadow-[0_-2px_10px_rgba(40,40,40,0.10)]'>
           <SwatchContentContainer />
         </div>
       </div>
