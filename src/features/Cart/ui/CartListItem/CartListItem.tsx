@@ -23,7 +23,8 @@ export const CartListItem = ({
       key={item.assetId}
       className='
         border-b border-[var(--border)]
-        px-[var(--sm-padding)] p-[var(--sm-padding)]'
+        px-[var(--sm-padding)] p-[var(--sm-padding)]
+        last:border-b-0'
     >
       <div className='relative flex gap-4 '>
         <div>
