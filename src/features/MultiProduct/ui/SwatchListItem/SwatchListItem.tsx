@@ -60,7 +60,7 @@ const SwatchListItem: React.FC<ISwatchesListItemProps> = ({
         <div
           onClick={handleDeleteClick}
           className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex justify-center items-center
-          bg-[var(--background-grey)] rounded-2xl border-none z-[999] cursor-pointer'
+          bg-[var(--background-grey)] rounded-2xl border-none z-[100] cursor-pointer'
         >
           <CloseIconSVG className='w-2 h-2 stroke-[var(--svg-dark)]' />
         </div>

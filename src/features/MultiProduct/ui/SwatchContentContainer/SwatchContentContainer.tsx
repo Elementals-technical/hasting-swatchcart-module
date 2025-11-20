@@ -23,7 +23,7 @@ export const SwatchContentContainer = () => {
 
   return (
     <div
-      className='flex flex-col border-t border-[var(--border)]
+      className='flex flex-col border-t border-[var(--border)] shrink-0 shadow-[0_-2px_10px_rgba(40,40,40,0.10)]
       sm:flex-row
     '
     >

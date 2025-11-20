@@ -19,7 +19,7 @@ export const Loader: React.FC<ILoaderProps> = ({
     <div
       className={
         isOverlay
-          ? 'absolute inset-0 flex items-center justify-center backdrop-blur bg-black/30 z-50'
+          ? 'absolute inset-0 flex items-center justify-center backdrop-blur bg-black/30 z-150'
           : 'inline-flex items-center justify-center'
       }
     >
