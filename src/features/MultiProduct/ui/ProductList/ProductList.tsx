@@ -15,6 +15,7 @@ import { getProductListThunk } from '../../model/thunk';
 import { getIsLoadingProductList, getProductLIst } from '../../model/selectors';
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
+import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'A-Z', value: 'asc' },
@@ -174,6 +175,8 @@ export const ProductList = () => {
           )}
         </div>
       </div>
+
+      <SwatchContentContainer />
     </div>
   );
 };

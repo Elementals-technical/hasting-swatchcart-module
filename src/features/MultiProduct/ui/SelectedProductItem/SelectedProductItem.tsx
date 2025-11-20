@@ -55,9 +55,7 @@ export const SelectedProductItem = () => {
           desktopColumnsCount={6}
         />
 
-        <div className='shrink-0 shadow-[0_-2px_10px_rgba(40,40,40,0.10)]'>
-          <SwatchContentContainer />
-        </div>
+        <SwatchContentContainer />
       </div>
     </div>
   );
