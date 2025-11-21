@@ -16,6 +16,56 @@ type HintProps = {
   forceOverflowVisible?: boolean;
 };
 
+/**
+ * Hint (Tooltip-like) component displayed in a portal above all UI layers.
+ *
+ * The component positions itself near the target element, supports dynamic
+ * repositioning on scroll/resize, and ensures the target element can
+ * overflow visibly when required. Includes an arrow that automatically aligns
+ * with the target.
+ *
+ * The tooltip uses `useLayoutEffect` to measure its size before final placement
+ * to avoid flickering or incorrect positioning.
+ *
+ * @component
+ *
+ * @param {boolean} open
+ *  Controls visibility of the hint. When `false`, nothing is rendered.
+ *
+ * @param {HTMLElement | null} target
+ *  The DOM element to which the hint is anchored. Required when open.
+ *
+ * @param {ReactNode} children
+ *  The content of the hint bubble.
+ *
+ * @param {number} [offset=12]
+ *  Vertical distance between the bubble and the target element.
+ *
+ * @param {number} [maxWidthPx=420]
+ *  Maximum width of the bubble in pixels before wrapping text.
+ *  The component also ensures the bubble fits inside the viewport.
+ *
+ * @param {boolean} [forceOverflowVisible=true]
+ *  When `true`, temporarily forces the target element's overflow to be `visible`
+ *  so that the hint can appear outside its bounds, improving usability inside
+ *  clipped containers.
+ *
+ * @description
+ * - On mount, optionally modifies the target element's `position` and `overflow`
+ *   styles to allow the bubble to display outside its bounding box.
+ * - Uses a combination of `useEffect`, `useLayoutEffect`, `ResizeObserver`, and
+ *   scroll/resize listeners to recalculate position whenever layout changes.
+ * - The bubble is rendered via `createPortal` into `document.body`
+ *   to escape stacking contexts.
+ *
+ * @example
+ * ```tsx
+ * <Hint open={isHovered} target={ref.current}>
+ *   Some details about this item
+ * </Hint>
+ * ```
+ */
+
 export const Hint: React.FC<HintProps> = ({
   open,
   target,
@@ -129,7 +179,7 @@ export const Hint: React.FC<HintProps> = ({
           top: pos.top,
           left: pos.left,
           maxWidth: `min(${maxWidthPx}px, calc(100vw - 16px))`,
-          backgroundColor: 'rgba(40,40,40,0.5)',
+          backgroundColor: 'rgba(40,40,40,0.8)',
         }}
       >
         <div className='px-4 py-3'>{children}</div>
@@ -143,7 +193,7 @@ export const Hint: React.FC<HintProps> = ({
           '
           style={{
             left: pos.arrowLeft,
-            borderTopColor: 'rgba(40,40,40,0.5)',
+            borderTopColor: 'rgba(40,40,40,0.8)',
           }}
         />
       </div>
