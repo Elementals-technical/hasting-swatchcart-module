@@ -49,7 +49,7 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
         <img
           src={imageURL}
           alt='product-list-item'
-          className='absolute inset-0 w-full h-full object-cover grayscale'
+          className='absolute inset-0 w-full h-full object-cover'
         />
       </div>
       {name}

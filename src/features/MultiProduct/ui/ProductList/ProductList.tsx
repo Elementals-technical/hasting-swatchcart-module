@@ -101,9 +101,6 @@ export const ProductList = () => {
           </span>
         </div>
       </header>
-      {/* <div className="3xs:bg-amber-700 2xs:bg-yellow-200 xs:bg-blue-400 sm:bg-amber-700">
-        Responsive Box
-      </div> */}
       <div className='flex min-h-0 flex-1 flex-col'>
         <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
           <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
