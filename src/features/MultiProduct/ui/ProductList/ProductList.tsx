@@ -12,7 +12,11 @@ import type {
 import { MOCK_ALL_CATEGORY_SLIDER_ITEM } from '../../utils/constants';
 import { SingleSelect } from '../../../../shared/ui/SingleSelect/SingleSelect';
 import { getProductListThunk } from '../../model/thunk';
-import { getIsLoadingProductList, getProductLIst } from '../../model/selectors';
+import {
+  getIsLoadingProductList,
+  getMultiCartItems,
+  getProductLIst,
+} from '../../model/selectors';
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
@@ -27,6 +31,7 @@ export const ProductList = () => {
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
   const isLoadingProduct = useAppSelector(getIsLoadingSelectedProduct);
   const productList = useAppSelector(getProductLIst);
+  const selectedProducts = useAppSelector(getMultiCartItems);
 
   const [activeCategory, setActiveCategory] = useState<
     ISliderItem | IProductCart
@@ -36,6 +41,13 @@ export const ProductList = () => {
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [sortValue, setSortValue] = useState<string | null>(null);
 
+  /**
+   * Debounces the search input.
+   *
+   * Whenever `search` changes, waits 300ms before updating `debouncedSearch`
+   * with the normalized (trimmed + lowercased) search string.
+   * Cleans up pending timeouts on re-runs to prevent memory leaks.
+   */
   useEffect(() => {
     const id = setTimeout(() => {
       setDebouncedSearch(search.trim().toLowerCase());
@@ -43,17 +55,62 @@ export const ProductList = () => {
     return () => clearTimeout(id);
   }, [search]);
 
-  const uniqueCategories = useMemo(() => {
+  /**
+   * Fetches the product list on component mount.
+   *
+   * Runs only once because `dispatch` is stable.
+   */
+  useEffect(() => {
+    dispatch(getProductListThunk());
+  }, [dispatch]);
+
+  /**
+   * Computes a memoized list of unique categories from the product list.
+   *
+   * Uses the MultiProductCartService helper to extract unique category values.
+   * Recomputes only when `productList` changes.
+   *
+   * @constant
+   * @type {ISliderItem[]}
+   */
+  const uniqueCategories: ISliderItem[] = useMemo(() => {
     return MultiProductCartService.getUniqueCategories(productList);
   }, [productList]);
 
-  const norm = (s: string) => s.toLowerCase();
+  /**
+   * Normalizes a string to lowercase for comparison operations.
+   *
+   * @param {string} s - Input string.
+   * @returns {string} Lowercased string.
+   */
+  const norm = (s: string): string => s.toLowerCase();
 
+  /**
+   * Memoized Intl.Collator instance for locale-aware, case-insensitive
+   * alphabetical sorting of product names.
+   *
+   * Stable reference ensures sorting computations are not recreated unnecessarily.
+   */
   const collator = useMemo(
     () => new Intl.Collator(undefined, { sensitivity: 'base', numeric: false }),
     [],
   );
 
+  /**
+   * Computes the final filtered and sorted list of products.
+   *
+   * Steps:
+   * 1. Starts from the full `productList`.
+   * 2. If a category is selected, filters products by matching `collection`.
+   * 3. If a debounced search query exists, filters by product name (case-insensitive).
+   * 4. Applies sorting:
+   *    - 'asc' → alphabetical A→Z
+   *    - 'dsc' → alphabetical Z→A
+   *
+   * Uses `collator` for locale-aware sorting.
+   *
+   * Recomputes whenever product list, filters, search query, or sort order changes.
+   */
   const filteredProductList = useMemo(() => {
     let list = productList;
 
@@ -79,10 +136,6 @@ export const ProductList = () => {
     return list;
   }, [productList, activeCategory, debouncedSearch, sortValue, collator]);
 
-  useEffect(() => {
-    dispatch(getProductListThunk());
-  }, [dispatch]);
-
   return (
     <div className='relative flex h-full flex-col '>
       {(isLoadingProductList || isLoadingProduct) && <Loader />}
@@ -101,9 +154,6 @@ export const ProductList = () => {
           </span>
         </div>
       </header>
-      {/* <div className="3xs:bg-amber-700 2xs:bg-yellow-200 xs:bg-blue-400 sm:bg-amber-700">
-        Responsive Box
-      </div> */}
       <div className='flex min-h-0 flex-1 flex-col'>
         <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
           <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
@@ -176,7 +226,7 @@ export const ProductList = () => {
         </div>
       </div>
 
-      <SwatchContentContainer />
+      {selectedProducts.length ? <SwatchContentContainer /> : null}
     </div>
   );
 };

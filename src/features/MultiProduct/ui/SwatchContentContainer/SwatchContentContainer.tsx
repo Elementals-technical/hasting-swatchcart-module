@@ -4,22 +4,42 @@ import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { getMultiCartItems } from '../../model/selectors';
 import { SwatchesMultiProductList } from '../SwatchesMultiProductList/SwatchesMultiProductList';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
+import { AttributeValue } from '../../../swatches/model/types';
 
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
-  const selectedProduct = useAppSelector(getSelectedProduct);
   const selectedProducts = useAppSelector(getMultiCartItems);
 
-  const handleOpenMultiCart = () => {
-    if (selectedProduct) {
+  /**
+   * Memoized list of all selected materials across all selected products.
+   *
+   * Iterates through the array of `selectedProducts` and extracts each product's
+   * `items` array, flattening them into a single list.
+   *
+   * This recomputes only when `selectedProducts` changes.
+   *
+   * @constant
+   * @type {AttributeValue[]}
+   */
+  const allItems: AttributeValue[] = useMemo(() => {
+    return selectedProducts.flatMap((p) => p.items);
+  }, [selectedProducts]);
+
+  /**
+   * Opens the Multi-Product Cart modal if there is at least one selected product.
+   *
+   * Checks whether `selectedProducts` contains items.
+   * If so, dispatches an action to set the Multi-Product Cart state to open.
+   *
+   * @function handleOpenMultiCart
+   * @returns {void}
+   */
+
+  const handleOpenMultiCart = (): void => {
+    if (allItems.length) {
       dispatch(setIsOpenMultiProductCart(true));
     }
   };
-
-  const allItems = useMemo(() => {
-    return selectedProducts.flatMap((p) => p.items);
-  }, [selectedProducts]);
 
   return (
     <div
