@@ -2,7 +2,10 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { AttributeValue } from '../../../swatches/model/types';
-import { IMultiCartProductItem } from '../../model/types';
+import {
+  IMultiCartProductItem,
+  ISwatchSelectedMaterial,
+} from '../../model/types';
 import {
   setActiveMultiCartProduct,
   setMultiCartItems,
@@ -11,6 +14,12 @@ import { getMultiCartItems } from '../../model/selectors';
 import { getSelectedProduct } from '../../../swatches/model/selectors';
 import SwatchListItem from '../SwatchListItem/SwatchListItem';
 
+/**
+ * Simple placeholder tile used to visually represent free swatch slots.
+ *
+ * Renders an empty bordered square tile to fill up to `MAX_SLOTS`
+ * when there are fewer selected swatches.
+ */
 const MockTile: React.FC = () => (
   <div
     className={[
@@ -22,10 +31,33 @@ const MockTile: React.FC = () => (
 );
 
 interface ISwatchesListProps {
+  /**
+   * Optional wrapper classes for the outer container
+   * (padding, border, etc. – Tailwind / className string).
+   */
   containerStyles?: string;
-  selectedMaterials: AttributeValue[];
+
+  /**
+   * List of currently selected swatch materials across products.
+   * Used to render the visual list and compute remaining free slots.
+   */
+  selectedMaterials: ISwatchSelectedMaterial[];
 }
 
+/**
+ * Renders the "Swatches list" section for the multi-product cart.
+ *
+ * Features:
+ * - Displays all selected swatches as tiles using `SwatchListItem`.
+ * - Allows removing a swatch across all products via `onDelete`.
+ * - Shows the current count and the `MAX_SLOTS` limit (with "Free" label).
+ * - Fills remaining slots with placeholder tiles (`MockTile`) for a
+ *   consistent grid layout.
+ *
+ * Removal logic:
+ * - When the user deletes a swatch, finds which product currently owns it,
+ *   removes that swatch from that product, and updates the multi-cart store.
+ */
 export const SwatchesMultiProductList = ({
   selectedMaterials,
   containerStyles = 'p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:p-[var(--sm-padding)]',
@@ -34,7 +66,20 @@ export const SwatchesMultiProductList = ({
   const selectedProduct = useAppSelector(getSelectedProduct);
   const selectedProducts = useAppSelector(getMultiCartItems);
 
-  const handleSelect = (item: AttributeValue) => {
+  /**
+   * Handles deleting a swatch from whichever product currently contains it.
+   *
+   * Steps:
+   * 1. If there is no `selectedProduct`, exit early.
+   * 2. Build a matcher (`isSame`) based on `metadata.label` and `parentName`.
+   * 3. Find the product that owns this swatch (`productWithItem`).
+   * 4. Filter that product's items to remove the matching swatch.
+   * 5. Dispatch updated product data to the multi-cart store and
+   *    set it as the active multi-cart product.
+   *
+   * @param item Swatch to remove from the multi-cart.
+   */
+  const handleSelect = (item: ISwatchSelectedMaterial) => {
     if (!selectedProduct) return;
 
     const isSame = (i: AttributeValue) =>
@@ -57,6 +102,7 @@ export const SwatchesMultiProductList = ({
     }
   };
 
+  // Number of placeholder tiles to render so the total count always matches MAX_SLOTS
   const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);
 
   return (

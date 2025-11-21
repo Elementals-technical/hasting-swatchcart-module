@@ -4,8 +4,22 @@ import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { getMultiCartItems } from '../../model/selectors';
 import { SwatchesMultiProductList } from '../SwatchesMultiProductList/SwatchesMultiProductList';
-import { AttributeValue } from '../../../swatches/model/types';
+import { ISwatchSelectedMaterial } from '../../model/types';
 
+/**
+ * Container component responsible for:
+ * - Displaying a combined list of swatches from all selected products
+ * - Showing a preview section and an action button
+ * - Handling the opening of the Multi-Product Cart modal
+ *
+ * It collects materials from all products, normalizes them with additional
+ * context (product name), and renders them in a structured two-column layout.
+ *
+ * Also includes the "Add Swatches to Cart" button which opens the cart modal
+ * only when there are selected items.
+ *
+ * @component
+ */
 export const SwatchContentContainer = () => {
   const dispatch = useAppDispatch();
   const selectedProducts = useAppSelector(getMultiCartItems);
@@ -13,28 +27,32 @@ export const SwatchContentContainer = () => {
   /**
    * Memoized list of all selected materials across all selected products.
    *
-   * Iterates through the array of `selectedProducts` and extracts each product's
-   * `items` array, flattening them into a single list.
+   * For each product, its `items` are extracted and extended with the
+   * `productName` property so the UI knows which product each swatch belongs to.
    *
    * This recomputes only when `selectedProducts` changes.
    *
    * @constant
-   * @type {AttributeValue[]}
+   * @type {ISwatchSelectedMaterial[]}
    */
-  const allItems: AttributeValue[] = useMemo(() => {
-    return selectedProducts.flatMap((p) => p.items);
+  const allItems: ISwatchSelectedMaterial[] = useMemo(() => {
+    return selectedProducts.flatMap((p) =>
+      p.items.map((item) => ({
+        ...item,
+        productName: p.name,
+      })),
+    );
   }, [selectedProducts]);
 
   /**
-   * Opens the Multi-Product Cart modal if there is at least one selected product.
+   * Opens the Multi-Product Cart modal if there are selected swatches.
    *
-   * Checks whether `selectedProducts` contains items.
-   * If so, dispatches an action to set the Multi-Product Cart state to open.
+   * Checks whether `allItems` contains items.
+   * If so, dispatches an action that opens the modal UI.
    *
    * @function handleOpenMultiCart
    * @returns {void}
    */
-
   const handleOpenMultiCart = (): void => {
     if (allItems.length) {
       dispatch(setIsOpenMultiProductCart(true));
@@ -51,6 +69,7 @@ export const SwatchContentContainer = () => {
         selectedMaterials={allItems}
         containerStyles='flex flex-col p-[var(--sm-padding)] shrink-0 sm:w-[50%] sm:border-r sm:border-[var(--border)]'
       />
+
       <div className='flex w-full p-[var(--sm-padding)] border-t border-[var(--border)] sm:border-none lg:w-[50%] sm:justify-center sm:items-center lg:justify-end lg:items-end'>
         <div className='w-full lg:w-[50%]'>
           <CustomButton onClick={handleOpenMultiCart}>

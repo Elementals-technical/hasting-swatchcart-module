@@ -17,11 +17,46 @@ import { MaterialListItem } from '../../../../shared/ui/MaterialListItem/Materia
 import { SwatchLimitModal } from '../../../../shared/ui/SwatchLimitModal/SwatchLimitModal';
 
 interface IMaterialListProps {
+  /** Tailwind / className for the scroll container */
   containerStyles?: string;
+  /** Tailwind / className for the grid wrapper */
   gridStyles?: string;
+  /** Number of columns on ≥ sm screens */
   desktopColumnsCount?: number;
 }
 
+/**
+ * Renders a virtualized grid of materials for the multi-product cart.
+ *
+ * Features:
+ * - Uses filters from the store (Finish, Color, Look) to derive `filteredItems`.
+ * - Uses TanStack Virtual to render only visible rows for performance.
+ * - Supports responsive column count (1 on mobile, `desktopColumnsCount` on sm+).
+ * - Enforces a global swatch limit (5 items across all products) and shows
+ *   `SwatchLimitModal` when the limit is exceeded.
+ *
+ * Selection logic:
+ * - Clicking a material toggles it for the active product:
+ *   - If it already exists, it’s removed from the combined `allItems` list.
+ *   - If it does not exist and the limit is not reached, it’s added with `count: 1`.
+ * - Keeps `setMultiCartItems` and `setActiveMultiCartProduct` in sync.
+ *
+ * Virtualization:
+ * - Computes rows from `filteredItems` based on column count.
+ * - Uses padding (`padTop` / `padBottom`) to emulate full scroll height.
+ * - Measures the last item in each row for accurate row height.
+ *
+ * @component
+ *
+ * @param {string} [containerStyles]
+ *  Optional classes for the scroll container.
+ *
+ * @param {string} [gridStyles]
+ *  Optional classes for the grid container.
+ *
+ * @param {number} [desktopColumnsCount=3]
+ *  Number of columns on desktop / sm+ breakpoints.
+ */
 export const MaterialMultiProductList = ({
   containerStyles = 'flex-1 min-h-0 overflow-y-auto p-[var(--padding)] sm:p-[var(--sm-padding)] ',
   gridStyles = 'grid grid-cols-1 gap-[8px] sm:grid-cols-3',
@@ -35,10 +70,24 @@ export const MaterialMultiProductList = ({
   const selectedProducts = useAppSelector(getMultiCartItems);
   const [isShowSwatchLimit, setIsShowSwatchLImit] = useState(false);
 
+  /**
+   * Flattened list of all selected materials across all products in the multi-cart.
+   *
+   * Used to:
+   * - Enforce the global limit (max 5 items).
+   * - Decide whether a material already exists and should be toggled off.
+   */
   const allItems = useMemo(() => {
     return selectedProducts.flatMap((p) => p.items);
   }, [selectedProducts]);
 
+  /**
+   * Materials filtered by the current Finish, Color and Look filters.
+   *
+   * - Finish filter matches either `metadata.Finish` or `metadata.Material`.
+   * - Color filter splits comma-separated `metadata.Color` values.
+   * - Look filter matches any selected look in `metadata.Look`.
+   */
   const filteredItems = useMemo(() => {
     return allMaterialsValues.filter((item) => {
       const finishOk =
@@ -78,7 +127,7 @@ export const MaterialMultiProductList = ({
 
   const rowCount = Math.ceil(filteredItems.length / cols);
   const estimateSize = smUp ? 300 : 200;
-  // Estimate row height close to your card+labels+gap; refine via measureElement
+
   const rowVirtualizer = useVirtualizer({
     count: rowCount,
     getScrollElement: () => scrollRef.current,
@@ -90,7 +139,6 @@ export const MaterialMultiProductList = ({
   const virtualRows = rowVirtualizer.getVirtualItems();
   const totalSize = rowVirtualizer.getTotalSize();
 
-  // Compute slice we actually render
   const startRow = virtualRows[0]?.index ?? 0;
   const endRow = virtualRows[virtualRows.length - 1]?.index ?? -1;
 
@@ -101,6 +149,16 @@ export const MaterialMultiProductList = ({
   const padTop = virtualRows[0]?.start ?? 0;
   const padBottom = totalSize - (virtualRows[virtualRows.length - 1]?.end ?? 0);
 
+  /**
+   * Handles toggling a material for the currently selected product
+   * within the multi-product cart.
+   *
+   * - If the item already exists in `allItems`, removes it from the combined list
+   *   and updates the corresponding product entry.
+   * - If it does not exist:
+   *   - If the global limit (5) is reached, shows `SwatchLimitModal`.
+   *   - Otherwise, adds it with `count: 1` to the active product.
+   */
   const handleSelect = (item: AttributeValue) => {
     if (!selectedProduct) return;
 
@@ -113,8 +171,9 @@ export const MaterialMultiProductList = ({
       i.parentName === item.parentName;
 
     const exists = allItems.some(isSame);
-    // if (!exists && allItems.length >= 5) toast(LIMIT_MESSAGE);
+
     if (!exists && allItems.length >= 5) setIsShowSwatchLImit(true);
+
     if (exists) {
       const filteredArray = allItems.filter((item) => !isSame(item));
       const existProductId = selectedProducts.find((p) =>

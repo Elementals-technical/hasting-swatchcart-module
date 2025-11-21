@@ -64,3 +64,11 @@ export interface IProductListItem {
   createdAt: string;
   updatedAt: string;
 }
+
+/**
+ * This interface extends the base AttributeValue and add a new property productName
+ *
+ */
+export interface ISwatchSelectedMaterial extends AttributeValue {
+  productName?: string;
+}
