@@ -10,7 +10,12 @@ export const SwatchLimitModal = ({
   onClose,
 }: ISwatchLimitModalProps) => {
   return (
-    <CustomModal isOpen={isOpen} onClose={onClose} width={320}>
+    <CustomModal
+      isOpen={isOpen}
+      onClose={onClose}
+      width={320}
+      title='Swatch Limit'
+    >
       <div>
         <div className='text-sm font-medium p-[var(--sm-padding)] border-b border-[var(--border)] leading-[20px]'>
           <p className='mb-4'>
@@ -18,7 +23,8 @@ export const SwatchLimitModal = ({
           </p>
 
           <p>
-            You can remove an existing swatch if you’d like to add a new one.
+            If you'd like to add another swatch please remove an exsiting swach
+            from your cart
           </p>
         </div>
         <div className='p-[var(--sm-padding)] w-full'>
