@@ -1,4 +1,5 @@
 module.exports = {
+  prefix: 'hsm-',
   content: ['./lib/**/*.{ts,tsx}'],
   corePlugins: { preflight: false },
   prefix: 'tw-',
