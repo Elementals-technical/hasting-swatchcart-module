@@ -15,6 +15,20 @@ npm i hasting-swatchcart-module
 
 ### UI (attributes from outside )
 
+### For example
+
+```js
+const handleOpenSidebar = () => {
+  // open/close a module
+};
+```
+
+```js
+const handleSetData = (data) => {
+  // Callback that returns selected materials from the cart back to the parent Application.
+};
+```
+
 ```js
 import { SwatchModule, EDataInputType } from 'hasting-swatchcart-module';
 
@@ -152,32 +166,32 @@ export interface IAttributeAsset {
 
 ### UI (attributes from outside )
 
-| Prop            | Type                                       | Required | Description                                                                            |
-| --------------- | ------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
-| isOpen          | boolean                                    | Yes      | Controls visibility of the module (module state). true → module is visible.            |
-| uiDataType      | 'UI'                                       | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
-| data            | IAttributeAsset[]                          | Yes      | Array of attributes data. Passed to the module to render swatch cards.                 |
-| onToggleSidebar | void                                       | Yes      | This method uses for open/close this module.                                           |
-| onSendData      | () => selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
+| Prop            | Type                                                   | Required | Description                                                                            |
+| --------------- | ------------------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
+| isOpen          | boolean                                                | Yes      | Controls visibility of the module (module state). true → module is visible.            |
+| uiDataType      | 'UI'                                                   | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
+| data            | IAttributeAsset[]                                      | Yes      | Array of attributes data. Passed to the module to render swatch cards.                 |
+| onToggleSidebar | void                                                   | Yes      | This method uses for open/close this module.                                           |
+| onSendData      | (data) => data is selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
 
 ### Fetch product
 
-| Prop            | Type                                       | Required | Description                                                                            |
-| --------------- | ------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
-| isOpen          | boolean                                    | Yes      | Controls visibility of the module (module state). true → module is visible.            |
-| uiDataType      | 'FETCH_DATA_PRODUCT'                       | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
-| assetId         | string                                     | Yes      | Defined an object for getting it`s attributes                                          |
-| onToggleSidebar | void                                       | Yes      | This method uses for open/close this module.                                           |
-| onSendData      | () => selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
+| Prop            | Type                                                   | Required | Description                                                                            |
+| --------------- | ------------------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
+| isOpen          | boolean                                                | Yes      | Controls visibility of the module (module state). true → module is visible.            |
+| uiDataType      | 'FETCH_DATA_PRODUCT'                                   | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
+| assetId         | string                                                 | Yes      | Defined an object for getting it`s attributes                                          |
+| onToggleSidebar | void                                                   | Yes      | This method uses for open/close this module.                                           |
+| onSendData      | (data) => data is selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
 
 ### Fetch all product
 
-| Prop            | Type                                       | Required | Description                                                                            |
-| --------------- | ------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
-| isOpen          | boolean                                    | Yes      | Controls visibility of the module (module state). true → module is visible.            |
-| uiDataType      | 'FETCH_DATA_ALL'                           | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
-| onToggleSidebar | void                                       | Yes      | This method uses for open/close this module.                                           |
-| onSendData      | () => selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
+| Prop            | Type                                                   | Required | Description                                                                            |
+| --------------- | ------------------------------------------------------ | -------- | -------------------------------------------------------------------------------------- |
+| isOpen          | boolean                                                | Yes      | Controls visibility of the module (module state). true → module is visible.            |
+| uiDataType      | 'FETCH_DATA_ALL'                                       | Yes      | Defines type data mode. Rendered data depends on this parameter                        |
+| onToggleSidebar | void                                                   | Yes      | This method uses for open/close this module.                                           |
+| onSendData      | (data) => data is selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
 
 ## Development
 
@@ -396,6 +410,10 @@ import { SwatchModule } from '../../dist/main'; // build module
 />
 ```
 
+## Branching
+
+We have one main branch `main`. This branch connected to DO and our web version of our module.
+
 ## Publishing
 
 In our app we have two envs that we need to published
@@ -408,6 +426,8 @@ In our app we have two envs that we need to published
 ```bach
 npm run build
 ```
+
+Then push your changes to the `develop` branch then push to the `main`
 
 ### Publishing module
 
@@ -428,3 +448,7 @@ Then
 ```bach
 npm publish
 ```
+
+You can publish module changes from any branch you want
+
+\*\* Don't forget to add your changes to the `main` branch

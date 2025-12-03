@@ -108,9 +108,9 @@ export const SwatchesMultiProductList = ({
   return (
     <div className={containerStyles}>
       <div className='flex justify-between items-center mb-3'>
-        <div className='relative w-30'>
+        <div className='relative'>
           <div className=''>Swatches list</div>
-          <span className='absolute top-0 right-[-6px] font-medium text-[var(--main-accent-color)] text-[8px] leading-none'>
+          <span className='absolute top-0 right-[-20px] font-medium text-[var(--main-accent-color)] text-[8px] leading-none'>
             Free
           </span>
         </div>

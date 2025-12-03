@@ -20,6 +20,7 @@ import {
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
+import headerImage from '../../../../app/assets/images/header_image.png';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'A-Z', value: 'asc' },
@@ -137,57 +138,69 @@ export const ProductList = () => {
   }, [productList, activeCategory, debouncedSearch, sortValue, collator]);
 
   return (
-    <div className='relative flex h-full flex-col '>
-      {(isLoadingProductList || isLoadingProduct) && <Loader />}
-      <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
-        <span className='p-[var(--sm-padding)] text-base font-medium'>
-          Swatches List
-        </span>
-
-        <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
-          <span>
-            Choose 5 free swatches to curate your perfect design. Plus get{' '}
-            <span className='text-[var(--main-accent-color)] underline'>
-              free design advice
-            </span>{' '}
-            from our experts
+    <div className='relative flex flex-col w-full'>
+      <div className='h-40 overflow-hidden'>
+        <img src={headerImage} className='object-cover w-full h-full' />
+      </div>
+      <div className='flex h-full flex-col '>
+        {(isLoadingProductList || isLoadingProduct) && <Loader />}
+        <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
+          <span className='p-[var(--sm-padding)] text-base font-medium'>
+            Swatches store
           </span>
-        </div>
-      </header>
-      <div className='flex min-h-0 flex-1 flex-col'>
-        <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
-          <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
-            <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
-              <input
-                type='text'
-                placeholder='Search'
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className='
-                  h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
-                  px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
-                  transition focus:border-[var(--main-accent-color)] focus:outline-none
-                '
-              />
 
-              <div
-                className='
-                  pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 sm:right-4
-                  [&_svg_path]:stroke-[var(--svg-dark)]
-                '
-              >
-                <SearchIconSVG width={20} height={20} />
+          <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
+            <span>
+              Choose 5 free swatches to curate your perfect design. Plus get{' '}
+              <span className='text-[var(--main-accent-color)] underline'>
+                free design advice
+              </span>{' '}
+              from our experts
+            </span>
+          </div>
+        </header>
+        <div className='flex min-h-0 flex-1 flex-col'>
+          <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
+            <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
+              <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
+                <input
+                  type='text'
+                  placeholder='Search'
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className='
+                    h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
+                    px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
+                    transition focus:border-[var(--main-accent-color)] focus:outline-none
+                  '
+                />
+
+                <div
+                  className='
+                    pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 sm:right-4
+                    [&_svg_path]:stroke-[var(--svg-dark)]
+                  '
+                >
+                  <SearchIconSVG width={20} height={20} />
+                </div>
               </div>
+
+              <SingleSelect
+                title='Sort by'
+                placeholder='Sort by'
+                values={SORT_OPTIONS}
+                value={sortValue}
+                onValueChange={setSortValue}
+                className='shrink-0 w-[90px] xxs:w-[100px] bg-[var(--label-bg)] sm:py-2 sm:px-4 sm:w-[102px]'
+                dropdownWidth='w-64'
+              />
             </div>
 
-            <SingleSelect
-              title='Sort by'
-              placeholder='Sort by'
-              values={SORT_OPTIONS}
-              value={sortValue}
-              onValueChange={setSortValue}
-              className='shrink-0 w-[90px] xxs:w-[100px] bg-[var(--label-bg)] sm:py-2 sm:px-4 sm:w-[102px]'
-              dropdownWidth='w-64'
+            <Slider
+              items={uniqueCategories}
+              activeId={activeCategory.productId}
+              onSelect={(item) => setActiveCategory(item)}
+              className='hidden lg:flex shrink-0 overflow-x-auto'
             />
           </div>
 
@@ -195,38 +208,31 @@ export const ProductList = () => {
             items={uniqueCategories}
             activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
-            className='hidden lg:flex shrink-0 overflow-x-auto'
+            className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] lg:hidden'
           />
+
+          <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)] '>
+            <div className='mb-4'>Select Product</div>
+
+            {filteredProductList.length ? (
+              <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
+                {filteredProductList.map((productListItem: any) => (
+                  <ProductListItem
+                    key={productListItem.name}
+                    productListItem={productListItem}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <div className='flex h-full items-center justify-center'>
+                No products were found
+              </div>
+            )}
+          </div>
         </div>
 
-        <Slider
-          items={uniqueCategories}
-          activeId={activeCategory.productId}
-          onSelect={(item) => setActiveCategory(item)}
-          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] lg:hidden'
-        />
-
-        <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)] '>
-          <div className='mb-4'>Select Product</div>
-
-          {filteredProductList.length ? (
-            <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
-              {filteredProductList.map((productListItem: any) => (
-                <ProductListItem
-                  key={productListItem.name}
-                  productListItem={productListItem}
-                />
-              ))}
-            </ul>
-          ) : (
-            <div className='flex h-full items-center justify-center'>
-              No products were found
-            </div>
-          )}
-        </div>
+        {selectedProducts.length ? <SwatchContentContainer /> : null}
       </div>
-
-      {selectedProducts.length ? <SwatchContentContainer /> : null}
     </div>
   );
 };
