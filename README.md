@@ -410,6 +410,10 @@ import { SwatchModule } from '../../dist/main'; // build module
 />
 ```
 
+## Branching
+
+We have one main branch `main`. This branch connected to DO and our web version of our module.
+
 ## Publishing
 
 In our app we have two envs that we need to published
@@ -422,6 +426,8 @@ In our app we have two envs that we need to published
 ```bach
 npm run build
 ```
+
+Then push your changes to the `develop` branch then push to the `main`
 
 ### Publishing module
 
@@ -442,3 +448,7 @@ Then
 ```bach
 npm publish
 ```
+
+You can publish module changes from any branch you want
+
+\*\* Don't forget to add your changes to the `main` branch

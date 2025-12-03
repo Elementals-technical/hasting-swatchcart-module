@@ -1,8 +1,8 @@
 module.exports = {
-  prefix: 'hsm-',
+  important: '.swatch-module-root',
   content: ['./lib/**/*.{ts,tsx}'],
   corePlugins: { preflight: false },
-  prefix: 'tw-',
+  prefix: 'hsm-',
   theme: {
     extend: {
       keyframes: {
