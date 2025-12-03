@@ -26,16 +26,16 @@ export const CartListItem = ({
         px-[var(--sm-padding)] p-[var(--sm-padding)]
         last:border-b-0'
     >
-      <div className='relative flex gap-4 '>
+      <div className='relative flex gap-[16px] '>
         <div>
           <MaterialItem val={item} />
         </div>
         <div className='flex flex-col justify-between'>
           <div className='flex flex-col'>
-            <span className='mb-1 font-semibold text-xs'>
+            <span className='mb-[4px] font-semibold text-xs'>
               {item.metadata?.label}
             </span>
-            <span className='mb-1 font-bold text-[10px]'>
+            <span className='mb-[4px] font-bold text-[10px]'>
               {item.parentName}
             </span>
           </div>

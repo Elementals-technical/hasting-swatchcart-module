@@ -109,7 +109,7 @@ const MultiSelect = React.forwardRef<
           <span
             className='
               flex-none flex justify-center items-center
-              w-5 h-5 rounded-full
+              w-[20px] h-5 rounded-full
               bg-[var(--main-accent-color)] text-white
               text-[10px] leading-none
               select-none pointer-events-none
@@ -137,7 +137,7 @@ const MultiSelect = React.forwardRef<
           </div>
           <ChevronDownIcon
             className={cn(
-              'h-4 w-4 transition-transform',
+              'h-4 w-[16px] transition-transform',
               isOpen && 'rotate-180',
             )}
           />
@@ -168,24 +168,24 @@ const MultiSelect = React.forwardRef<
           }}
         >
           {selectedCount > 0 && (
-            <div className='flex flex-row gap-2 items-center justify-between px-2 py-1 mb-2 border-b'>
+            <div className='flex flex-row gap-[8px] items-center justify-between px-2 py-1 mb-2 border-b'>
               <button
                 onClick={handleClearAll}
-                className='text-sm text-black hover:text-primary transition-color cursor-pointer duration-200 flex flex-row items-center gap-1'
+                className='text-sm text-black hover:text-primary transition-color cursor-pointer duration-200 flex flex-row items-center gap-[4px]'
               >
-                <XIcon className='h-3 w-3' />
+                <XIcon className='h-3 w-[12px]' />
                 Clear all
               </button>
             </div>
           )}
 
-          <div className='flex flex-col gap-1'>
+          <div className='flex flex-col gap-[4px]'>
             {options.map((option) => {
               const isChecked = values.includes(option.value);
               return (
                 <div
                   key={option.value}
-                  className='flex flex-row items-start gap-2 px-2 py-1 hover:bg-gray-50 rounded transition-background duration-300 cursor-pointer'
+                  className='flex flex-row items-start gap-[8px] px-2 py-1 hover:bg-gray-50 rounded transition-background duration-300 cursor-pointer'
                   onClick={() => handleSelectOption(option.value, !isChecked)}
                 >
                   <Checkbox
@@ -196,7 +196,7 @@ const MultiSelect = React.forwardRef<
                     }
                   />
                   <div className='flex-1 flex flex-row items-center justify-between'>
-                    <div className='flex flex-row items-center gap-2'>
+                    <div className='flex flex-row items-center gap-[8px]'>
                       <span className='text-sm'>{option.label}</span>
                       {(() => {
                         if (!getTooltipByMaterialAndSection || !sectionName)

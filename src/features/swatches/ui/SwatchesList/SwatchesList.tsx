@@ -8,8 +8,8 @@ import SwatchListItem from '../../../MultiProduct/ui/SwatchListItem/SwatchListIt
 const MockTile: React.FC = () => (
   <div
     className={[
-      'relative w-10 h-10 rounded-sm aspect-square overflow-hidden',
-      'border border-solid border-[var(--border)] bg-[var(--sidebar-b)] sm:w-16 sm:h-16',
+      'relative w-[40px] h-[40px] rounded-sm aspect-square overflow-hidden',
+      'border border-solid border-[var(--border)] bg-[var(--sidebar-b)] sm:w-[64px] sm:h-[64px]',
     ].join(' ')}
     aria-hidden
   />
@@ -34,7 +34,7 @@ export const SwatchesList = ({
 
   return (
     <div className={containerStyles}>
-      <div className='flex justify-between items-center mb-3'>
+      <div className='flex justify-between items-center mb-[12px]'>
         <div className='relative'>
           <div className=''>Swatches list</div>
           <span className='absolute top-0 right-[-20px] font-medium text-[var(--main-accent-color)] text-[8px] leading-none'>
@@ -46,7 +46,7 @@ export const SwatchesList = ({
         </div>
       </div>
 
-      <div className='flex flex-wrap gap-2'>
+      <div className='flex flex-wrap gap-[8px]'>
         {selectedMaterials.map((val, index) => {
           const meta = val.metadata;
           return (

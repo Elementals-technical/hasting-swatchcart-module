@@ -1,6 +1,6 @@
 module.exports = {
-  important: '.swatch-module-root',
-  content: ['./lib/**/*.{ts,tsx}'],
+  important: true,
+  content: ['./src/**/*.{ts,tsx}'],
   corePlugins: { preflight: false },
   prefix: 'hsm-',
   theme: {

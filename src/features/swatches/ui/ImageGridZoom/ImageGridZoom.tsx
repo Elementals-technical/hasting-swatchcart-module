@@ -22,13 +22,13 @@ export const ImageGridZoom = ({ item }: { item: any }) => {
 
   // const getZoomIcon = (zoomIconColor: string) => {
   //   if (!zoomIconColor)
-  //     return <Maximize2 className='w-5 h-5 sm:w-6 sm:h-6 shrink-0' />;
+  //     return <Maximize2 className='w-[20px] h-5 sm:w-6 sm:h-6 shrink-0' />;
 
   //   if (zoomIconColor === 'Dark Grey') {
-  //     return <DarkWhiteIconSVG className='w-5 h-5 sm:w-6 sm:h-6' />;
+  //     return <DarkWhiteIconSVG className='w-[20px] h-5 sm:w-6 sm:h-6' />;
   //   }
   //   if (zoomIconColor === 'White') {
-  //     return <WhiteWhiteIconSVG className='w-5 h-5 sm:w-6 sm:h-6' />;
+  //     return <WhiteWhiteIconSVG className='w-[20px] h-5 sm:w-6 sm:h-6' />;
   //   }
   // };
 

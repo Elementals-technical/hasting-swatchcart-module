@@ -17,7 +17,7 @@ export const CartSelectedProductList = () => {
   };
 
   return (
-    <div className='flex items-center gap-4 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'>
+    <div className='flex items-center gap-[16px] p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'>
       <Slider
         items={selectedProducts}
         activeId={selectedProduct?.productId}

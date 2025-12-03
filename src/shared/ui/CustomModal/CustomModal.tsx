@@ -69,7 +69,7 @@ export const CustomModal: FC<ModalProps> = ({
           </button>
         </div>
 
-        <div className='flex flex-col gap-3 text-[var(--text-muted)]'>
+        <div className='flex flex-col gap-[12px] text-[var(--text-muted)]'>
           {children}
         </div>
       </div>

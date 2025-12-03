@@ -19,7 +19,7 @@ export const CartHeader = ({
   return (
     <header className='flex MaterialMultiProductList justify-between items-center border-b border-solid border-[var(--border)] p-[var(--sm-padding)]'>
       <div className='flex items-center flex-row  gap-[4px]'>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-[8px]'>
           <button
             className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
             onClick={() =>

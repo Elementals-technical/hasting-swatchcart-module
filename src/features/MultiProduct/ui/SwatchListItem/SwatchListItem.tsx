@@ -73,8 +73,8 @@ const SwatchListItem: React.FC<ISwatchesListItemProps> = ({
           }
         }}
         className='
-          bg-[var(--background-grey)] relative w-10 h-10 border border-solid border-[var(--border)]
-          rounded-sm aspect-square overflow-hidden transition sm:w-16 sm:h-16
+          bg-[var(--background-grey)] relative w-[40px] h-[40px] border border-solid border-[var(--border)]
+          rounded-sm aspect-square overflow-hidden transition sm:w-[64px] sm:h-[64px]
           select-none
         '
         aria-label={`Selected swatch ${val.name ?? val.assetId}`}
@@ -101,7 +101,7 @@ const SwatchListItem: React.FC<ISwatchesListItemProps> = ({
           className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex justify-center items-center
           bg-[var(--background-grey)] rounded-2xl border-none z-[100] cursor-pointer'
         >
-          <CloseIconSVG className='w-2 h-2 stroke-[var(--svg-dark)]' />
+          <CloseIconSVG className='w-[8px] h-2 stroke-[var(--svg-dark)]' />
         </div>
       </div>
 

@@ -32,7 +32,7 @@ export const SelectedProductItem = () => {
   return (
     <div className='flex h-full flex-col'>
       <header className='flex shrink-0 items-center justify-between border-b border-[var(--border)] p-[var(--sm-padding)]'>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-[8px]'>
           <button
             className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
             onClick={handleGoBack}
@@ -51,7 +51,7 @@ export const SelectedProductItem = () => {
 
         <MaterialMultiProductList
           containerStyles='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'
-          gridStyles='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9'
+          gridStyles='grid grid-cols-2 gap-[16px] sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9'
           desktopColumnsCount={6}
         />
 

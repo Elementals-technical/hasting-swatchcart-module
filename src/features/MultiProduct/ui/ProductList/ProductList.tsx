@@ -118,8 +118,8 @@ export const ProductList = () => {
 
       <div className='flex flex-1 min-h-0 flex-col'>
         {(isLoadingProductList || isLoadingProduct) && <Loader />}
-        <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
-          <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
+        <div className='flex w-full items-center justify-between gap-[16px] border-b border-[var(--border)] p-[var(--sm-padding)]'>
+          <div className='flex h-[36px] w-full items-center justify-between gap-[16px] shrink-0 lg:max-w-[382px]'>
             <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
               <input
                 type='text'
@@ -173,7 +173,7 @@ export const ProductList = () => {
           <div className='mb-4'>Select Product</div>
 
           {filteredProductList.length ? (
-            <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
+            <ul className='grid grid-cols-2 gap-[16px] sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
               {filteredProductList.map((productListItem: any) => (
                 <ProductListItem
                   key={productListItem.name}
