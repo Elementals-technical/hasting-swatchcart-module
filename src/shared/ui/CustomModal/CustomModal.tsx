@@ -40,7 +40,7 @@ export const CustomModal: FC<ModalProps> = ({
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className='fixed inset-0 z-9999 flex items-center justify-center bg-black/40 p-4'>
+    <div className='fixed inset-0 z-99999999999999 flex items-center justify-center bg-black/40 p-4'>
       <div
         ref={modalRef}
         className='

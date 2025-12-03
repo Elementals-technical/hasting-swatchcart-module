@@ -81,7 +81,7 @@ const SingleSelect = React.forwardRef<
           aria-expanded={isOpen}
           className={cn(
             'inline-flex items-center justify-between gap-[8px] rounded-full bg-[var(--label-bg, #f5f5f5)] ' +
-              'px-2 py-2 text-xs font-medium h-9 text-black' +
+              'px-2 py-2 text-[12px] font-medium h-9 text-black' +
               'border border-transparent hover:bg-gray-100 ' +
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--main-accent-color)]' +
               'sm:w-[102px]',
@@ -89,7 +89,7 @@ const SingleSelect = React.forwardRef<
           )}
         >
           <span
-            className={cn(!selected && 'text-xs  text-gray-700 ms:text-sm')}
+            className={cn(!selected && 'text-[12px]  text-gray-700 ms:text-sm')}
           >
             {selected?.label ?? placeholder}
           </span>

@@ -34,7 +34,7 @@ export const CartHeader = ({
         </div>
         {totalCount >= MAX_SLOTS ? (
           <>
-            <span className='text-[var(--main-accent-color)] hidden text-xs sm:block'>
+            <span className='text-[var(--main-accent-color)] hidden text-[12px] sm:block'>
               ({MAX_SLOTS}) You reached maximum amount of swatches
             </span>
             <span className='text-[var(--main-accent-color)] block sm:hidden'>

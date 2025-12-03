@@ -132,7 +132,7 @@ const MultiSelect = React.forwardRef<
             className,
           )}
         >
-          <div className='w-full text-xs truncate text-left leading-[20px] sm:text-sm'>
+          <div className='w-full text-[12px] truncate text-left leading-[20px] sm:text-sm'>
             {displayContent}
           </div>
           <ChevronDownIcon

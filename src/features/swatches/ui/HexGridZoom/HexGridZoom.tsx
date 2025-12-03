@@ -36,7 +36,7 @@ export const HexGridZoom = ({ item }: { item: any }) => {
   return (
     <>
       <div
-        className='group relative w-full h-full aspect-video overflow-hidden shadow-sm group cursor-pointer rounded-sm'
+        className='group relative w-full h-full! aspect-video overflow-hidden shadow-sm group cursor-pointer rounded-sm'
         style={{ backgroundColor: hexColor || defaultHex }}
       >
         {/* <div

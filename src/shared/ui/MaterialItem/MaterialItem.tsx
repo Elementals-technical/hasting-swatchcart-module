@@ -12,7 +12,7 @@ export interface IMaterialItemProps {
 }
 
 const DEFAULT_STYLES =
-  'w-[64px]] h-[64px] bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition';
+  'w-[64px] h-[64px] bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition';
 
 export const MaterialItem = ({
   val,

@@ -34,12 +34,12 @@ export const ImageGridZoom = ({ item }: { item: any }) => {
 
   return (
     <>
-      <div className='group relative w-full h-full aspect-video overflow-hidden shadow-sm group cursor-pointer rounded-sm'>
+      <div className='group relative w-full h-full! aspect-video overflow-hidden shadow-sm group cursor-pointer rounded-sm'>
         {imageUrl && (
           <img
             src={imageUrl}
             alt={valueLabel}
-            className='w-full h-full object-cover'
+            className='w-full h-full! object-cover'
             loading='lazy'
           />
         )}

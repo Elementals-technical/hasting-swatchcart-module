@@ -104,7 +104,7 @@ export const ProductList = () => {
             Swatches store
           </span>
 
-          <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
+          <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-[12px] font-medium leading-[24px] lg:border-none'>
             <span>
               Choose 5 free swatches to curate your perfect design. Plus get{' '}
               <span className='text-[var(--main-accent-color)] underline'>
