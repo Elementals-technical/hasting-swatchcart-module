@@ -139,7 +139,7 @@ export const ProductList = () => {
 
   return (
     <div className='relative flex flex-col w-full'>
-      <div className='h-full max-h-40 overflow-hidden'>
+      <div className='h-40 overflow-hidden'>
         <img src={headerImage} className='object-cover w-full h-full' />
       </div>
       <div className='flex h-full flex-col '>
