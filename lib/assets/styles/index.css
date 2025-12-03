@@ -1,7 +1,6 @@
 @layer theme, base, components, utilities;
 @import './normalize.css';
 @import './root.css';
-@import './fonts.css';
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tw-animate-css';
@@ -18,7 +17,7 @@ html {
 }
 
 body {
-  font-family: var(--main-font-family), sans-serif;
+  /* font-family: var(--main-font-family), sans-serif; */
   font-weight: 400;
 }
 
