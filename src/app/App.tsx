@@ -29,7 +29,7 @@ function App() {
   };
 
   return (
-    <>
+    <div className='swatch-module-root'>
       <div className='flex flex-col gap-3 m-2'>
         <div>
           Active type Module -{' '}
@@ -82,7 +82,7 @@ function App() {
           onSendData={handleSetData}
         />
       </div>
-    </>
+    </div>
   );
 }
 
