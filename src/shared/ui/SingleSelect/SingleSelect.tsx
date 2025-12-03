@@ -80,7 +80,7 @@ const SingleSelect = React.forwardRef<
           aria-haspopup='listbox'
           aria-expanded={isOpen}
           className={cn(
-            'inline-flex items-center justify-between gap-[8px] rounded-full bg-[var(--label-bg, #f5f5f5)] ' +
+            'inline-flex flex-row items-center justify-between gap-[8px] rounded-full bg-[var(--label-bg, #f5f5f5)] ' +
               'px-2 py-2 text-[12px] font-medium h-9 text-black' +
               'border border-transparent hover:bg-gray-100 ' +
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--main-accent-color)]' +
@@ -131,7 +131,7 @@ const SingleSelect = React.forwardRef<
             <div className='px-4 py-2 border-b'>
               <button
                 onClick={handleClear}
-                className='inline-flex items-center gap-[4px] text-[0.95rem] text-black hover:text-[var(--main-accent-color)] transition-colors'
+                className='inline-flex flex-row items-center gap-[4px] text-[0.95rem] text-black hover:text-[var(--main-accent-color)] transition-colors'
               >
                 <XIcon className='h-3.5 w-[12px].5' />
                 Clear
@@ -156,7 +156,7 @@ const SingleSelect = React.forwardRef<
                   aria-selected={isSelected}
                   tabIndex={0}
                   className={cn(
-                    'flex items-start justify-between gap-[8px] px-4 py-2 cursor-pointer',
+                    'flex flex-row items-start justify-between gap-[8px] px-4 py-2 cursor-pointer',
                     'hover:bg-gray-50 focus:bg-gray-50 focus:outline-none',
                   )}
                   onClick={() => handleSelect(opt.value)}
@@ -167,7 +167,7 @@ const SingleSelect = React.forwardRef<
                     }
                   }}
                 >
-                  <div className='flex items-center gap-[8px]'>
+                  <div className='flex flex-row items-center gap-[8px]'>
                     <span className='text-[1.05rem]'>{opt.label}</span>
                     {(() => {
                       if (!getTooltipByMaterialAndSection || !sectionName)

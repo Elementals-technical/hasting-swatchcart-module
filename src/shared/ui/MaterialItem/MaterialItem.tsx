@@ -40,7 +40,7 @@ export const MaterialItem = ({
 
       {isShowDeleteIcon ? (
         <div
-          className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex justify-center items-center
+          className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex flex-row justify-center items-center
           bg-[var(--background-grey)] rounded-2xl border-none pointer-events-none'
         >
           <CloseIconSVG className='w-[8px] h-2 stroke-[var(--svg-dark)]' />

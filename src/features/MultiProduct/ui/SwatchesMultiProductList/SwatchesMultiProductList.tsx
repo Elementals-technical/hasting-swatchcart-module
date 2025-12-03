@@ -107,7 +107,7 @@ export const SwatchesMultiProductList = ({
 
   return (
     <div className={containerStyles}>
-      <div className='flex justify-between items-center mb-[12px]'>
+      <div className='flex flex-row justify-between items-center mb-[12px]'>
         <div className='relative'>
           <div className=''>Swatches list</div>
           <span className='absolute top-0 right-[-20px] font-medium text-[var(--main-accent-color)] text-[8px] leading-none'>
@@ -119,7 +119,7 @@ export const SwatchesMultiProductList = ({
         </div>
       </div>
 
-      <div className='flex flex-wrap gap-[8px]'>
+      <div className='flex flex-row flex-wrap gap-[8px]'>
         {selectedMaterials.map((val, index) => {
           const meta = val.metadata;
           return (

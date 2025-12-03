@@ -17,9 +17,9 @@ export const CartHeader = ({
   const totalCount = useAppSelector(getCartTotalCount);
 
   return (
-    <header className='flex MaterialMultiProductList justify-between items-center border-b border-solid border-[var(--border)] p-[var(--sm-padding)]'>
-      <div className='flex items-center flex-row  gap-[4px]'>
-        <div className='flex items-center gap-[8px]'>
+    <header className='flex flex-row MaterialMultiProductList justify-between items-center border-b border-solid border-[var(--border)] p-[var(--sm-padding)]'>
+      <div className='flex flex-row items-center gap-[4px]'>
+        <div className='flex flex-row items-center gap-[8px]'>
           <button
             className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
             onClick={() =>
@@ -44,7 +44,7 @@ export const CartHeader = ({
         ) : null}
       </div>
       <button
-        className='flex justify-center items-center w-[30px] h-[30px] bg-[var(--background-grey)]
+        className='flex flex-row justify-center items-center w-[30px] h-[30px] bg-[var(--background-grey)]
             border-none cursor-pointer rounded-full
             [&_svg_path]:stroke-[var(--svg-dark)]'
         onClick={onToggleSidebar}

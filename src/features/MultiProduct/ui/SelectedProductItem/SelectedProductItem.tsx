@@ -30,9 +30,9 @@ export const SelectedProductItem = () => {
   };
 
   return (
-    <div className='flex h-full flex-col'>
-      <header className='flex shrink-0 items-center justify-between border-b border-[var(--border)] p-[var(--sm-padding)]'>
-        <div className='flex items-center gap-[8px]'>
+    <div className='flex flex-col h-full '>
+      <header className='flex flex-row shrink-0 items-center justify-between border-b border-[var(--border)] p-[var(--sm-padding)]'>
+        <div className='flex flex-row items-center gap-[8px]'>
           <button
             className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
             onClick={handleGoBack}
@@ -44,7 +44,7 @@ export const SelectedProductItem = () => {
           </h2>
         </div>
       </header>
-      <div className='flex min-h-0 flex-1 flex-col'>
+      <div className='flex flex-col min-h-0 flex-1 '>
         <div className='shrink-0'>
           <FiltersSelectedProductItem />
         </div>

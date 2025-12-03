@@ -93,7 +93,7 @@ export const ProductList = () => {
   }, [productList, activeCategory, debouncedSearch, sortValue, collator]);
 
   return (
-    <div className='relative flex h-full min-h-0 flex-col w-full'>
+    <div className='relative flex flex-col h-full min-h-0 w-full'>
       <div className='flex-shrink-0'>
         <div className='h-40 overflow-hidden'>
           <img src={headerImage} className='object-cover w-full h-full' />
@@ -116,10 +116,10 @@ export const ProductList = () => {
         </header>
       </div>
 
-      <div className='flex flex-1 min-h-0 flex-col'>
+      <div className='flex flex-col flex-1 min-h-0'>
         {(isLoadingProductList || isLoadingProduct) && <Loader />}
-        <div className='flex w-full items-center justify-between gap-[16px] border-b border-[var(--border)] p-[var(--sm-padding)]'>
-          <div className='flex h-[36px] w-full items-center justify-between gap-[16px] shrink-0 lg:max-w-[382px]'>
+        <div className='flex flex-row w-full items-center justify-between gap-[16px] border-b border-[var(--border)] p-[var(--sm-padding)]'>
+          <div className='flex flex-row h-[36px] w-full items-center justify-between gap-[16px] shrink-0 lg:max-w-[382px]'>
             <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
               <input
                 type='text'
@@ -157,7 +157,7 @@ export const ProductList = () => {
             items={uniqueCategories}
             activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
-            className='hidden lg:flex shrink-0 overflow-x-auto'
+            className='hidden lg:flex flex-row shrink-0 overflow-x-auto'
           />
         </div>
 
@@ -182,7 +182,7 @@ export const ProductList = () => {
               ))}
             </ul>
           ) : (
-            <div className='flex h-full items-center justify-center'>
+            <div className='flex flex-row h-full items-center justify-center'>
               No products were found
             </div>
           )}

@@ -26,7 +26,7 @@ export const CartListItem = ({
         px-[var(--sm-padding)] p-[var(--sm-padding)]
         last:border-b-0'
     >
-      <div className='relative flex gap-[16px] '>
+      <div className='relative flex flex-row gap-[16px]'>
         <div>
           <MaterialItem val={item} />
         </div>

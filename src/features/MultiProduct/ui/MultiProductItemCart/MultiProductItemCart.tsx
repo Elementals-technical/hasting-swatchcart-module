@@ -63,7 +63,7 @@ export const MultiProductItemCart = ({
   }, [allItems]);
 
   return (
-    <div className='flex h-full flex-col '>
+    <div className='flex flex-col h-full'>
       <MultiProductCartHeader totalCount={totalCount} />
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col flex-1 min-h-0 overflow-y-auto'>
@@ -120,7 +120,7 @@ export const MultiProductItemCart = ({
               containerStyles='flex flex-col gap-[8px] text-[12px]/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-[12px] sm:border-none s'
             />
           </div>
-          <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex sm:justify-end sm:items-end sm:h-full'>
+          <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
             <div className='sm:w-[50%]'>
               <CustomButton
                 onClick={() => onSendData && onSendData(selectedProducts)}

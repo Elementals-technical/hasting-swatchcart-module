@@ -87,7 +87,7 @@ export const Slider: React.FC<ISliderProps> = ({
 
   return (
     <div
-      className={`flex items-center gap-[8px] lg:w-[50%] xl:w-auto ${className}`}
+      className={`flex flex-row items-center gap-[8px] lg:w-[50%] xl:w-auto ${className}`}
       role='region'
       aria-label='Category slider'
     >
@@ -96,7 +96,7 @@ export const Slider: React.FC<ISliderProps> = ({
         aria-label='Scroll left'
         disabled={!canLeft}
         onClick={() => scrollByStep('left')}
-        className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center shadow
+        className={`flex-shrink-0 h-8 w-8 rounded-full flex flex-row items-center justify-center shadow
           ${canLeft ? 'bg-black text-white hover:brightness-110' : 'bg-gray-200 text-gray-500 opacity-60 cursor-not-allowed'}`}
       >
         <ChevronSVGIcon className='w-[16px] h-4 rotate-360' />{' '}
@@ -111,7 +111,10 @@ export const Slider: React.FC<ISliderProps> = ({
           paddingRight: '0.5rem',
         }}
       >
-        <div ref={contentRef} className='flex gap-[12px] sm:gap-[16px] py-2'>
+        <div
+          ref={contentRef}
+          className='flex flex-row gap-[12px] sm:gap-[16px] py-2'
+        >
           {items.map((it) => {
             const id = it.productId;
             const isActive = activeId === id;
@@ -134,7 +137,7 @@ export const Slider: React.FC<ISliderProps> = ({
         aria-label='Scroll right'
         disabled={!canRight}
         onClick={() => scrollByStep('right')}
-        className={`flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center shadow
+        className={`flex-shrink-0 h-8 w-8 rounded-full flex flex-row items-center justify-center shadow
           ${canRight ? 'bg-black text-white hover:brightness-110' : 'bg-gray-200 text-gray-400 opacity-60 cursor-not-allowed'}`}
       >
         <ChevronSVGIcon className='w-[16px] h-4 rotate-180' />{' '}

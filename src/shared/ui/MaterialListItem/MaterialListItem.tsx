@@ -55,7 +55,7 @@ export const MaterialListItem = ({ val, onClick }: IMaterialListItemProps) => {
         <div
           className={`
           absolute top-0 right-0 m-2 h-[30px] w-[30px]
-          flex items-center justify-center rounded-2xl border-none
+          flex flex-row items-center justify-center rounded-2xl border-none
           bg-[var(--background-grey)] pointer-events-none
           ${isSelected ? 'bg-[var(--main-accent-color)]' : ''}
         `}

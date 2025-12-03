@@ -40,7 +40,7 @@ export const CustomModal: FC<ModalProps> = ({
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className='fixed inset-0 z-99999999999999 flex items-center justify-center bg-black/40 p-4'>
+    <div className='fixed inset-0 z-99999999999999 flex flex-row items-center justify-center bg-black/40 p-4'>
       <div
         ref={modalRef}
         className='
@@ -52,14 +52,14 @@ export const CustomModal: FC<ModalProps> = ({
           height: height || 'auto',
         }}
       >
-        <div className='flex items-center justify-between p-[var(--sm-padding)] border-b border-[var(--border)]'>
+        <div className='flex flex-row items-center justify-between p-[var(--sm-padding)] border-b border-[var(--border)]'>
           <span className='text-base font-semibold text-[var(--text)]'>
             {title}
           </span>
 
           <button
             onClick={onClose}
-            className='flex justify-center items-center p-1 rounded-full bg-[var(--border)] hover:bg-gray-100 transition [&_svg_path]:stroke-[var(--svg-dark)] w-[30px] h-[30px]'
+            className='flex flex-row justify-center items-center p-1 rounded-full bg-[var(--border)] hover:bg-gray-100 transition [&_svg_path]:stroke-[var(--svg-dark)] w-[30px] h-[30px]'
           >
             <CloseIconSVG
               className='text-[var(--text)] '
