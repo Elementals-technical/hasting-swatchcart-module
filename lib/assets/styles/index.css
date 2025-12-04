@@ -5,11 +5,14 @@
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tw-animate-css';
 @import './theme.css';
-@import './hubspot-forms.css';
 @import 'tailwindcss';
 
 .root-app {
   @import 'tailwindcss/utilities.css';
+}
+
+h2 {
+  margin: 0 !important;
 }
 
 html {

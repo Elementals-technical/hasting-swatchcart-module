@@ -19,7 +19,7 @@ export const Counter = ({
 }: ICounterProps) => {
   const showTrash = value <= 1;
   return (
-    <div className='flex items-center gap-2 text-sm'>
+    <div className='flex flex-row items-center gap-[8px] text-sm'>
       {showTrash ? (
         <button
           aria-label='Remove item'
@@ -37,7 +37,7 @@ export const Counter = ({
           <MinusIconSVG />
         </button>
       )}
-      <span className='min-w-4 text-center select-none'>{value}</span>
+      <span className='min-w-[16px] text-center select-none'>{value}</span>
       <button
         aria-label='Increase'
         onClick={onIncrement}

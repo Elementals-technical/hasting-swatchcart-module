@@ -34,7 +34,7 @@ export const MaterialListItem = ({ val, onClick }: IMaterialListItemProps) => {
   );
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col gap-[8px]'>
       <button
         key={val.assetId}
         onClick={() => handleSelect(val)}
@@ -55,7 +55,7 @@ export const MaterialListItem = ({ val, onClick }: IMaterialListItemProps) => {
         <div
           className={`
           absolute top-0 right-0 m-2 h-[30px] w-[30px]
-          flex items-center justify-center rounded-2xl border-none
+          flex flex-row items-center justify-center rounded-2xl border-none
           bg-[var(--background-grey)] pointer-events-none
           ${isSelected ? 'bg-[var(--main-accent-color)]' : ''}
         `}
@@ -64,11 +64,11 @@ export const MaterialListItem = ({ val, onClick }: IMaterialListItemProps) => {
         </div>
       </button>
 
-      <div className='mt-3 flex flex-col'>
-        <span className='mb-1 text-xs font-semibold leading-[14px]'>
+      <div className='mb-[12px] flex flex-col'>
+        <span className='mb-[4px] text-[14px] font-semibold leading-[16px]'>
           {val.metadata?.label || val.label}{' '}
         </span>
-        <span className='text-[10px] font-medium leading-[12px]'>
+        <span className='text-[12px] font-medium leading-[14px]'>
           {val.parentName}{' '}
         </span>
       </div>

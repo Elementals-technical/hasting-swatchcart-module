@@ -12,7 +12,7 @@ export interface IMaterialItemProps {
 }
 
 const DEFAULT_STYLES =
-  'w-16 h-16 bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition';
+  'w-[64px] h-[64px] bg-[var(--sidebar-b)] border border-solid border-[var(--border)] rounded-sm aspect-square overflow-hidden transition';
 
 export const MaterialItem = ({
   val,
@@ -40,10 +40,10 @@ export const MaterialItem = ({
 
       {isShowDeleteIcon ? (
         <div
-          className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex justify-center items-center
+          className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex flex-row justify-center items-center
           bg-[var(--background-grey)] rounded-2xl border-none pointer-events-none'
         >
-          <CloseIconSVG className='w-2 h-2 stroke-[var(--svg-dark)]' />
+          <CloseIconSVG className='w-[8px] h-2 stroke-[var(--svg-dark)]' />
         </div>
       ) : null}
     </button>
