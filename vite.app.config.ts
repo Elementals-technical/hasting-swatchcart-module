@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   // no build.lib here — this is an APP build (emits index.html)
   build: {
+    assetsInlineLimit: 0,
     copyPublicDir: true, // if you have /public
     cssCodeSplit: true,
     outDir: 'dist',
