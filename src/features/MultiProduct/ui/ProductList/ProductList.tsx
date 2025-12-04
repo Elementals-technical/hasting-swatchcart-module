@@ -20,7 +20,6 @@ import {
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
-import headerImage from '../../../../app/assets/images/header_image.png';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'A-Z', value: 'asc' },
@@ -96,7 +95,12 @@ export const ProductList = () => {
     <div className='relative flex flex-col h-full min-h-0 w-full'>
       <div className='flex-shrink-0'>
         <div className='h-40 overflow-hidden'>
-          <img src={headerImage} className='object-cover w-full h-full' />
+          <img
+            src={
+              'https://clownfish-app-cvxrz.ondigitalocean.app/assets/header_image-BZoSlAHj.png'
+            }
+            className='object-cover w-full h-full'
+          />
         </div>
 
         <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
