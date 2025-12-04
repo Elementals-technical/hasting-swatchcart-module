@@ -20,6 +20,7 @@ export default defineConfig({
   },
 
   build: {
+    assetsInlineLimit: 0,
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
       name: 'SwatchModule',
