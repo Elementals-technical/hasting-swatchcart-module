@@ -1,4 +1,3 @@
-import productThumbnail from '../../../../app/assets/images/product_thumb.png';
 import { useAppDispatch } from '../../../../app/store/store';
 import { DataAdapterServices } from '../../../DataAdapter/lib/DataAdapterServices';
 import { EDataInputType } from '../../../DataAdapter/utils/types';
@@ -13,15 +12,13 @@ interface IProductListItemProps {
   productListItem: IProductListItem;
 }
 
-console.log('productThumbnail', productThumbnail);
-
 export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
   const dispatch = useAppDispatch();
   const { name, img } = productListItem;
 
   const imageURL = img
     ? `https://admin-fts.threekit.com${img}`
-    : productThumbnail;
+    : 'https://clownfish-app-cvxrz.ondigitalocean.app/assets/product_thumb-Bn1S8z9K.png';
 
   const handleSetSelectedItem = async () => {
     const { assetId, name } = productListItem;
