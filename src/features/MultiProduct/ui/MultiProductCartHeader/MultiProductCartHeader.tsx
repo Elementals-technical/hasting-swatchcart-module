@@ -16,22 +16,22 @@ export const MultiProductCartHeader = ({
     dispatch(setIsOpenMultiProductCart(false));
   };
   return (
-    <header className='flex p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
+    <header className='flex flex-row p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
       <div className='flex items-center flex-row  gap-[4px]'>
-        <div className='flex items-center gap-2'>
+        <div className='flex flex-row items-center gap-[8px]'>
           <button
             className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
             onClick={handleGoBack}
           >
             <ArrowIconSVG />
           </button>
-          <h2 className='m-0 text-base leading-[1.6] font-medium '>
+          <h2 className='m-0! text-base leading-[1.6] font-medium '>
             Your cart
           </h2>
         </div>
         {totalCount >= MAX_SLOTS ? (
           <>
-            <span className='text-[var(--main-accent-color)] hidden text-xs sm:block'>
+            <span className='text-[var(--main-accent-color)] hidden text-[12px] sm:block'>
               ({MAX_SLOTS}) You reached maximum amount of swatches
             </span>
             <span className='text-[var(--main-accent-color)] block sm:hidden'>

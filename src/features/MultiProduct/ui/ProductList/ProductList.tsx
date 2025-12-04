@@ -93,7 +93,7 @@ export const ProductList = () => {
   }, [productList, activeCategory, debouncedSearch, sortValue, collator]);
 
   return (
-    <div className='relative flex h-full min-h-0 flex-col w-full'>
+    <div className='relative flex flex-col h-full min-h-0 w-full'>
       <div className='flex-shrink-0'>
         <div className='h-40 overflow-hidden'>
           <img src={headerImage} className='object-cover w-full h-full' />
@@ -104,7 +104,7 @@ export const ProductList = () => {
             Swatches store
           </span>
 
-          <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
+          <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-[12px] font-medium leading-[24px] lg:border-none'>
             <span>
               Choose 5 free swatches to curate your perfect design. Plus get{' '}
               <span className='text-[var(--main-accent-color)] underline'>
@@ -116,10 +116,10 @@ export const ProductList = () => {
         </header>
       </div>
 
-      <div className='flex flex-1 min-h-0 flex-col'>
+      <div className='flex flex-col flex-1 min-h-0'>
         {(isLoadingProductList || isLoadingProduct) && <Loader />}
-        <div className='flex w-full items-center justify-between gap-4 border-b border-[var(--border)] p-[var(--sm-padding)]'>
-          <div className='flex h-[36px] w-full items-center justify-between gap-4 shrink-0 lg:max-w-[382px]'>
+        <div className='flex flex-row w-full items-center justify-between gap-[16px] border-b border-[var(--border)] p-[var(--sm-padding)]'>
+          <div className='flex flex-row h-[36px] w-full items-center justify-between gap-[16px] shrink-0 lg:max-w-[382px]'>
             <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
               <input
                 type='text'
@@ -157,7 +157,7 @@ export const ProductList = () => {
             items={uniqueCategories}
             activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
-            className='hidden lg:flex shrink-0 overflow-x-auto'
+            className='hidden lg:flex flex-row shrink-0 overflow-x-auto'
           />
         </div>
 
@@ -173,7 +173,7 @@ export const ProductList = () => {
           <div className='mb-4'>Select Product</div>
 
           {filteredProductList.length ? (
-            <ul className='grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
+            <ul className='grid grid-cols-2 gap-[16px] sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
               {filteredProductList.map((productListItem: any) => (
                 <ProductListItem
                   key={productListItem.name}
@@ -182,7 +182,7 @@ export const ProductList = () => {
               ))}
             </ul>
           ) : (
-            <div className='flex h-full items-center justify-center'>
+            <div className='flex flex-row h-full items-center justify-center'>
               No products were found
             </div>
           )}

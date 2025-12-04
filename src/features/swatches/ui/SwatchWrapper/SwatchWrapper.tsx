@@ -41,12 +41,12 @@ export const SwatchWrapper = ({
 
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
-      <header className='flex p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
-        <h2 className='m-0 text-[16px] leading-[1.6] font-medium'>
+      <header className='flex flex-row p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
+        <h2 className='m-0! text-[16px] leading-[1.6] font-medium'>
           Order free swatches
         </h2>
         <button
-          className='flex justify-center items-center w-[30px] h-[30px] bg-[var(--background-grey)]
+          className='flex flex-row justify-center items-center w-[30px] h-[30px] bg-[var(--background-grey)]
               border-none cursor-pointer rounded-full
               [&_svg_path]:stroke-[var(--svg-dark)]'
           onClick={onToggleSidebar}
@@ -58,7 +58,7 @@ export const SwatchWrapper = ({
         {isLoading && <Loader />}
 
         <ProductElement
-          containerStyles='flex justify-between items-center shrink-0 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'
+          containerStyles='flex flex-row justify-between items-center shrink-0 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'
           selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[250px]'
         />
         <Filters />

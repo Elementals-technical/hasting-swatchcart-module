@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div className='swatch-module-root'>
-      <div className='flex flex-col gap-3 m-2'>
+      <div className='flex flex-col gap-[12px] m-2'>
         <div>
           Active type Module -{' '}
           <span className='p-1 rounded-sm bg-amber-300'>
@@ -45,7 +45,7 @@ function App() {
             {isOpenModule ? 'Open' : 'Close'}
           </span>
         </div>
-        <div className='mb-1'>
+        <div className='mb-[4px]'>
           <button
             type='button'
             onClick={handleOpenSidebar}
@@ -78,6 +78,7 @@ function App() {
           // uiDataType={EDataInputType.UI}
           // data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
           assetId='9aa4a6cc-05a2-4de0-b376-ef3ef2271bfe'
+          // assetId='c5f1aeee-d13b-41f6-98d6-75fd35c49236'
           onToggleSidebar={handleOpenSidebar}
           onSendData={handleSetData}
         />
