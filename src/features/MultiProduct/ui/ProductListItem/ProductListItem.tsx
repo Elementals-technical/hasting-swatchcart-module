@@ -7,13 +7,17 @@ import {
 } from '../../../swatches/model/swatchesSlice';
 import { getSelectedProductThunk } from '../../../swatches/model/thunks';
 import { IProductListItem } from '../../model/types';
+import productThumbnail from '../../../../app/assets/images/product_thumb.png';
 
 interface IProductListItemProps {
   productListItem: IProductListItem;
 }
 
+console.log('productThumbnail', productThumbnail);
+
 export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
   const dispatch = useAppDispatch();
+
   const { name, img } = productListItem;
 
   const imageURL = img
