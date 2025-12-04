@@ -39,7 +39,7 @@ export const SelectedProductItem = () => {
           >
             <ArrowIconSVG />
           </button>
-          <h2 className='m-0 text-base font-medium leading-[1.6]'>
+          <h2 className='m-0! text-base font-medium leading-[1.6]'>
             {selectedProduct?.name}
           </h2>
         </div>

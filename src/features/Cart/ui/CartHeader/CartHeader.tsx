@@ -28,7 +28,7 @@ export const CartHeader = ({
           >
             <ArrowIconSVG />
           </button>
-          <h2 className='m-0 text-base leading-[1.6] font-medium '>
+          <h2 className='m-0! text-base leading-[1.6] font-medium '>
             Your cart
           </h2>
         </div>
