@@ -70,7 +70,7 @@ function App() {
       </div>
 
       <div
-        className={`${mockDataMode === EDataInputType.FETCH_DATA_ALL ? 'h-[600px] min-h-0 overflow-hidden flex flex-col border border-[var(--border)]' : ''}`}
+        className={`${mockDataMode === EDataInputType.FETCH_DATA_ALL ? 'h-[756px] min-h-0 overflow-hidden flex flex-col border border-[var(--border)]' : ''}`}
       >
         <SwatchModule
           isOpen={isOpenModule}
