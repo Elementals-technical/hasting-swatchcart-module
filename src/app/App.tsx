@@ -23,8 +23,6 @@ function App() {
       mockDataMode === EDataInputType.FETCH_DATA_ALL
         ? EDataInputType.FETCH_DATA_PRODUCT
         : EDataInputType.FETCH_DATA_ALL;
-    console.log(newMode);
-
     setMockDataMode(newMode);
   };
 

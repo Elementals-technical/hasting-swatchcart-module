@@ -3,7 +3,8 @@ import { useAppSelector } from '../../../../app/store/store';
 import { EActiveTab } from '../../../../shared/types/activeTab';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
-import { getCartTotalCount } from '../../model/selectors';
+import { useMemo } from 'react';
+import { getSelectedMaterials } from '../../../swatches/model/selectors';
 
 interface ICartHeaderProps {
   onSetActiveTab?: (arg: EActiveTab) => void;
@@ -14,7 +15,14 @@ export const CartHeader = ({
   onSetActiveTab,
   onToggleSidebar,
 }: ICartHeaderProps) => {
-  const totalCount = useAppSelector(getCartTotalCount);
+  const selectedMaterials = useAppSelector(getSelectedMaterials);
+
+  /**
+   * Count exact number of swatch in the cart
+   */
+  const totalCount = useMemo(() => {
+    return selectedMaterials.reduce((sum, item) => sum + (item.count ?? 0), 0);
+  }, [selectedMaterials]);
 
   return (
     <header className='flex flex-row MaterialMultiProductList justify-between items-center border-b border-solid border-[var(--border)] p-[var(--sm-padding)]'>

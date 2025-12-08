@@ -13,7 +13,7 @@ export const FiltersSelectedProductItem = () => {
         border-b border-[var(--border)]
         sm:max-w-[360px] sm:text-sm sm:border-none
         '
-        selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[160px] font-normal'
+        selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[180px] font-normal'
       />
       <Filters />
     </div>

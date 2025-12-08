@@ -82,6 +82,15 @@ export const MaterialMultiProductList = ({
   }, [selectedProducts]);
 
   /**
+   * Count exact number of swatch in the cart
+   */
+  const cartCount = useMemo(() => {
+    return selectedProducts
+      .flatMap((p) => p.items)
+      .reduce((sum, item) => sum + (item.count ?? 0), 0);
+  }, [selectedProducts]);
+
+  /**
    * Materials filtered by the current Finish, Color and Look filters.
    *
    * - Finish filter matches either `metadata.Finish` or `metadata.Material`.
@@ -172,7 +181,10 @@ export const MaterialMultiProductList = ({
 
     const exists = allItems.some(isSame);
 
-    if (!exists && allItems.length >= 5) setIsShowSwatchLImit(true);
+    if (!exists && cartCount >= 5) {
+      setIsShowSwatchLImit(true);
+      return;
+    }
 
     if (exists) {
       const filteredArray = allItems.filter((item) => !isSame(item));

@@ -129,6 +129,7 @@ export type ETypeComponent =
   (typeof ETypeComponent)[keyof typeof ETypeComponent];
 
 export interface AttributeValue {
+  count: number;
   assetId?: string;
   name?: string;
   tags?: string[];

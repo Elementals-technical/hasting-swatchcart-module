@@ -22,6 +22,7 @@ import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
+  { label: 'Clear All', value: '' },
   { label: 'A-Z', value: 'asc' },
   { label: 'Z-A', value: 'dsc' },
 ];
@@ -86,6 +87,8 @@ export const ProductList = () => {
       list = [...list].sort((a, b) => collator.compare(a.name, b.name));
     } else if (sortValue === 'dsc') {
       list = [...list].sort((a, b) => collator.compare(b.name, a.name));
+    } else {
+      list = [...list];
     }
 
     return list;
@@ -104,11 +107,11 @@ export const ProductList = () => {
         </div>
 
         <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
-          <span className='p-[var(--sm-padding)] text-base font-medium'>
+          <h1 className='m-0! p-[var(--sm-padding)] text-[1.6rem] font-medium'>
             Swatches store
-          </span>
+          </h1>
 
-          <div className='border-t border-[var(--border)] p-[var(--sm-padding)] text-[12px] font-medium leading-[24px] lg:border-none'>
+          <div className='flex flex-row justify-center items-center border-t border-[var(--border)] p-[var(--sm-padding)] text-[12px] font-medium leading-[24px] lg:border-none'>
             <span>
               Choose 5 free swatches to curate your perfect design. Plus get{' '}
               <span className='text-[var(--main-accent-color)] underline'>

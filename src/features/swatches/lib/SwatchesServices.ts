@@ -81,8 +81,6 @@ export class SwatchesServices {
     allValues: TAllValue[],
     selected: IMaterialSelectState,
   ): TFilterGroup[] {
-    console.log('mapFiltersFromValues allValues', allValues);
-    console.log('mapFiltersFromValues selected', selected);
     return (Object.keys(selected) as TFilterName[]).map((filterType) => {
       const valueKey = FILTER_TO_VALUE_KEY[filterType];
       const requested = selected[filterType];
