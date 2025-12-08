@@ -13,6 +13,7 @@ import {
 } from '../../model/multiProductCartSlice';
 import { CartListItem } from '../../../Cart/ui/CartListItem/CartListItem';
 import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCartHeader';
+import { getSelectedMaterials } from '../../../swatches/model/selectors';
 
 interface IMultiProductItemCartProps {
   onSendData?: (data: unknown) => void;
@@ -25,6 +26,7 @@ export const MultiProductItemCart = ({
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
   const selectedProducts = useAppSelector(getMultiCartItems);
+  const selectedMaterials = useAppSelector(getSelectedMaterials);
 
   const allItems = useMemo(() => {
     return selectedProducts.flatMap((p) => p.items);
@@ -36,7 +38,13 @@ export const MultiProductItemCart = ({
     if (assetId && label && parentName) {
       dispatch(removeMultiProductItem({ assetId, label, parentName }));
       // DeleteSelected material from the  SwatchesList
-      dispatch(setSelectedMaterial({ selectedMaterial: item }));
+      dispatch(
+        setSelectedMaterial({
+          selectedMaterial: item,
+          materialCount: 1,
+          selectedMaterials,
+        }),
+      );
     }
   };
 

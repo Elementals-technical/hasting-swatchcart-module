@@ -87,7 +87,7 @@ export const Slider: React.FC<ISliderProps> = ({
 
   return (
     <div
-      className={`flex flex-row items-center gap-[8px] lg:w-[50%] xl:w-auto ${className}`}
+      className={`flex flex-row items-center gap-[8px] lg:w-[50%] xl:max-w-[68%] xl:w-full ${className}`}
       role='region'
       aria-label='Category slider'
     >
@@ -107,8 +107,8 @@ export const Slider: React.FC<ISliderProps> = ({
         className='no-scrollbar flex-1 overflow-hidden scroll-smooth'
         style={{
           WebkitOverflowScrolling: 'touch',
-          paddingLeft: '0.5rem',
-          paddingRight: '0.5rem',
+          // paddingLeft: '0.5rem',
+          // paddingRight: '0.5rem',
         }}
       >
         <div
@@ -128,7 +128,6 @@ export const Slider: React.FC<ISliderProps> = ({
               </div>
             );
           })}
-          <div aria-hidden className='shrink-0 w-1 sm:w-[16px]' />
         </div>
       </div>
 

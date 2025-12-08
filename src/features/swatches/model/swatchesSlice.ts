@@ -1,4 +1,4 @@
-import { createSlice, current, type PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type {
   AttributeValue,
   IAttributeAsset,
@@ -12,6 +12,7 @@ import { uniqueList } from '../../../shared/utils/uniqueList';
 import { type IMapUIData } from '../../DataAdapter/utils/types';
 import { getSelectedProductThunk } from './thunks';
 import { IProductListItem } from '../../MultiProduct/model/types';
+import { MAX_SLOTS } from '../../../shared/constants/selectedMaterials';
 
 const initialState: ISwatchesSlice = {
   // isOpenSidebar: true,
@@ -24,6 +25,8 @@ const initialState: ISwatchesSlice = {
   isLoadingSelectedProduct: false,
   isOpenMultiProductCart: false,
 };
+
+const sum = (arr: AttributeValue[]) => arr.reduce((s, i) => s + i.count, 0);
 
 export const swatchesSlice = createSlice({
   name: 'swatches',
@@ -79,26 +82,29 @@ export const swatchesSlice = createSlice({
     setSelectedMaterial(
       state,
       action: PayloadAction<{
+        materialCount: number;
         selectedMaterial: AttributeValue;
+        selectedMaterials: AttributeValue[];
         limitCb?: () => void;
       }>,
     ) {
-      const { selectedMaterial, limitCb } = action.payload;
+      const { materialCount, selectedMaterial, selectedMaterials, limitCb } =
+        action.payload;
       if (!selectedMaterial) return;
-      const selected = current(state.selectedMaterials);
+      // const selected = current(state.selectedMaterials);
 
       const isSame = (i: AttributeValue) =>
         i.metadata?.label === selectedMaterial.metadata?.label &&
         i.parentName === selectedMaterial.parentName;
 
-      const exists = selected.some(isSame);
+      const exists = selectedMaterials?.some(isSame);
 
-      if (!exists && selected.length >= 5 && limitCb) limitCb();
+      if (!exists && materialCount >= 5 && limitCb) limitCb();
 
       if (exists) {
-        state.selectedMaterials = selected.filter((i) => !isSame(i));
-      } else if (selected.length < 5) {
-        state.selectedMaterials = [...selected, selectedMaterial];
+        state.selectedMaterials = selectedMaterials.filter((i) => !isSame(i));
+      } else if (materialCount < 5) {
+        state.selectedMaterials = [...selectedMaterials, selectedMaterial];
       }
     },
     resetSelectedMaterials(state) {
@@ -112,6 +118,72 @@ export const swatchesSlice = createSlice({
     },
     setIsOpenMultiProductCart(state, action: PayloadAction<boolean>) {
       state.isOpenMultiProductCart = action.payload;
+    },
+    removeItem(
+      state,
+      action: PayloadAction<{ selectedMaterial: AttributeValue }>,
+    ) {
+      const { metadata, parentName } = action.payload.selectedMaterial;
+
+      state.selectedMaterials = state.selectedMaterials.filter(
+        (i) =>
+          !(
+            i.metadata?.label === metadata?.label && i.parentName === parentName
+          ),
+      );
+    },
+    increment(
+      state,
+      action: PayloadAction<{ selectedMaterial: AttributeValue }>,
+    ) {
+      const { metadata, parentName } = action.payload.selectedMaterial;
+
+      const item = state.selectedMaterials.find(
+        (i) =>
+          i.metadata?.label === metadata?.label && i.parentName === parentName,
+      );
+      if (!item) return;
+      if (sum(state.selectedMaterials) < MAX_SLOTS) {
+        item.count += 1;
+      }
+    },
+    decrement(
+      state,
+      action: PayloadAction<{ selectedMaterial: AttributeValue }>,
+    ) {
+      const { metadata, parentName } = action.payload.selectedMaterial;
+      const item = state.selectedMaterials.find(
+        (i) =>
+          i.metadata?.label === metadata?.label && i.parentName === parentName,
+      );
+      if (!item) return;
+      if (item.count > 1) item.count -= 1;
+    },
+    setCount(
+      state,
+      action: PayloadAction<{ selectedMaterial: AttributeValue; next: number }>,
+    ) {
+      const { metadata, parentName } = action.payload.selectedMaterial;
+      const { next } = action.payload;
+      const item = state.selectedMaterials.find(
+        (i) =>
+          i.metadata?.label === metadata?.label && i.parentName === parentName,
+      );
+      if (!item) return;
+
+      const clamped = Math.max(1, Math.floor(next));
+      const otherTotal = state.selectedMaterials
+        .filter(
+          (i) =>
+            !(
+              i.metadata?.label === metadata?.label &&
+              i.parentName === parentName
+            ),
+        )
+        .reduce((s, i) => s + i.count, 0);
+
+      const maxForThis = Math.max(1, MAX_SLOTS - otherTotal);
+      item.count = Math.min(clamped, maxForThis);
     },
   },
   extraReducers: (builder) => {
@@ -142,4 +214,8 @@ export const {
   deleteSelectedProduct,
   setIsOpenMultiProductCart,
   resetSelectedMaterials,
+  removeItem,
+  increment,
+  decrement,
+  setCount,
 } = swatchesSlice.actions;
