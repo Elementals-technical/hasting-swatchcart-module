@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // import { SwatchModule } from '../features/SwatchModule/SwatchModule/ui/SwatchModule'; // App
-import { SwatchModule } from '../../dist/main'; // build module
-// import { SwatchModule } from '../../lib/main'; // lib
+// import { SwatchModule } from '../../dist/main'; // build module
+import { SwatchModule } from '../../lib/main'; // lib
 import { EDataInputType } from '../features/DataAdapter/utils/types';
 // import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 function App() {
