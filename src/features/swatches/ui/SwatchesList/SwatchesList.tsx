@@ -27,7 +27,13 @@ export const SwatchesList = ({
   const dispatch = useAppDispatch();
 
   const handleSelect = (item: AttributeValue) => {
-    dispatch(setSelectedMaterial({ selectedMaterial: item }));
+    dispatch(
+      setSelectedMaterial({
+        selectedMaterial: item,
+        materialCount: 1,
+        selectedMaterials,
+      }),
+    );
   };
 
   const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);

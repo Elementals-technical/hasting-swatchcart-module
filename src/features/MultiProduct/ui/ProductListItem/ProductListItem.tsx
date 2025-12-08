@@ -13,8 +13,6 @@ interface IProductListItemProps {
   productListItem: IProductListItem;
 }
 
-// console.log('productThumbnail', productThumbnail);
-
 export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
   const dispatch = useAppDispatch();
 

@@ -23,7 +23,7 @@ export const SwatchLimitModal = ({
           </p>
 
           <p>
-            If you'd like to add another swatch please remove an exsiting swach
+            If you'd like to add another swatch please remove an existing swatch
             from your cart
           </p>
         </div>

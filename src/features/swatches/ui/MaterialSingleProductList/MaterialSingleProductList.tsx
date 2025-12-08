@@ -5,6 +5,7 @@ import { useAppSelector } from '../../../../app/store/store';
 import {
   getAllMaterialValues,
   getMaterialSelectStateFilters,
+  getSelectedMaterials,
 } from '../../model/selectors';
 import { MaterialListItem } from '../../../../shared/ui/MaterialListItem/MaterialListItem';
 import { AttributeValue } from '../../model/types';
@@ -26,8 +27,17 @@ export const MaterialSingleProductList = ({
   const dispatch = useDispatch();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const allMaterialsValues = useAppSelector(getAllMaterialValues);
+
+  const selectedMaterials = useAppSelector(getSelectedMaterials);
   const filters = useAppSelector(getMaterialSelectStateFilters);
   const [isShowLimitMessage, setIsShowLimitMessage] = useState(false);
+
+  /**
+   * Count exact number of swatch in the cart
+   */
+  const cartCount = useMemo(() => {
+    return selectedMaterials.reduce((sum, item) => sum + (item.count ?? 0), 0);
+  }, [selectedMaterials]);
 
   const filteredItems = useMemo(() => {
     return allMaterialsValues.filter((item) => {
@@ -93,7 +103,9 @@ export const MaterialSingleProductList = ({
   const handleSelect = (item: AttributeValue) => {
     dispatch(
       setSelectedMaterial({
-        selectedMaterial: item,
+        materialCount: cartCount,
+        selectedMaterials,
+        selectedMaterial: { ...item, count: 1 },
         limitCb: () => setIsShowLimitMessage(true),
       }),
     );
