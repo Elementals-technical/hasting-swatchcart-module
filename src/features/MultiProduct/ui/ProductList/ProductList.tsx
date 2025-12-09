@@ -155,7 +155,7 @@ export const ProductList = () => {
               values={SORT_OPTIONS}
               value={sortValue}
               onValueChange={setSortValue}
-              className='shrink-0 w-[90px] xxs:w-[100px] bg-[var(--label-bg)] sm:py-2 sm:px-4 sm:w-[102px]'
+              className='shrink-0 w-[90px] xxs:w-[100px] bg-[var(--label-bg)] sm:py-8px sm:px-16px sm:w-[102px]'
               dropdownWidth='w-64'
             />
           </div>
