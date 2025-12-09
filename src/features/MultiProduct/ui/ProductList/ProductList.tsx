@@ -107,11 +107,11 @@ export const ProductList = () => {
         </div>
 
         <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
-          <h1 className='m-0! p-[var(--sm-padding)] text-[1.6rem] font-medium'>
+          <h1 className='m-0! p-[var(--sm-padding)] text-base font-medium'>
             Swatches store
           </h1>
 
-          <div className='flex flex-row justify-center items-center border-t border-[var(--border)] p-[var(--sm-padding)] text-[12px] font-medium leading-[24px] lg:border-none'>
+          <div className='flex flex-row justify-center items-center border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
             <span>
               Choose 5 free swatches to curate your perfect design. Plus get{' '}
               <span className='text-[var(--main-accent-color)] underline'>

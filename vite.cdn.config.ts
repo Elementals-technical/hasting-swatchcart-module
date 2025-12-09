@@ -2,12 +2,14 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   base: './',
 
   plugins: [
     react(),
+    tailwindcss(),
     dts({
       insertTypesEntry: true,
       copyDtsFiles: true,

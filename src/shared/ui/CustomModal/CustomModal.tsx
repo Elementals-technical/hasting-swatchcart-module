@@ -74,6 +74,6 @@ export const CustomModal: FC<ModalProps> = ({
         </div>
       </div>
     </div>,
-    document.body,
+    document.querySelector('#root-container')!,
   );
 };
