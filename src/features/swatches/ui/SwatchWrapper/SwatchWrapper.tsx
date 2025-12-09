@@ -61,7 +61,9 @@ export const SwatchWrapper = ({
           containerStyles='flex flex-row justify-between items-center shrink-0 p-[var(--sm-padding)] border-b border-solid border-[var(--border)]'
           selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[250px]'
         />
-        <Filters />
+        <div className='w-full border-b border-b-border'>
+          <Filters />
+        </div>
         <MaterialSingleProductList />
         <SwatchesSingleProductListWrapper />
 
