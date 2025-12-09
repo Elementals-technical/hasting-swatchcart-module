@@ -17,8 +17,6 @@ export const CartList = () => {
   const canInc = useAppSelector(getCartCanIncrement);
 
   const handleDelete = (item: ICartItem) => {
-    console.log('selectedMaterials', selectedMaterials);
-
     // DeleteSelected material from the Cart
     dispatch(removeItem({ selectedMaterial: item }));
     // DeleteSelected material from the  SwatchesList

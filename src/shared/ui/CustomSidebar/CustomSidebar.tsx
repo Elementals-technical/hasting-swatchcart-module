@@ -79,7 +79,7 @@ const CustomSidebar: React.FC<SidebarProps> = ({
         {children}
       </div>
     </div>,
-    document.body,
+    document.querySelector('#root-container')!,
   );
 };
 

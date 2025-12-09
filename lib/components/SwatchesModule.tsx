@@ -84,41 +84,46 @@ export const SwatchModule = ({
   }, [uiDataType, data, assetId]);
 
   return (
-    <LibraryProvider>
-      <ToastContainer
-        position='top-center'
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme='dark'
-        transition={Bounce}
-      />
-      {isOpen ? (
-        <>
-          {!isSingleProduct ? (
-            <MultiProductWrapper
-              onSendData={onSendData}
-              onToggleSidebar={onToggleSidebar}
-            />
-          ) : null}
+    <div
+      id='root-container'
+      className='relative flex flex-col h-full min-h-0 w-full'
+    >
+      <LibraryProvider>
+        <ToastContainer
+          position='top-center'
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='dark'
+          transition={Bounce}
+        />
+        {isOpen ? (
+          <>
+            {!isSingleProduct ? (
+              <MultiProductWrapper
+                onSendData={onSendData}
+                onToggleSidebar={onToggleSidebar}
+              />
+            ) : null}
 
-          {isSingleProduct ? (
-            <Swatches
-              isOpen={isOpen}
-              uiDataType={uiDataType}
-              data={data as any[]}
-              assetId={assetId}
-              onToggleSidebar={onToggleSidebar}
-              onSendData={onSendData}
-            />
-          ) : null}
-        </>
-      ) : null}
-    </LibraryProvider>
+            {isSingleProduct ? (
+              <Swatches
+                isOpen={isOpen}
+                uiDataType={uiDataType}
+                data={data as any[]}
+                assetId={assetId}
+                onToggleSidebar={onToggleSidebar}
+                onSendData={onSendData}
+              />
+            ) : null}
+          </>
+        ) : null}
+      </LibraryProvider>
+    </div>
   );
 };

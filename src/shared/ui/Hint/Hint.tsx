@@ -198,6 +198,6 @@ export const Hint: React.FC<HintProps> = ({
         />
       </div>
     </div>,
-    document.body,
+    document.querySelector('#root-container')!,
   );
 };
