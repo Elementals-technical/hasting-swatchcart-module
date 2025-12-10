@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { SearchIconSVG } from '../../../../app/assets/svg/SearchIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { ProductListItem } from '../ProductListItem/ProductListItem';
@@ -20,6 +20,7 @@ import {
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
+import clsx from 'clsx';
 
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'Clear All', value: '' },
@@ -29,6 +30,7 @@ const SORT_OPTIONS: ISingleSelectOption[] = [
 
 export const ProductList = () => {
   const dispatch = useAppDispatch();
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
   const isLoadingProduct = useAppSelector(getIsLoadingSelectedProduct);
   const productList = useAppSelector(getProductLIst);
@@ -41,6 +43,27 @@ export const ProductList = () => {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [sortValue, setSortValue] = useState<string | null>(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const top = el.scrollTop;
+
+      if (!isScrolling && top > 0) {
+        setIsScrolling(true);
+      }
+
+      if (top === 0 && isScrolling) {
+        setIsScrolling(false);
+      }
+    };
+
+    el.addEventListener('scroll', handleScroll);
+    return () => el.removeEventListener('scroll', handleScroll);
+  }, [isScrolling]);
 
   // Debounce search
   useEffect(() => {
@@ -97,13 +120,23 @@ export const ProductList = () => {
   return (
     <div className='relative flex flex-col h-full min-h-0 w-full'>
       <div className='flex-shrink-0'>
-        <div className='h-40 overflow-hidden'>
-          <img
-            src={
-              'https://clownfish-app-cvxrz.ondigitalocean.app/assets/header_image-BZoSlAHj.png'
-            }
-            className='object-cover w-full h-full'
-          />
+        <div
+          className={clsx(
+            'overflow-hidden transform-gpu transition-[max-height,opacity,transform] duration-500 ease-in-out',
+
+            isScrolling
+              ? 'max-h-0 opacity-0 -translate-y-4 pointer-events-none'
+              : 'max-h-40 opacity-100 translate-y-0',
+          )}
+        >
+          <div className='h-40'>
+            <img
+              src={
+                'https://clownfish-app-cvxrz.ondigitalocean.app/assets/header_image-BZoSlAHj.png'
+              }
+              className='object-cover w-full h-full'
+            />
+          </div>
         </div>
 
         <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
@@ -176,7 +209,10 @@ export const ProductList = () => {
           className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] lg:hidden'
         />
 
-        <div className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'>
+        <div
+          ref={scrollRef}
+          className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'
+        >
           <div className='mb-4'>Select Product</div>
 
           {filteredProductList.length ? (
