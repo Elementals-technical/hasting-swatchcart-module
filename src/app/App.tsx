@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div className='swatch-module-root'>
-      <div className='flex flex-col gap-[12px] m-2'>
+      <div className='manipulation_block'>
         <div>
           Active type Module -{' '}
           <span className='p-1 rounded-sm bg-amber-300'>
@@ -68,7 +68,7 @@ function App() {
       </div>
 
       <div
-        className={`${mockDataMode === EDataInputType.FETCH_DATA_ALL ? 'h-[802px] min-h-0 overflow-hidden flex flex-col border border-[var(--border)]' : ''}`}
+        className={`${mockDataMode === EDataInputType.FETCH_DATA_ALL ? 'h-[780px] min-h-0 overflow-hidden flex flex-col border border-[var(--border)]' : ''}`}
       >
         <SwatchModule
           isOpen={isOpenModule}

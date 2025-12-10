@@ -113,7 +113,7 @@ export const Slider: React.FC<ISliderProps> = ({
       >
         <div
           ref={contentRef}
-          className='flex flex-row gap-[12px] sm:gap-[16px] py-2'
+          className='flex flex-row gap-[12px] sm:gap-[16px] py-2 px-3'
         >
           {items.map((it) => {
             const id = it.productId;

@@ -11,7 +11,7 @@ export const CartPrice = ({
   materials,
   containerStyles = 'flex flex-col gap-[8px] text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)] sm:gap-[12px] shadow-[0_-2px_10px_rgba(40,40,40,0.10)]',
 }: ICartPriceProps) => {
-  const COMMON_STYLES = 'flex flex-row justify-between items-center';
+  const COMMON_STYLES = 'flex flex-row text-xs justify-between items-center';
 
   const totalPrice = useMemo(() => {
     return (
