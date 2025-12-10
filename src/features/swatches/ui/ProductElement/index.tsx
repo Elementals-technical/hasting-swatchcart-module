@@ -94,7 +94,7 @@ export const ProductElement = ({
   return (
     // <div className='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
     <div className={containerStyles}>
-      <span>Product element</span>
+      <span className='text-xs'>Product element</span>
       <MultiSelect
         options={productOptions}
         values={productValues}

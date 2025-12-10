@@ -1,13 +1,13 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type {
-  MultiProductState,
+  IMultiProductState,
   IMultiCartProductItem,
   IProductCart,
   IProductListResponse,
 } from './types';
 import { getProductListThunk } from './thunk';
 
-const initialState: MultiProductState = {
+const initialState: IMultiProductState = {
   items: [],
   productList: [],
   isLoadingProductList: false,
@@ -17,7 +17,7 @@ const initialState: MultiProductState = {
 };
 
 function ensureProduct(
-  state: MultiProductState,
+  state: IMultiProductState,
   assetId: string,
   name?: string,
 ) {
@@ -37,11 +37,11 @@ type Key = {
   parentName: string;
 };
 
-const findProductIdx = (state: MultiProductState, assetId: string) =>
+const findProductIdx = (state: IMultiProductState, assetId: string) =>
   state.items.findIndex((p) => p.assetId === assetId);
 
 const findItemIdx = (
-  state: MultiProductState,
+  state: IMultiProductState,
   productIdx: number,
   label: string,
   parentName: string,

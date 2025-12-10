@@ -84,8 +84,8 @@ export const MultiProductItemCart = ({
               <>
                 <div
                   key={product.value}
-                  className=' p-[var(--sm-padding)] border-b border-[var(--border)]
-                  sm:px-[var(--sm-padding)]'
+                  className=' p-[var(--sm-padding)] border-y border-[var(--border)]
+                  sm:px-[var(--sm-padding)] text-sm font-medium'
                 >
                   {name}
                 </div>
@@ -129,7 +129,7 @@ export const MultiProductItemCart = ({
             />
           </div>
           <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
-            <div className='sm:w-[50%]'>
+            <div className='sm:w-[50%] text-sm'>
               <CustomButton
                 onClick={() => onSendData && onSendData(selectedProducts)}
                 disabled={allItems.length > MAX_SLOTS + 1}

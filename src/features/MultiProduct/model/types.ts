@@ -1,6 +1,6 @@
 import type { AttributeValue } from '../../swatches/model/types';
 
-export interface MultiProductState {
+export interface IMultiProductState {
   items: IProductCart[];
   activeMultiCartProduct: IProductCart | null;
   productList: IProductListItem[];
