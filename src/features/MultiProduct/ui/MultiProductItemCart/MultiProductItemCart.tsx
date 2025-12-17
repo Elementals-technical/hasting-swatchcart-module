@@ -14,30 +14,59 @@ import {
 import { CartListItem } from '../../../Cart/ui/CartListItem/CartListItem';
 import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCartHeader';
 import { getSelectedMaterials } from '../../../swatches/model/selectors';
+import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 
+/**
+ * Props for {@link MultiProductItemCart}.
+ */
 interface IMultiProductItemCartProps {
+  /**
+   * Optional callback fired when user proceeds to shipping.
+   * Receives the current selected products payload.
+   */
   onSendData?: (data: unknown) => void;
-  // onToggleSidebar: () => void;
 }
+
+/**
+ * Renders a multi-product cart with grouped items, quantity controls, and totals.
+ *
+ * Features:
+ * - grouped rendering by product
+ * - increment/decrement/delete actions for cart items
+ * - synchronizes deletion with the swatches selected materials state
+ * - shows totals and a "Go to shipping" action
+ *
+ * @component
+ *
+ * @param props - {@link IMultiProductItemCartProps}
+ */
 
 export const MultiProductItemCart = ({
   onSendData,
-  // onToggleSidebar,
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
   const selectedProducts = useAppSelector(getMultiCartItems);
   const selectedMaterials = useAppSelector(getSelectedMaterials);
 
+  /**
+   * Flattens product groups into a single items list used for totals and pricing.
+   */
   const allItems = useMemo(() => {
     return selectedProducts.flatMap((p) => p.items);
   }, [selectedProducts]);
 
+  /**
+   * Removes an item from the multi-product cart and updates swatches selection state.
+   *
+   * @param params - Cart action payload containing the item and product asset id
+   */
   const handleDelete = ({ item, assetId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
     const label = metadata?.label;
+
     if (assetId && label && parentName) {
       dispatch(removeMultiProductItem({ assetId, label, parentName }));
-      // DeleteSelected material from the  SwatchesList
+
       dispatch(
         setSelectedMaterial({
           selectedMaterial: item,
@@ -48,6 +77,11 @@ export const MultiProductItemCart = ({
     }
   };
 
+  /**
+   * Increments an item count in the multi-product cart.
+   *
+   * @param params - Cart action payload containing the item and product asset id
+   */
   const handleIncrement = ({ item, assetId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
     const label = metadata?.label;
@@ -57,6 +91,11 @@ export const MultiProductItemCart = ({
     }
   };
 
+  /**
+   * Decrements an item count in the multi-product cart.
+   *
+   * @param params - Cart action payload containing the item and product asset id
+   */
   const handleDecrement = ({ item, assetId }: IMultiProductCartHandleProps) => {
     const { parentName, metadata } = item;
     const label = metadata?.label;
@@ -66,13 +105,12 @@ export const MultiProductItemCart = ({
     }
   };
 
-  const totalCount = useMemo(() => {
-    return allItems.reduce((sum, item) => sum + (item.count ?? 0), 0);
-  }, [allItems]);
+  const totalCount = useCartCount(allItems);
 
   return (
     <div className='flex flex-col h-full'>
       <MultiProductCartHeader totalCount={totalCount} />
+
       <div className='flex flex-col h-full min-h-0'>
         <ul className='flex flex-col flex-1 min-h-0 overflow-y-auto'>
           {selectedProducts.map((product) => {
@@ -89,33 +127,33 @@ export const MultiProductItemCart = ({
                 >
                   {name}
                 </div>
+
                 <ul>
-                  {items?.map((item) => {
-                    return (
-                      <CartListItem
-                        key={`${item.value}/${item.parentName}`}
-                        item={item}
-                        canInc={totalCount < MAX_SLOTS}
-                        onDelete={() => {
-                          if (!assetId) return;
-                          handleDelete({ item, assetId });
-                        }}
-                        onIncrement={() => {
-                          if (!assetId) return;
-                          handleIncrement({ item, assetId });
-                        }}
-                        onDecrement={() => {
-                          if (!assetId) return;
-                          handleDecrement({ item, assetId });
-                        }}
-                      />
-                    );
-                  })}
+                  {items?.map((item) => (
+                    <CartListItem
+                      key={`${item.value}/${item.parentName}`}
+                      item={item}
+                      canInc={totalCount < MAX_SLOTS}
+                      onDelete={() => {
+                        if (!assetId) return;
+                        handleDelete({ item, assetId });
+                      }}
+                      onIncrement={() => {
+                        if (!assetId) return;
+                        handleIncrement({ item, assetId });
+                      }}
+                      onDecrement={() => {
+                        if (!assetId) return;
+                        handleDecrement({ item, assetId });
+                      }}
+                    />
+                  ))}
                 </ul>
               </>
             );
           })}
         </ul>
+
         <div
           className='flex flex-col 
           sm:flex-row sm:w-full sm:justify-between sm:items-center
@@ -128,6 +166,7 @@ export const MultiProductItemCart = ({
               containerStyles='flex flex-col gap-[8px] text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-[12px] sm:border-none s'
             />
           </div>
+
           <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
             <div className='sm:w-[50%] text-sm'>
               <CustomButton
