@@ -20,6 +20,7 @@ import {
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
+import headerImage from '../../../../app/assets/images/pic_big.jpg';
 import clsx from 'clsx';
 
 /**
@@ -158,10 +159,7 @@ export const ProductList = () => {
           )}
         >
           <div className='h-40'>
-            <img
-              src='https://clownfish-app-cvxrz.ondigitalocean.app/assets/pic_big-B9n1cTU-.jpg'
-              className='object-cover w-full h-full'
-            />
+            <img src={headerImage} className='object-cover w-full h-full' />
           </div>
         </div>
 
