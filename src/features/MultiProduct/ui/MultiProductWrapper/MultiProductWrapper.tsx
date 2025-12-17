@@ -24,7 +24,6 @@ export const MultiProductWrapper = ({
 
   useEffect(() => {
     return () => {
-      console.log('MultiProductWrapper unmount');
       dispatch(clear());
       dispatch(deleteSelectedProduct());
     };
