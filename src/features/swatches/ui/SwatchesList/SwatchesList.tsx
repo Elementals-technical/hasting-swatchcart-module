@@ -16,7 +16,7 @@ import { useCartCount } from '../../utils/hooks/useCartCount';
 const MockTile: React.FC = () => (
   <div
     className={[
-      'relative w-[40px] h-[40px] rounded-sm aspect-square overflow-hidden',
+      'relative w-[40px] h-[40px] rounded-md aspect-square overflow-hidden',
       'border border-solid border-[var(--border)] bg-[var(--sidebar-b)] sm:w-[64px] sm:h-[64px]',
     ].join(' ')}
     aria-hidden
