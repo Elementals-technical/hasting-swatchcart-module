@@ -74,7 +74,7 @@ const SwatchListItem: React.FC<ISwatchesListItemProps> = ({
         }}
         className='
           bg-[var(--background-grey)] relative w-[40px] h-[40px] border border-solid border-[var(--border)]
-          rounded-sm aspect-square overflow-hidden transition sm:w-[64px] sm:h-[64px]
+          rounded-md aspect-square overflow-hidden transition sm:w-[64px] sm:h-[64px]
           select-none
         '
         aria-label={`Selected swatch ${val.name ?? val.assetId}`}
@@ -98,10 +98,24 @@ const SwatchListItem: React.FC<ISwatchesListItemProps> = ({
 
         <div
           onClick={handleDeleteClick}
-          className='absolute top-0 right-0 m-2 w-[16px] h-[16px] flex flex-row justify-center items-center
-          bg-[var(--background-grey)] rounded-2xl border-none z-[100] cursor-pointer'
+          className='absolute top-0 right-0 m-[2px] w-[12px] h-[12px] flex flex-row justify-center items-center text-white
+        bg-[var(--main-accent-color)] rounded-2xl border-none z-[99] cursor-pointer sm:w-[16px] sm:h-[16px]'
         >
-          <CloseIconSVG className='w-[8px] h-2 stroke-[var(--svg-dark)]' />
+          {val.count}
+        </div>
+        <div
+          onClick={handleDeleteClick}
+          className='
+          absolute inset-0 m-auto
+          w-[12px] h-[12px]
+          flex items-center justify-center
+          bg-[var(--background-grey)]
+          rounded-full
+          z-[100] cursor-pointer
+          sm:w-[32px] sm:h-[32px]
+        '
+        >
+          <CloseIconSVG className='w-[8px] h-[8px] stroke-[var(--svg-dark)]' />
         </div>
       </div>
 

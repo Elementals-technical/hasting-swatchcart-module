@@ -13,6 +13,7 @@ import {
 import { getMultiCartItems } from '../../model/selectors';
 import { getSelectedProduct } from '../../../swatches/model/selectors';
 import SwatchListItem from '../SwatchListItem/SwatchListItem';
+import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 
 /**
  * Simple placeholder tile used to visually represent free swatch slots.
@@ -23,7 +24,7 @@ import SwatchListItem from '../SwatchListItem/SwatchListItem';
 const MockTile: React.FC = () => (
   <div
     className={[
-      'relative w-[40px] h-[40px] rounded-sm aspect-square overflow-hidden',
+      'relative w-[40px] h-[40px] rounded-md aspect-square overflow-hidden',
       'border border-solid border-[var(--border)] bg-[var(--sidebar-b)] sm:w-[64px] sm:h-[64px]',
     ].join(' ')}
     aria-hidden
@@ -104,6 +105,7 @@ export const SwatchesMultiProductList = ({
 
   // Number of placeholder tiles to render so the total count always matches MAX_SLOTS
   const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);
+  const cartCount = useCartCount(selectedMaterials);
 
   return (
     <div className={containerStyles}>
@@ -115,7 +117,7 @@ export const SwatchesMultiProductList = ({
           </span>
         </div>
         <div className='text-xs'>
-          {selectedMaterials.length}/{MAX_SLOTS} Selected
+          {cartCount}/{MAX_SLOTS} Selected
         </div>
       </div>
 
