@@ -22,15 +22,32 @@ import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
 import clsx from 'clsx';
 
+/**
+ * Sorting options for the product list.
+ */
 const SORT_OPTIONS: ISingleSelectOption[] = [
   { label: 'Clear All', value: '' },
   { label: 'A-Z', value: 'asc' },
   { label: 'Z-A', value: 'dsc' },
 ];
 
+/**
+ * Renders the product list with category filtering, search, and sorting.
+ *
+ * Features:
+ * - fetches the product list on mount
+ * - builds unique categories for the slider
+ * - supports debounced text search
+ * - supports A–Z and Z–A sorting
+ * - hides the header image while the user scrolls down
+ * - shows swatch cart content when products are selected
+ *
+ * @component
+ */
 export const ProductList = () => {
   const dispatch = useAppDispatch();
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
   const isLoadingProductList = useAppSelector(getIsLoadingProductList);
   const isLoadingProduct = useAppSelector(getIsLoadingSelectedProduct);
   const productList = useAppSelector(getProductLIst);
@@ -39,7 +56,6 @@ export const ProductList = () => {
   const [activeCategory, setActiveCategory] = useState<
     ISliderItem | IProductCart
   >(MOCK_ALL_CATEGORY_SLIDER_ITEM);
-
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [sortValue, setSortValue] = useState<string | null>(null);
@@ -65,31 +81,44 @@ export const ProductList = () => {
     return () => el.removeEventListener('scroll', handleScroll);
   }, [isScrolling]);
 
-  // Debounce search
   useEffect(() => {
     const id = setTimeout(() => {
       setDebouncedSearch(search.trim().toLowerCase());
     }, 300);
+
     return () => clearTimeout(id);
   }, [search]);
 
-  // Fetch products
   useEffect(() => {
     dispatch(getProductListThunk());
   }, [dispatch]);
 
-  // Unique categories
+  /**
+   * Unique category list used by the category slider.
+   */
   const uniqueCategories: ISliderItem[] = useMemo(() => {
     return MultiProductCartService.getUniqueCategories(productList);
   }, [productList]);
 
+  /**
+   * Normalizes string values for case-insensitive filtering.
+   *
+   * @param s - Input string
+   * @returns Normalized string
+   */
   const norm = (s: string): string => s.toLowerCase();
 
+  /**
+   * Collator for locale-aware, case-insensitive name sorting.
+   */
   const collator = useMemo(
     () => new Intl.Collator(undefined, { sensitivity: 'base', numeric: false }),
     [],
   );
 
+  /**
+   * Product list after applying active category filter, debounced search, and sorting.
+   */
   const filteredProductList = useMemo(() => {
     let list = productList;
 
@@ -123,7 +152,6 @@ export const ProductList = () => {
         <div
           className={clsx(
             'overflow-hidden transform-gpu transition-[max-height,opacity,transform] duration-500 ease-in-out',
-
             isScrolling
               ? 'max-h-0 opacity-0 -translate-y-4 pointer-events-none'
               : 'max-h-40 opacity-100 translate-y-0',
@@ -131,9 +159,7 @@ export const ProductList = () => {
         >
           <div className='h-40'>
             <img
-              src={
-                'https://clownfish-app-cvxrz.ondigitalocean.app/assets/pic_big-B9n1cTU-.jpg'
-              }
+              src='https://clownfish-app-cvxrz.ondigitalocean.app/assets/pic_big-B9n1cTU-.jpg'
               className='object-cover w-full h-full'
             />
           </div>
@@ -158,6 +184,7 @@ export const ProductList = () => {
 
       <div className='flex flex-col flex-1 min-h-0'>
         {(isLoadingProductList || isLoadingProduct) && <Loader />}
+
         <div className='flex flex-row w-full items-center justify-between gap-[16px] border-b border-[var(--border)] p-[var(--sm-padding)]'>
           <div className='flex flex-row h-[36px] w-full items-center justify-between gap-[16px] shrink-0 lg:max-w-[382px]'>
             <div className='relative h-[36px] flex-1 min-w-0 lg:max-w-[240px]'>
@@ -201,7 +228,6 @@ export const ProductList = () => {
           />
         </div>
 
-        {/* Mobile slider */}
         <Slider
           items={uniqueCategories}
           activeId={activeCategory.productId}

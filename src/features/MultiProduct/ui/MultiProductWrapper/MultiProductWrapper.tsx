@@ -1,4 +1,5 @@
-import { useAppSelector } from '../../../../app/store/store';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import {
   getIsOpenMultiCart,
   getSelectedProduct,
@@ -6,6 +7,8 @@ import {
 import { MultiProductItemCart } from '../MultiProductItemCart/MultiProductItemCart';
 import { ProductList } from '../ProductList/ProductList';
 import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem';
+import { clear } from '../../model/multiProductCartSlice';
+import { deleteSelectedProduct } from '../../../swatches/model/swatchesSlice';
 
 interface IMultiProductWrapperProps {
   onSendData: (data: unknown) => void;
@@ -15,8 +18,17 @@ interface IMultiProductWrapperProps {
 export const MultiProductWrapper = ({
   onSendData,
 }: IMultiProductWrapperProps) => {
+  const dispatch = useAppDispatch();
   const isOpenMultiProductCart = useAppSelector(getIsOpenMultiCart);
   const selectedProduct = useAppSelector(getSelectedProduct);
+
+  useEffect(() => {
+    return () => {
+      console.log('MultiProductWrapper unmount');
+      dispatch(clear());
+      dispatch(deleteSelectedProduct());
+    };
+  }, []);
 
   // const handleToggleSidebar = () => {
   //   onToggleSidebar();
