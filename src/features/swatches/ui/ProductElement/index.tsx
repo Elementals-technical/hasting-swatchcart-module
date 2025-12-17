@@ -12,11 +12,34 @@ import { uniqueList } from '../../../../shared/utils/uniqueList';
 import { setMaterialSelect, setPanelFilter } from '../../model/swatchesSlice';
 import { SwatchesServices } from '../../lib/SwatchesServices';
 
+/**
+ * Props for {@link ProductElement}.
+ */
 interface IProductElementProps {
+  /**
+   * ClassName string applied to the outer container.
+   */
   containerStyles: string;
+
+  /**
+   * ClassName string applied to the {@link MultiSelect} component.
+   */
   selectStyles: string;
 }
 
+/**
+ * Renders a product element filter based on a multi-select control.
+ *
+ * Builds selectable options from `allProductElementOptions` and
+ * applies filtering logic that:
+ * - updates selected product element values
+ * - remaps and prunes related filters based on available counts
+ * - updates the panel attributes list according to selection
+ *
+ * @component
+ *
+ * @param props - {@link IProductElementProps}
+ */
 export const ProductElement = ({
   containerStyles,
   selectStyles,
@@ -24,6 +47,7 @@ export const ProductElement = ({
   const dispatch = useAppDispatch();
   const allProductElementOptions = useAppSelector(getProductElementOptions);
   const filters = useAppSelector(getMaterialSelectStateFilters);
+
   const [productOptions, setProductOptions] = useState<IMultiSelectOption[]>(
     [],
   );
@@ -31,48 +55,53 @@ export const ProductElement = ({
 
   useEffect(() => {
     if (!allProductElementOptions?.length) return;
+
     const formatProductData = allProductElementOptions.map((item) => {
       if (item.metadata) {
         const { Name, Label } = item.metadata || {};
-
         return { value: Name, label: Label, id: Name };
-      } else {
-        const { label, value } = item || {};
-
-        return { value, label, id: value };
       }
+
+      const { label, value } = item || {};
+      return { value, label, id: value };
     });
 
     setProductOptions(formatProductData);
   }, [allProductElementOptions]);
 
+  /**
+   * Handles changes to the product element filter selection.
+   *
+   * Updates the selected values, filters available attributes for the panel,
+   * and recalculates related filter options to keep only valid selections.
+   *
+   * @param _ - Filter name (currently unused)
+   * @param values - Selected values from the multi-select
+   */
   const handleFilterChange = (_: string, values: string[]) => {
     if (values.length) {
       const uniqueListValue = uniqueList(values);
+
       if (uniqueListValue.length) {
         const filteredMaterialByProduct = allProductElementOptions.filter(
           (item) => {
             if (item.metadata) {
               return uniqueListValue.includes(item.metadata?.Label);
-            } else {
-              return uniqueListValue.includes(item.value);
             }
+            return uniqueListValue.includes(item.value);
           },
         );
 
         setProductValues(uniqueListValue);
 
-        // Find all counts for every selected type of filters Material, Color, Look according to selected PanelElement
         const mappedData = SwatchesServices.mapFiltersFromValues(
           filteredMaterialByProduct,
           filters,
         );
 
-        // Find all filters that where value count !== 0
         const nonZeroCountList =
           SwatchesServices.getPositiveSelectedFilers(mappedData);
 
-        // Reset all filters that don't have any
         if (nonZeroCountList.length) {
           nonZeroCountList.forEach((listItem) => {
             const { filterName, filterKeys } = listItem;
@@ -81,6 +110,7 @@ export const ProductElement = ({
             dispatch(setMaterialSelect(itemsWithoutZeroCount));
           });
         }
+
         dispatch(setPanelFilter({ attributes: filteredMaterialByProduct }));
       } else {
         dispatch(setPanelFilter({ attributes: allProductElementOptions }));
@@ -92,16 +122,14 @@ export const ProductElement = ({
   };
 
   return (
-    // <div className='flex justify-between items-center shrink-0 p-[var(--padding)] border-b border-solid border-[var(--border)] sm:p-[var(--sm-padding)]'>
     <div className={containerStyles}>
-      <span className='text-xs'>Product element</span>
+      <span className='text-sm'>Product element</span>
+
       <MultiSelect
         options={productOptions}
         values={productValues}
         onValueChange={(values) => handleFilterChange('PanelElement', values)}
         placeholder='All product elements'
-        // getTooltipByMaterialAndSection={getTooltipByMaterialAndSection}
-        // sectionName={sectionName}
         className={selectStyles}
         dropdownWidth='w-80'
       />

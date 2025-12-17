@@ -4,7 +4,15 @@ import type { AttributeValue } from '../../model/types';
 import { setSelectedMaterial } from '../../model/swatchesSlice';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import SwatchListItem from '../../../MultiProduct/ui/SwatchListItem/SwatchListItem';
+import { useCartCount } from '../../utils/hooks/useCartCount';
 
+/**
+ * Renders a placeholder tile for an empty swatch slot.
+ *
+ * Used to visually fill remaining available slots up to {@link MAX_SLOTS}.
+ *
+ * @component
+ */
 const MockTile: React.FC = () => (
   <div
     className={[
@@ -15,17 +23,44 @@ const MockTile: React.FC = () => (
   />
 );
 
+/**
+ * Props for {@link SwatchesList}.
+ */
 interface ISwatchesListProps {
+  /**
+   * Optional className string applied to the outer container.
+   */
   containerStyles?: string;
+
+  /**
+   * Currently selected swatch materials.
+   */
   selectedMaterials: AttributeValue[];
 }
 
+/**
+ * Renders the swatches list with selected materials and remaining empty slots.
+ *
+ * Displays:
+ * - header with selected count
+ * - selected swatches as list items
+ * - placeholder tiles for unused slots up to {@link MAX_SLOTS}
+ *
+ * @component
+ *
+ * @param props - {@link ISwatchesListProps}
+ */
 export const SwatchesList = ({
   selectedMaterials,
   containerStyles = 'p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 shadow-[0_-2px_10px_rgba(40,40,40,0.10)]',
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
 
+  /**
+   * Selects a material and updates the swatches state.
+   *
+   * @param item - Material value to set as selected
+   */
   const handleSelect = (item: AttributeValue) => {
     dispatch(
       setSelectedMaterial({
@@ -37,6 +72,7 @@ export const SwatchesList = ({
   };
 
   const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);
+  const cartCount = useCartCount(selectedMaterials);
 
   return (
     <div className={containerStyles}>
@@ -48,7 +84,7 @@ export const SwatchesList = ({
           </span>
         </div>
         <div className='text-xs'>
-          {selectedMaterials.length}/{MAX_SLOTS} Selected
+          {cartCount}/{MAX_SLOTS} Selected
         </div>
       </div>
 
@@ -63,6 +99,7 @@ export const SwatchesList = ({
             />
           );
         })}
+
         {Array.from({ length: mockCount }).map((_, i) => (
           <MockTile key={`mock-${i}`} />
         ))}

@@ -3,14 +3,39 @@ import { useAppSelector } from '../../../../app/store/store';
 import { EActiveTab } from '../../../../shared/types/activeTab';
 import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
-import { useMemo } from 'react';
 import { getSelectedMaterials } from '../../../swatches/model/selectors';
+import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 
+/**
+ * Props for {@link CartHeader}.
+ */
 interface ICartHeaderProps {
+  /**
+   * Optional callback for switching the active tab (e.g. back to swatches).
+   *
+   * @param arg - Active tab value
+   */
   onSetActiveTab?: (arg: EActiveTab) => void;
+
+  /**
+   * Callback for closing or toggling the sidebar.
+   */
   onToggleSidebar: () => void;
 }
 
+/**
+ * Renders the cart header with navigation, count limit messaging, and close action.
+ *
+ * Displays:
+ * - back navigation button (optional tab switch)
+ * - cart title
+ * - max swatches warning when {@link MAX_SLOTS} is reached
+ * - close button to toggle the sidebar
+ *
+ * @component
+ *
+ * @param props - {@link ICartHeaderProps}
+ */
 export const CartHeader = ({
   onSetActiveTab,
   onToggleSidebar,
@@ -18,11 +43,9 @@ export const CartHeader = ({
   const selectedMaterials = useAppSelector(getSelectedMaterials);
 
   /**
-   * Count exact number of swatch in the cart
+   * Total number of swatches currently in the cart.
    */
-  const totalCount = useMemo(() => {
-    return selectedMaterials.reduce((sum, item) => sum + (item.count ?? 0), 0);
-  }, [selectedMaterials]);
+  const totalCount = useCartCount(selectedMaterials);
 
   return (
     <header className='flex flex-row MaterialMultiProductList justify-between items-center border-b border-solid border-[var(--border)] p-[var(--sm-padding)]'>
@@ -30,16 +53,16 @@ export const CartHeader = ({
         <div className='flex flex-row items-center gap-[8px]'>
           <button
             className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
-            onClick={() =>
-              onSetActiveTab && onSetActiveTab(EActiveTab.SWATCH as EActiveTab)
-            }
+            onClick={() => onSetActiveTab?.(EActiveTab.SWATCH)}
           >
             <ArrowIconSVG />
           </button>
+
           <h2 className='m-0! text-base leading-[1.6] font-medium '>
             Your cart
           </h2>
         </div>
+
         {totalCount >= MAX_SLOTS ? (
           <>
             <span className='text-[var(--main-accent-color)] hidden text-xs sm:block'>
@@ -51,6 +74,7 @@ export const CartHeader = ({
           </>
         ) : null}
       </div>
+
       <button
         className='flex flex-row justify-center items-center w-[30px] h-[30px] bg-[var(--background-grey)]
             border-none cursor-pointer rounded-full
