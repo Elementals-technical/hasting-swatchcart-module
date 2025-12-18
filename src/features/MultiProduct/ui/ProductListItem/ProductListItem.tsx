@@ -48,7 +48,10 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
     >
       <div className='mb-[12px] w-full aspect-square relative overflow-hidden rounded-sm'>
         <img
-          src={imageURL}
+          src={
+            imageURL ||
+            'https://hastings-questionnaie-storage.fra1.digitaloceanspaces.com/static/Image%20(8)%20(1).png'
+          }
           alt='product-list-item'
           className='absolute inset-0 w-full h-full! object-cover'
         />

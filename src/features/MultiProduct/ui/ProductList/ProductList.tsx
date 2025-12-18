@@ -20,7 +20,6 @@ import {
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { getIsLoadingSelectedProduct } from '../../../swatches/model/selectors';
 import { SwatchContentContainer } from '../SwatchContentContainer/SwatchContentContainer';
-import headerImage from '../../../../app/assets/images/pic_big.jpg';
 import clsx from 'clsx';
 
 /**
@@ -159,7 +158,12 @@ export const ProductList = () => {
           )}
         >
           <div className='h-40'>
-            <img src={headerImage} className='object-cover w-full h-full' />
+            <img
+              src={
+                'https://hastings-questionnaie-storage.fra1.digitaloceanspaces.com/static/pic%20big%201%20(1).jpg'
+              }
+              className='object-cover w-full h-full'
+            />
           </div>
         </div>
 
