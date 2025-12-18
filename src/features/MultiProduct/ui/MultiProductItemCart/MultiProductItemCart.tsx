@@ -121,7 +121,7 @@ export const MultiProductItemCart = ({
             return (
               <>
                 <div
-                  key={product.value}
+                  key={product.assetId}
                   className=' p-[var(--sm-padding)] border-y border-[var(--border)]
                   sm:px-[var(--sm-padding)] text-sm font-medium'
                 >

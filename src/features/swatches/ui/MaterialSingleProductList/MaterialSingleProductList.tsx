@@ -101,14 +101,17 @@ export const MaterialSingleProductList = ({
   const padBottom = totalSize - (virtualRows[virtualRows.length - 1]?.end ?? 0);
 
   const handleSelect = (item: AttributeValue) => {
-    dispatch(
-      setSelectedMaterial({
-        materialCount: cartCount,
-        selectedMaterials,
-        selectedMaterial: { ...item, count: 1 },
-        limitCb: () => setIsShowLimitMessage(true),
-      }),
-    );
+    if (cartCount + 1 > 5) {
+      setIsShowLimitMessage(true);
+    } else {
+      dispatch(
+        setSelectedMaterial({
+          materialCount: cartCount,
+          selectedMaterials,
+          selectedMaterial: { ...item, count: 1 },
+        }),
+      );
+    }
   };
 
   return (
