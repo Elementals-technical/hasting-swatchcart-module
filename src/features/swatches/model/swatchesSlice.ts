@@ -85,10 +85,9 @@ export const swatchesSlice = createSlice({
         materialCount: number;
         selectedMaterial: AttributeValue;
         selectedMaterials: AttributeValue[];
-        limitCb?: () => void;
       }>,
     ) {
-      const { materialCount, selectedMaterial, selectedMaterials, limitCb } =
+      const { materialCount, selectedMaterial, selectedMaterials } =
         action.payload;
       if (!selectedMaterial) return;
       // const selected = current(state.selectedMaterials);
@@ -99,7 +98,7 @@ export const swatchesSlice = createSlice({
 
       const exists = selectedMaterials?.some(isSame);
 
-      if (!exists && materialCount >= 5 && limitCb) limitCb();
+      // if (!exists && materialCount >= 5 && limitCb) limitCb();
 
       if (exists) {
         state.selectedMaterials = selectedMaterials.filter((i) => !isSame(i));

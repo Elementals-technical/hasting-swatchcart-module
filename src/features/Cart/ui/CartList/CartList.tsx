@@ -42,7 +42,7 @@ export const CartList = () => {
       {selectedMaterials?.map((item) => {
         return (
           <CartListItem
-            key={`${item.assetId}/${item.parentName}`}
+            key={`${item.label}/${item.parentName}`}
             item={item}
             canInc={canInc}
             onDelete={() => handleDelete(item)}
