@@ -22,6 +22,7 @@ export default defineConfig({
   },
 
   build: {
+    cssMinify: false,
     assetsInlineLimit: 0,
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),
@@ -36,7 +37,6 @@ export default defineConfig({
 
     cssCodeSplit: true,
     assetsDir: 'assets',
-
     outDir: 'dist/cdn',
     emptyOutDir: true,
   },

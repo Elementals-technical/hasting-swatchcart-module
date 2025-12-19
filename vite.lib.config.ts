@@ -20,6 +20,7 @@ export default defineConfig({
   build: {
     copyPublicDir: false,
     cssCodeSplit: true,
+    cssMinify: false,
     assetsInlineLimit: 0,
     lib: {
       entry: resolve(__dirname, 'lib/main.ts'),

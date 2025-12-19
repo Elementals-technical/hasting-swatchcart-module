@@ -9,6 +9,7 @@ import { ProductList } from '../ProductList/ProductList';
 import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem';
 import { clear } from '../../model/multiProductCartSlice';
 import { deleteSelectedProduct } from '../../../swatches/model/swatchesSlice';
+import { ToastContainer, Bounce } from 'react-toastify';
 
 interface IMultiProductWrapperProps {
   onSendData: (data: unknown) => void;
@@ -29,14 +30,23 @@ export const MultiProductWrapper = ({
     };
   }, []);
 
-  // const handleToggleSidebar = () => {
-  //   onToggleSidebar();
-  // };
-
   return (
-    // Simulate a parent height block delete before pushing to the module
-    // <div className='h-[600px] min-h-0 overflow-hidden flex flex-col border'>
-    <>
+    <div className='relative h-full min-h-0 w-full'>
+      <ToastContainer
+        containerId='swatch-multi-module'
+        position='top-center'
+        autoClose={4000}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        draggable={false}
+        theme='dark'
+        transition={Bounce}
+        style={{
+          zIndex: 999999999999999,
+          position: 'absolute',
+        }}
+      />
       {isOpenMultiProductCart ? (
         <MultiProductItemCart
           onSendData={onSendData}
@@ -47,7 +57,6 @@ export const MultiProductWrapper = ({
       ) : (
         <ProductList />
       )}
-    </>
-    // </div>
+    </div>
   );
 };
