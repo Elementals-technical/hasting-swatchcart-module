@@ -90,15 +90,12 @@ export const swatchesSlice = createSlice({
       const { materialCount, selectedMaterial, selectedMaterials } =
         action.payload;
       if (!selectedMaterial) return;
-      // const selected = current(state.selectedMaterials);
 
       const isSame = (i: AttributeValue) =>
         i.metadata?.label === selectedMaterial.metadata?.label &&
         i.parentName === selectedMaterial.parentName;
 
       const exists = selectedMaterials?.some(isSame);
-
-      // if (!exists && materialCount >= 5 && limitCb) limitCb();
 
       if (exists) {
         state.selectedMaterials = selectedMaterials.filter((i) => !isSame(i));
