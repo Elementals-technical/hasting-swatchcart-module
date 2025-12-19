@@ -1,4 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
+import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import {
   decrement,
@@ -6,15 +7,14 @@ import {
   removeItem,
   setSelectedMaterial,
 } from '../../../swatches/model/swatchesSlice';
-// import { decrement, increment, removeItem } from '../../model/cartSlice';
-import { getCartCanIncrement } from '../../model/selectors';
+import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 import type { ICartItem } from '../../model/types';
 import { CartListItem } from '../CartListItem/CartListItem';
 
 export const CartList = () => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
-  const canInc = useAppSelector(getCartCanIncrement);
+  const totalCount = useCartCount(selectedMaterials);
 
   const handleDelete = (item: ICartItem) => {
     // DeleteSelected material from the Cart
@@ -44,7 +44,7 @@ export const CartList = () => {
           <CartListItem
             key={`${item.label}/${item.parentName}`}
             item={item}
-            canInc={canInc}
+            canInc={totalCount < MAX_SLOTS}
             onDelete={() => handleDelete(item)}
             onIncrement={() => handleIncrement(item)}
             onDecrement={() => handleDecrement(item)}
