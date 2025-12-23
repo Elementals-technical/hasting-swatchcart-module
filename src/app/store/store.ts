@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import rootReducer from './rootReducer';
+import { storageMiddleware } from './storageMiddleware';
 
 const { NODE_ENV } = import.meta.env;
 
@@ -13,7 +14,7 @@ export const store = configureStore({
         ignoredActionPaths: ['meta.limitCb', 'payload.limitCb'],
         ignoredPaths: [],
       },
-    }),
+    }).concat(storageMiddleware),
   devTools: NODE_ENV !== 'production',
 });
 

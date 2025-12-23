@@ -13,6 +13,9 @@ import { type IMapUIData } from '../../DataAdapter/utils/types';
 import { getSelectedProductThunk } from './thunks';
 import { IProductListItem } from '../../MultiProduct/model/types';
 import { MAX_SLOTS } from '../../../shared/constants/selectedMaterials';
+import { StorageService } from '../../../shared/utils/storageService';
+
+const persistedSelectedMaterials = StorageService.getSelectedMaterials();
 
 const initialState: ISwatchesSlice = {
   // isOpenSidebar: true,
@@ -20,7 +23,7 @@ const initialState: ISwatchesSlice = {
   productElementOptions: [],
   materialSelectState: { Finish: [], Color: [], Look: [] },
   allMaterialsValues: [],
-  selectedMaterials: [],
+  selectedMaterials: persistedSelectedMaterials,
   selectedProduct: null,
   isLoadingSelectedProduct: false,
   isOpenMultiProductCart: false,

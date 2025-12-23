@@ -6,9 +6,12 @@ import type {
   IProductListResponse,
 } from './types';
 import { getProductListThunk } from './thunk';
+import { StorageService } from '../../../shared/utils/storageService';
+
+const persistedMultiProductItems = StorageService.getMultiProductItems();
 
 const initialState: IMultiProductState = {
-  items: [],
+  items: persistedMultiProductItems,
   productList: [],
   isLoadingProductList: false,
   selectedProduct: null,
