@@ -6,7 +6,6 @@ import { storageMiddleware } from '../../src/app/store/storageMiddleware';
 let _store: ReturnType<typeof createLibStore> | null = null;
 
 function createLibStore() {
-  console.log('[LibStore] Creating store with storage middleware');
   return configureStore({
     reducer: rootReducer,
     devTools: import.meta.env.DEV,
