@@ -198,6 +198,7 @@ export const MaterialMultiProductList = ({
       const cartProductItem: IMultiCartProductItem = {
         assetId: existProductId?.assetId || selectedProduct.assetId,
         name: selectedProduct.name,
+        productInformation: selectedProduct,
         items: filteredArray,
       };
 
@@ -213,6 +214,7 @@ export const MaterialMultiProductList = ({
       const cartProductItem: IMultiCartProductItem = {
         assetId: selectedProduct.assetId,
         name: selectedProduct.name,
+        productInformation: selectedProduct,
         items,
       };
 

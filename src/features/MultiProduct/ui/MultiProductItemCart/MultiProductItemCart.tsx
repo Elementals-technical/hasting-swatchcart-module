@@ -3,7 +3,7 @@ import { setSelectedMaterial } from '../../../swatches/model/swatchesSlice';
 import { CartPrice } from '../../../../shared/ui/CartPrice/CartPrice';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
-import { getMultiCartItems } from '../../model/selectors';
+
 import { useMemo } from 'react';
 import type { IMultiProductCartHandleProps } from '../../model/types';
 import {
@@ -15,6 +15,7 @@ import { CartListItem } from '../../../Cart/ui/CartListItem/CartListItem';
 import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCartHeader';
 import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
+import { getMultiCartItems } from '../../model/selectors';
 
 /**
  * Props for {@link MultiProductItemCart}.
@@ -131,7 +132,7 @@ export const MultiProductItemCart = ({
                 <ul>
                   {items?.map((item) => (
                     <CartListItem
-                      key={`${item.value}/${item.parentName}`}
+                      key={`${item.value}/${product.assetId}`}
                       item={item}
                       canInc={totalCount < MAX_SLOTS}
                       onDelete={() => {

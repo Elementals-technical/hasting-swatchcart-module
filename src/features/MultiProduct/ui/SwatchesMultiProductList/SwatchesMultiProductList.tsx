@@ -95,6 +95,7 @@ export const SwatchesMultiProductList = ({
       const cartProductItem: IMultiCartProductItem = {
         assetId: productWithItem.assetId || 'empty_assetId',
         name: productWithItem.name,
+        productInformation: selectedProduct,
         items: filteredItems || [],
       };
 
