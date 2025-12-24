@@ -35,9 +35,6 @@ export const swatchesSlice = createSlice({
   name: 'swatches',
   initialState,
   reducers: {
-    // toggleSidebar: (state) => {
-    //   state.isOpenSidebar = !state.isOpenSidebar;
-    // },
     setMaterialSelect(state, action: PayloadAction<ISetFiltersPayload>) {
       const { filterName, values } = action.payload;
 
@@ -184,6 +181,9 @@ export const swatchesSlice = createSlice({
       const maxForThis = Math.max(1, MAX_SLOTS - otherTotal);
       item.count = Math.min(clamped, maxForThis);
     },
+    setCartMaterials(state, action: PayloadAction<AttributeValue[]>) {
+      state.selectedMaterials = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -217,4 +217,5 @@ export const {
   increment,
   decrement,
   setCount,
+  setCartMaterials,
 } = swatchesSlice.actions;
