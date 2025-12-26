@@ -66,6 +66,7 @@ export const SwatchesMultiProductList = ({
   const dispatch = useAppDispatch();
   const selectedProduct = useAppSelector(getSelectedProduct);
   const selectedProducts = useAppSelector(getMultiCartItems);
+  console.log('selectedProducts', selectedProducts);
 
   /**
    * Handles deleting a swatch from whichever product currently contains it.
@@ -81,7 +82,7 @@ export const SwatchesMultiProductList = ({
    * @param item Swatch to remove from the multi-cart.
    */
   const handleSelect = (item: ISwatchSelectedMaterial) => {
-    if (!selectedProduct) return;
+    if (!selectedProducts.length) return;
 
     const isSame = (i: AttributeValue) =>
       i.metadata?.label === item.metadata?.label &&

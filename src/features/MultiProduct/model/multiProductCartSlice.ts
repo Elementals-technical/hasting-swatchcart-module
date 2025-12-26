@@ -19,15 +19,25 @@ const initialState: IMultiProductState = {
   totalCount: 0,
 };
 
-function ensureProduct(
-  state: IMultiProductState,
-  assetId: string,
-  productInformation: IProductListItem,
-  name?: string,
-) {
+function ensureProduct({
+  state,
+  assetId,
+  productInformation,
+  name,
+}: {
+  state: IMultiProductState;
+  assetId: string;
+  productInformation?: IProductListItem;
+  name?: string;
+}) {
   let bucket = state.items.find((p) => p.assetId === assetId);
   if (!bucket) {
-    bucket = { assetId, name: name ?? '', items: [], productInformation };
+    bucket = {
+      assetId,
+      name: name ?? '',
+      items: [],
+      productInformation: productInformation,
+    };
     state.items.push(bucket);
   } else if (name && !bucket.name) {
     bucket.name = name;
@@ -81,8 +91,22 @@ const multiProductCartSlice = createSlice({
         return;
       }
 
-      const bucket = ensureProduct(state, assetId, productInformation, name);
-      bucket.items = items;
+      if (productInformation) {
+        const bucket = ensureProduct({
+          state,
+          assetId,
+          productInformation,
+          name,
+        });
+        bucket.items = items;
+      } else {
+        const bucket = ensureProduct({
+          state,
+          assetId,
+          name,
+        });
+        bucket.items = items;
+      }
     },
 
     incrementMultiProductItem(state, action: PayloadAction<Key>) {

@@ -19,7 +19,7 @@ export interface IProductCart {
   name: string;
   assetId?: string;
   productId?: number;
-  productInformation: IProductListItem;
+  productInformation?: IProductListItem | null;
 }
 
 export interface ISliderItem {
@@ -43,7 +43,7 @@ export interface IMultiCartProductItem {
   assetId: string;
   items: ICartItem[];
   name: string;
-  productInformation: IProductListItem;
+  productInformation?: IProductListItem | null;
 }
 
 export interface IMultiProductCartHandleProps {
