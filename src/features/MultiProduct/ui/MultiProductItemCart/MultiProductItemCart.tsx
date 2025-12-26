@@ -171,7 +171,12 @@ export const MultiProductItemCart = ({
           <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
             <div className='sm:w-[50%] text-sm'>
               <CustomButton
-                onClick={() => onSendData && onSendData(selectedProducts)}
+                onClick={() =>
+                  onSendData &&
+                  onSendData(
+                    selectedProducts.filter((product) => product.items.length),
+                  )
+                }
                 disabled={allItems.length > MAX_SLOTS + 1}
               >
                 GO TO SHIPPING
