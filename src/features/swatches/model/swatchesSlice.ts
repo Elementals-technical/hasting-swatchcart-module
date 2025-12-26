@@ -13,6 +13,9 @@ import { type IMapUIData } from '../../DataAdapter/utils/types';
 import { getSelectedProductThunk } from './thunks';
 import { IProductListItem } from '../../MultiProduct/model/types';
 import { MAX_SLOTS } from '../../../shared/constants/selectedMaterials';
+import { StorageService } from '../../../shared/utils/storageService';
+
+const persistedSelectedMaterials = StorageService.getSelectedMaterials();
 
 const initialState: ISwatchesSlice = {
   // isOpenSidebar: true,
@@ -20,7 +23,7 @@ const initialState: ISwatchesSlice = {
   productElementOptions: [],
   materialSelectState: { Finish: [], Color: [], Look: [] },
   allMaterialsValues: [],
-  selectedMaterials: [],
+  selectedMaterials: persistedSelectedMaterials,
   selectedProduct: null,
   isLoadingSelectedProduct: false,
   isOpenMultiProductCart: false,
@@ -32,9 +35,6 @@ export const swatchesSlice = createSlice({
   name: 'swatches',
   initialState,
   reducers: {
-    // toggleSidebar: (state) => {
-    //   state.isOpenSidebar = !state.isOpenSidebar;
-    // },
     setMaterialSelect(state, action: PayloadAction<ISetFiltersPayload>) {
       const { filterName, values } = action.payload;
 
@@ -181,6 +181,9 @@ export const swatchesSlice = createSlice({
       const maxForThis = Math.max(1, MAX_SLOTS - otherTotal);
       item.count = Math.min(clamped, maxForThis);
     },
+    setCartMaterials(state, action: PayloadAction<AttributeValue[]>) {
+      state.selectedMaterials = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -214,4 +217,5 @@ export const {
   increment,
   decrement,
   setCount,
+  setCartMaterials,
 } = swatchesSlice.actions;

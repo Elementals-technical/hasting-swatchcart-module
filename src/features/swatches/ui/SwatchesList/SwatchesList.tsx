@@ -55,6 +55,8 @@ export const SwatchesList = ({
   containerStyles = 'p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 shadow-[0_-2px_10px_rgba(40,40,40,0.10)]',
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
+  const cartCount = useCartCount(selectedMaterials);
+  const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);
 
   /**
    * Selects a material and updates the swatches state.
@@ -65,14 +67,11 @@ export const SwatchesList = ({
     dispatch(
       setSelectedMaterial({
         selectedMaterial: item,
-        materialCount: 1,
+        materialCount: cartCount,
         selectedMaterials,
       }),
     );
   };
-
-  const mockCount = Math.max(0, MAX_SLOTS - selectedMaterials.length);
-  const cartCount = useCartCount(selectedMaterials);
 
   return (
     <div className={containerStyles}>

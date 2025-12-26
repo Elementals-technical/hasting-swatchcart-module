@@ -1,4 +1,5 @@
 import { IFetchProductData } from '../../../shared/types/fetchData';
+import { IProductListItem } from '../../MultiProduct/model/types';
 import { SwatchesServices } from '../../swatches/lib/SwatchesServices';
 import {
   ETypeComponent,
@@ -13,9 +14,11 @@ export class DataAdapterServices {
   static getTransformedData({
     dataType,
     data,
+    selectedProduct,
   }: {
     dataType: EDataInputType;
     data: IFetchProductData | any;
+    selectedProduct?: IProductListItem;
   }) {
     switch (dataType) {
       case EDataInputType.UI:
@@ -25,7 +28,7 @@ export class DataAdapterServices {
       // case EDataInputType.DATA_ALL_PRODUCT:
       //   return console.log(EDataInputType.DATA_ALL_PRODUCT);
       case EDataInputType.FETCH_DATA_PRODUCT:
-        return this.getTransformedFetchProductData(data);
+        return this.getTransformedFetchProductData({ data, selectedProduct });
       default:
         throw new Error('Unsupported format');
     }
@@ -84,7 +87,13 @@ export class DataAdapterServices {
   }
 
   // groupName solution
-  static getTransformedFetchProductData(data: IFetchProductData): any {
+  static getTransformedFetchProductData({
+    data,
+    selectedProduct,
+  }: {
+    data: IFetchProductData;
+    selectedProduct?: IProductListItem;
+  }): any {
     const { materials = [], structure = [] } = data;
 
     // optionName -> groupName (only MATERIAL)
@@ -120,6 +129,7 @@ export class DataAdapterServices {
       return (item.valuesArray ?? []).map((v) => ({
         ...v,
         parentName,
+        productInformation: selectedProduct || "Product wasn't found",
       }));
     });
 

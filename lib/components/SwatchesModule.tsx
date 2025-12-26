@@ -8,7 +8,10 @@ import { useAppDispatch } from '../store/store';
 import { useEffect } from 'react';
 import { DataAdapterServices } from '../../src/features/DataAdapter/lib/DataAdapterServices';
 import { setAllMaterialsOptions } from '../../src/features/swatches/model/swatchesSlice';
-import { getSelectedProductThunk } from '../../src/features/swatches/model/thunks';
+import {
+  getSelectedProductInformationThunk,
+  getSelectedProductThunk,
+} from '../../src/features/swatches/model/thunks';
 import { getProductListThunk } from '../../src/features/MultiProduct/model/thunk';
 
 export interface ISwatchesModuleProps {
@@ -32,10 +35,9 @@ export const SwatchModule = ({
     EDataInputType.UI,
     EDataInputType.FETCH_DATA_PRODUCT,
   ];
+  const dispatch = useAppDispatch();
 
   const isSingleProduct = SINGLE_PRODUCT_DATA.includes(uiDataType);
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     // if (!data && uiDataType === EDataInputType.UI) {
@@ -58,10 +60,15 @@ export const SwatchModule = ({
           const productData = await dispatch(
             getSelectedProductThunk({ assetId }),
           ).unwrap();
+          const selectedProduct = await dispatch(
+            getSelectedProductInformationThunk({ assetId }),
+          ).unwrap();
+          if (!selectedProduct) return;
 
           const fetchProductData = DataAdapterServices.getTransformedData({
             dataType: EDataInputType.FETCH_DATA_PRODUCT,
             data: productData,
+            selectedProduct: selectedProduct.rows[0],
           });
 
           dispatch(setAllMaterialsOptions(fetchProductData));

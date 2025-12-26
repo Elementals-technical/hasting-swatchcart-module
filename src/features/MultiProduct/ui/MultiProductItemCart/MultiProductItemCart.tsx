@@ -3,7 +3,7 @@ import { setSelectedMaterial } from '../../../swatches/model/swatchesSlice';
 import { CartPrice } from '../../../../shared/ui/CartPrice/CartPrice';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
-import { getMultiCartItems } from '../../model/selectors';
+
 import { useMemo } from 'react';
 import type { IMultiProductCartHandleProps } from '../../model/types';
 import {
@@ -15,6 +15,7 @@ import { CartListItem } from '../../../Cart/ui/CartListItem/CartListItem';
 import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCartHeader';
 import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
+import { getMultiCartItems } from '../../model/selectors';
 
 /**
  * Props for {@link MultiProductItemCart}.
@@ -131,7 +132,7 @@ export const MultiProductItemCart = ({
                 <ul>
                   {items?.map((item) => (
                     <CartListItem
-                      key={`${item.value}/${item.parentName}`}
+                      key={`${item.value}/${product.assetId}`}
                       item={item}
                       canInc={totalCount < MAX_SLOTS}
                       onDelete={() => {
@@ -170,7 +171,12 @@ export const MultiProductItemCart = ({
           <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
             <div className='sm:w-[50%] text-sm'>
               <CustomButton
-                onClick={() => onSendData && onSendData(selectedProducts)}
+                onClick={() =>
+                  onSendData &&
+                  onSendData(
+                    selectedProducts.filter((product) => product.items.length),
+                  )
+                }
                 disabled={allItems.length > MAX_SLOTS + 1}
               >
                 GO TO SHIPPING
