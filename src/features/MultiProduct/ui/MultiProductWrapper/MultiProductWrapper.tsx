@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
+import { useAppSelector } from '../../../../app/store/store';
 import {
   getIsOpenMultiCart,
   getSelectedProduct,
@@ -7,8 +6,6 @@ import {
 import { MultiProductItemCart } from '../MultiProductItemCart/MultiProductItemCart';
 import { ProductList } from '../ProductList/ProductList';
 import { SelectedProductItem } from '../SelectedProductItem/SelectedProductItem';
-import { clear } from '../../model/multiProductCartSlice';
-import { deleteSelectedProduct } from '../../../swatches/model/swatchesSlice';
 import { ToastContainer, Bounce } from 'react-toastify';
 
 interface IMultiProductWrapperProps {
@@ -19,16 +16,8 @@ interface IMultiProductWrapperProps {
 export const MultiProductWrapper = ({
   onSendData,
 }: IMultiProductWrapperProps) => {
-  const dispatch = useAppDispatch();
   const isOpenMultiProductCart = useAppSelector(getIsOpenMultiCart);
   const selectedProduct = useAppSelector(getSelectedProduct);
-
-  useEffect(() => {
-    return () => {
-      dispatch(clear());
-      dispatch(deleteSelectedProduct());
-    };
-  }, []);
 
   return (
     <div className='relative h-full min-h-0 w-full'>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 // import { SwatchModule } from '../../dist/main'; // build module
 import { SwatchModule } from '../../lib/main'; // lib
 import { EDataInputType } from '../features/DataAdapter/utils/types';
+import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 // import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 
 /**
@@ -103,7 +104,7 @@ function App() {
         <SwatchModule
           isOpen={isOpenModule}
           uiDataType={mockDataMode}
-          // data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
+          data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
           assetId='9aa4a6cc-05a2-4de0-b376-ef3ef2271bfe'
           onToggleSidebar={handleOpenSidebar}
           onSendData={handleSetData}

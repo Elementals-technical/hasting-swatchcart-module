@@ -132,16 +132,30 @@ export const MaterialSingleProductList = ({
           const isEndOfRow =
             (realIndex + 1) % cols === 0 ||
             realIndex === filteredItems.length - 1;
-
+          const value = val && val.metadata?.value;
+          const isSelected = !!selectedMaterials.find(
+            (elem) =>
+              elem.metadata?.value === value &&
+              elem.parentName === val.parentName,
+          );
           if (isEndOfRow) {
             return (
               <div key={key} ref={rowVirtualizer.measureElement as any}>
-                <MaterialListItem val={val} onClick={handleSelect} />
+                <MaterialListItem
+                  val={val}
+                  isSelected={isSelected}
+                  onClick={handleSelect}
+                />
               </div>
             );
           }
           return (
-            <MaterialListItem key={key} val={val} onClick={handleSelect} />
+            <MaterialListItem
+              key={key}
+              val={val}
+              isSelected={isSelected}
+              onClick={handleSelect}
+            />
           );
         })}
       </div>

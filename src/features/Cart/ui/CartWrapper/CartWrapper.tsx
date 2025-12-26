@@ -4,7 +4,7 @@ import { useAppSelector } from '../../../../app/store/store';
 import { CartHeader } from '../CartHeader/CartHeader';
 import { CartPrice } from '../../../../shared/ui/CartPrice/CartPrice';
 import { CartList } from '../CartList/CartList';
-import { getCartItems } from '../../model/selectors';
+import { getSelectedMaterials } from '../../../swatches/model/selectors';
 
 interface ICartWrapperProps {
   isOpen: boolean;
@@ -19,8 +19,7 @@ export const CartWrapper = ({
   onSetActiveTab,
   onSendData,
 }: ICartWrapperProps) => {
-  const cartItems = useAppSelector(getCartItems);
-  const selectedMaterials = useAppSelector(getCartItems) ?? [];
+  const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
 
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
@@ -33,8 +32,8 @@ export const CartWrapper = ({
         <CartPrice materials={selectedMaterials} />
         <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
-            className='w-full bg-[var(--main-accent-color)] text-white py-3 text-sm rounded-full font-bold cursor-pointer'
-            onClick={() => onSendData(cartItems)}
+            className='w-full bg-[var(--main-accent-color)] p-[1.25rem] hover:bg-secondary transition-all duration-200 text-white text-sm rounded-full font-bold cursor-pointer'
+            onClick={() => onSendData(selectedMaterials)}
           >
             GO TO SHIPPING
           </button>

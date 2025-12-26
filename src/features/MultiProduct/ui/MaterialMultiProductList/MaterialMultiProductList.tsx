@@ -11,7 +11,7 @@ import {
   setActiveMultiCartProduct,
   setMultiCartItems,
 } from '../../model/multiProductCartSlice';
-import { IMultiCartProductItem } from '../../model/types';
+import { IMultiCartProductItem, IProductListItem } from '../../model/types';
 import { getMultiCartItems } from '../../model/selectors';
 import { MaterialListItem } from '../../../../shared/ui/MaterialListItem/MaterialListItem';
 import { SwatchLimitModal } from '../../../../shared/ui/SwatchLimitModal/SwatchLimitModal';
@@ -159,66 +159,92 @@ export const MaterialMultiProductList = ({
   const padBottom = totalSize - (virtualRows[virtualRows.length - 1]?.end ?? 0);
 
   /**
-   * Handles toggling a material for the currently selected product
-   * within the multi-product cart.
+   * Compares two AttributeValue items to determine if they represent the same material.
+   * Matching logic is based on `metadata.label` + `parentName` (your current rule).
+   */
+  const isSameMaterial = (a: AttributeValue, b: AttributeValue) =>
+    a.metadata?.label === b.metadata?.label && a.parentName === b.parentName;
+
+  /**
+   * Toggles a material in the multi-product cart:
+   * - If the material already exists in the cart, removes it from the product where it is stored.
+   *   If that product ends up with no items, removes the whole product from the cart.
+   * - If the material does not exist, adds it to the currently selected product (if under limit).
    *
-   * - If the item already exists in `allItems`, removes it from the combined list
-   *   and updates the corresponding product entry.
-   * - If it does not exist:
-   *   - If the global limit (5) is reached, shows `SwatchLimitModal`.
-   *   - Otherwise, adds it with `count: 1` to the active product.
+   * Assumptions:
+   * - `selectedProducts` is IMultiCartProductItem[]
+   * - `allItems` is a flattened list of all items in cart (across all products)
+   * - `cartCount` is total selected materials count (same as allItems.length)
    */
   const handleSelect = (item: AttributeValue) => {
     if (!selectedProduct) return;
 
-    const activeProduct = selectedProducts.find(
-      (product) => selectedProduct.assetId === product.assetId,
+    const existsInCart = selectedProducts.some((p) =>
+      p.items.some((i) => isSameMaterial(i, item)),
     );
 
-    const isSame = (i: AttributeValue) =>
-      i.metadata?.label === item.metadata?.label &&
-      i.parentName === item.parentName;
+    if (existsInCart) {
+      const nextSelectedProducts = selectedProducts
+        .map((p) => {
+          const nextItems = p.items.filter((i) => !isSameMaterial(i, item));
+          return { ...p, items: nextItems };
+        })
+        .filter((p) => p.items.length > 0) as IMultiCartProductItem[];
 
-    const exists = allItems.some(isSame);
+      dispatch(setMultiCartItems(nextSelectedProducts));
 
-    if (!exists && cartCount >= 5) {
+      const nextActive =
+        nextSelectedProducts.find(
+          (p) => p.assetId === selectedProduct.assetId,
+        ) ??
+        nextSelectedProducts[0] ??
+        null;
+
+      if (nextActive) dispatch(setActiveMultiCartProduct(nextActive));
+      return;
+    }
+
+    if (cartCount >= 5) {
       setIsShowSwatchLImit(true);
       return;
     }
 
-    if (exists) {
-      const filteredArray = allItems.filter((item) => !isSame(item));
-      const existProductId = selectedProducts.find((p) =>
-        p.items.some(
-          (i) =>
-            i.metadata?.label === item.metadata?.label &&
-            i.parentName === item.parentName,
-        ),
-      );
-      const cartProductItem: IMultiCartProductItem = {
-        assetId: existProductId?.assetId || selectedProduct.assetId,
-        name: selectedProduct.name,
-        items: filteredArray,
-      };
+    const newMaterial: AttributeValue & {
+      count: number;
+      productInformation: IProductListItem;
+    } = { ...item, productInformation: selectedProduct, count: 1 };
 
-      dispatch(setMultiCartItems(cartProductItem));
-      dispatch(setActiveMultiCartProduct(cartProductItem));
-    } else if (allItems.length < 5) {
-      const newMaterial = { ...item, count: 1 };
+    const existingProductIndex = selectedProducts.findIndex(
+      (p) => p.assetId === selectedProduct.assetId,
+    );
 
-      const items = activeProduct
-        ? [...activeProduct.items, newMaterial]
-        : [newMaterial];
+    let nextSelectedProducts: IMultiCartProductItem[];
 
-      const cartProductItem: IMultiCartProductItem = {
+    if (existingProductIndex >= 0) {
+      nextSelectedProducts = selectedProducts.map((p, idx) => {
+        if (idx !== existingProductIndex) return p;
+        return { ...p, items: [...p.items, newMaterial] };
+      }) as IMultiCartProductItem[];
+    } else {
+      const newProduct: IMultiCartProductItem = {
         assetId: selectedProduct.assetId,
         name: selectedProduct.name,
-        items,
+        productInformation: selectedProduct,
+        items: [newMaterial],
       };
-
-      dispatch(setMultiCartItems(cartProductItem));
-      dispatch(setActiveMultiCartProduct(cartProductItem));
+      nextSelectedProducts = [
+        ...selectedProducts,
+        newProduct,
+      ] as IMultiCartProductItem[];
     }
+
+    dispatch(setMultiCartItems(nextSelectedProducts));
+
+    const nextActive =
+      nextSelectedProducts.find((p) => p.assetId === selectedProduct.assetId) ??
+      nextSelectedProducts[0];
+
+    dispatch(setActiveMultiCartProduct(nextActive));
   };
 
   return (
@@ -237,15 +263,31 @@ export const MaterialMultiProductList = ({
             (realIndex + 1) % cols === 0 ||
             realIndex === filteredItems.length - 1;
 
+          const value = val && val.metadata?.value;
+          const isSelected = !!allItems.find(
+            (elem) =>
+              elem.metadata?.value === value &&
+              elem.parentName === val.parentName,
+          );
+
           if (isEndOfRow) {
             return (
               <div key={key} ref={rowVirtualizer.measureElement as any}>
-                <MaterialListItem val={val} onClick={handleSelect} />
+                <MaterialListItem
+                  val={val}
+                  isSelected={isSelected}
+                  onClick={handleSelect}
+                />
               </div>
             );
           }
           return (
-            <MaterialListItem key={key} val={val} onClick={handleSelect} />
+            <MaterialListItem
+              key={key}
+              val={val}
+              isSelected={isSelected}
+              onClick={handleSelect}
+            />
           );
         })}
       </div>

@@ -11,6 +11,7 @@ export interface IMultiProductState {
 
 export interface ICartItem extends AttributeValue {
   count: number;
+  productInformation?: IProductListItem | null;
 }
 
 export interface IProductCart {
@@ -19,6 +20,7 @@ export interface IProductCart {
   name: string;
   assetId?: string;
   productId?: number;
+  productInformation?: IProductListItem | null;
 }
 
 export interface ISliderItem {
@@ -42,6 +44,7 @@ export interface IMultiCartProductItem {
   assetId: string;
   items: ICartItem[];
   name: string;
+  productInformation?: IProductListItem | null;
 }
 
 export interface IMultiProductCartHandleProps {
@@ -65,10 +68,16 @@ export interface IProductListItem {
   updatedAt: string;
 }
 
+export interface IProductInformationResponse {
+  rows: IProductListItem[];
+  count: number;
+}
+
 /**
  * This interface extends the base AttributeValue and add a new property productName
  *
  */
 export interface ISwatchSelectedMaterial extends AttributeValue {
+  productInformation?: IProductListItem | null;
   productName?: string;
 }
