@@ -52,6 +52,7 @@ export const ProductList = () => {
   const isLoadingProduct = useAppSelector(getIsLoadingSelectedProduct);
   const productList = useAppSelector(getProductLIst);
   const selectedProducts = useAppSelector(getMultiCartItems);
+  console.log('SwatchContentContainer', selectedProducts);
 
   const [activeCategory, setActiveCategory] = useState<
     ISliderItem | IProductCart
@@ -92,6 +93,19 @@ export const ProductList = () => {
   useEffect(() => {
     dispatch(getProductListThunk());
   }, [dispatch]);
+
+  /**
+   * Calculates the total number of selected materials
+   * across all products in the cart.
+   *
+   * @returns {number} Total count of all items.
+   */
+  const totalItemsLength = useMemo(() => {
+    return selectedProducts.reduce(
+      (sum, product) => sum + (product.items?.length ?? 0),
+      0,
+    );
+  }, [selectedProducts]);
 
   /**
    * Unique category list used by the category slider.
@@ -259,7 +273,7 @@ export const ProductList = () => {
           )}
         </div>
 
-        {selectedProducts.length ? <SwatchContentContainer /> : null}
+        {totalItemsLength ? <SwatchContentContainer /> : null}
       </div>
     </div>
   );
