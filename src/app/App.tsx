@@ -105,7 +105,7 @@ function App() {
           isOpen={isOpenModule}
           uiDataType={mockDataMode}
           data={MOCK_ROW_PROPS_ATTRIBUTES as any[]}
-          // assetId='9aa4a6cc-05a2-4de0-b376-ef3ef2271bfe'
+          assetId='9aa4a6cc-05a2-4de0-b376-ef3ef2271bfe'
           onToggleSidebar={handleOpenSidebar}
           onSendData={handleSetData}
         />

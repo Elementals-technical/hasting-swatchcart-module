@@ -4,7 +4,6 @@ import type {
   IMultiCartProductItem,
   IProductCart,
   IProductListResponse,
-  IProductListItem,
 } from './types';
 import { getProductListThunk } from './thunk';
 import { StorageService } from '../../../shared/utils/storageService';
@@ -19,31 +18,31 @@ const initialState: IMultiProductState = {
   totalCount: 0,
 };
 
-function ensureProduct({
-  state,
-  assetId,
-  productInformation,
-  name,
-}: {
-  state: IMultiProductState;
-  assetId: string;
-  productInformation?: IProductListItem;
-  name?: string;
-}) {
-  let bucket = state.items.find((p) => p.assetId === assetId);
-  if (!bucket) {
-    bucket = {
-      assetId,
-      name: name ?? '',
-      items: [],
-      productInformation: productInformation,
-    };
-    state.items.push(bucket);
-  } else if (name && !bucket.name) {
-    bucket.name = name;
-  }
-  return bucket;
-}
+// function ensureProduct({
+//   state,
+//   assetId,
+//   productInformation,
+//   name,
+// }: {
+//   state: IMultiProductState;
+//   assetId: string;
+//   productInformation?: IProductListItem;
+//   name?: string;
+// }) {
+//   let bucket = state.items.find((p) => p.assetId === assetId);
+//   if (!bucket) {
+//     bucket = {
+//       assetId,
+//       name: name ?? '',
+//       items: [],
+//       productInformation: productInformation,
+//     };
+//     state.items.push(bucket);
+//   } else if (name && !bucket.name) {
+//     bucket.name = name;
+//   }
+//   return bucket;
+// }
 
 type Key = {
   assetId: string;
@@ -82,31 +81,8 @@ const multiProductCartSlice = createSlice({
     ) {
       state.activeMultiCartProduct = action.payload;
     },
-    setMultiCartItems(state, action: PayloadAction<IMultiCartProductItem>) {
-      const { assetId, items, name, productInformation } = action.payload;
-
-      if (!items || items.length === 0) {
-        const idx = state.items.findIndex((b) => b.assetId === assetId);
-        if (idx !== -1) state.items.splice(idx, 1);
-        return;
-      }
-
-      if (productInformation) {
-        const bucket = ensureProduct({
-          state,
-          assetId,
-          productInformation,
-          name,
-        });
-        bucket.items = items;
-      } else {
-        const bucket = ensureProduct({
-          state,
-          assetId,
-          name,
-        });
-        bucket.items = items;
-      }
+    setMultiCartItems(state, action: PayloadAction<IMultiCartProductItem[]>) {
+      state.items = action.payload;
     },
 
     incrementMultiProductItem(state, action: PayloadAction<Key>) {

@@ -97,9 +97,8 @@ const SwatchListItem: React.FC<ISwatchesListItemProps> = ({
         )}
 
         <div
-          onClick={handleDeleteClick}
           className='absolute top-0 right-0 m-[2px] w-[12px] h-[12px] flex flex-row justify-center items-center text-white
-        bg-[var(--main-accent-color)] rounded-2xl border-none z-[99] cursor-pointer sm:w-[16px] sm:h-[16px]'
+        bg-[var(--main-accent-color)] rounded-2xl border-none z-[99] sm:w-[16px] sm:h-[16px]'
         >
           {val.count}
         </div>

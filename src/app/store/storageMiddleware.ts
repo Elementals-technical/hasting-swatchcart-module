@@ -41,10 +41,10 @@ export const storageMiddleware: Middleware<object, RootState> =
 
     // Persist multi-product cart items
     if (MULTI_PRODUCT_PERSIST_ACTIONS.has(actionType)) {
-      console.log(
-        '[StorageMiddleware] Persisting multiProductItems:',
-        state.multiProductCart.items,
-      );
+      // console.log(
+      //   '[StorageMiddleware] Persisting multiProductItems:',
+      //   state.multiProductCart.items,
+      // );
       StorageService.setMultiProductItems(state.multiProductCart.items);
     }
 

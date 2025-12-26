@@ -52,7 +52,6 @@ export const ProductList = () => {
   const isLoadingProduct = useAppSelector(getIsLoadingSelectedProduct);
   const productList = useAppSelector(getProductLIst);
   const selectedProducts = useAppSelector(getMultiCartItems);
-  console.log('SwatchContentContainer', selectedProducts);
 
   const [activeCategory, setActiveCategory] = useState<
     ISliderItem | IProductCart

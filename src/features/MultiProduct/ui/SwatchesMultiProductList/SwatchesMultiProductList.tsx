@@ -6,12 +6,8 @@ import {
   IMultiCartProductItem,
   ISwatchSelectedMaterial,
 } from '../../model/types';
-import {
-  setActiveMultiCartProduct,
-  setMultiCartItems,
-} from '../../model/multiProductCartSlice';
+import { setMultiCartItems } from '../../model/multiProductCartSlice';
 import { getMultiCartItems } from '../../model/selectors';
-import { getSelectedProduct } from '../../../swatches/model/selectors';
 import SwatchListItem from '../SwatchListItem/SwatchListItem';
 import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 
@@ -64,9 +60,7 @@ export const SwatchesMultiProductList = ({
   containerStyles = 'p-[var(--padding)] border-t border-solid border-[var(--border)] shrink-0 sm:p-[var(--sm-padding)]',
 }: ISwatchesListProps) => {
   const dispatch = useAppDispatch();
-  const selectedProduct = useAppSelector(getSelectedProduct);
   const selectedProducts = useAppSelector(getMultiCartItems);
-  console.log('selectedProducts', selectedProducts);
 
   /**
    * Handles deleting a swatch from whichever product currently contains it.
@@ -84,25 +78,28 @@ export const SwatchesMultiProductList = ({
   const handleSelect = (item: ISwatchSelectedMaterial) => {
     if (!selectedProducts.length) return;
 
-    const isSame = (i: AttributeValue) =>
-      i.metadata?.label === item.metadata?.label &&
-      i.parentName === item.parentName;
+    const targetAssetId = item.productInformation?.assetId;
 
-    const productWithItem = selectedProducts.find((p) => p.items.some(isSame));
+    /**
+     * Identifies the same swatch inside product.items
+     */
+    const isSameSwatch = (i: AttributeValue) =>
+      i.parentName === item.parentName &&
+      i.metadata?.label === item.metadata?.label;
 
-    const filteredItems = productWithItem?.items.filter((i) => !isSame(i));
+    const nextSelectedProducts = selectedProducts
+      .map((product) => {
+        // Only update the product that owns this swatch
+        if (product.assetId !== targetAssetId) return product;
 
-    if (productWithItem) {
-      const cartProductItem: IMultiCartProductItem = {
-        assetId: productWithItem.assetId || 'empty_assetId',
-        name: productWithItem.name,
-        productInformation: selectedProduct,
-        items: filteredItems || [],
-      };
+        const nextItems = product.items.filter((i) => !isSameSwatch(i));
 
-      dispatch(setMultiCartItems(cartProductItem));
-      dispatch(setActiveMultiCartProduct(cartProductItem));
-    }
+        return { ...product, items: nextItems };
+      })
+      // Remove products that have no items left
+      .filter((product) => product.items.length > 0) as IMultiCartProductItem[];
+
+    dispatch(setMultiCartItems(nextSelectedProducts));
   };
 
   // Number of placeholder tiles to render so the total count always matches MAX_SLOTS

@@ -11,6 +11,7 @@ export interface IMultiProductState {
 
 export interface ICartItem extends AttributeValue {
   count: number;
+  productInformation?: IProductListItem | null;
 }
 
 export interface IProductCart {
@@ -77,5 +78,6 @@ export interface IProductInformationResponse {
  *
  */
 export interface ISwatchSelectedMaterial extends AttributeValue {
+  productInformation?: IProductListItem | null;
   productName?: string;
 }
