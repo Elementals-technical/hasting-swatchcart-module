@@ -165,7 +165,7 @@ export const Hint: React.FC<HintProps> = ({
   if (!open || !target) return null;
 
   return createPortal(
-    <div className='fixed inset-0 z-[60000] pointer-events-none'>
+    <div className='fixed inset-0 z-[9999999999] pointer-events-none'>
       <div
         ref={bubbleRef}
         role='tooltip'
