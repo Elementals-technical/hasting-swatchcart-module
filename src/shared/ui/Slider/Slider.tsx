@@ -87,7 +87,7 @@ export const Slider: React.FC<ISliderProps> = ({
 
   return (
     <div
-      className={`flex flex-row items-center gap-[8px] lg:w-[50%] xl:max-w-[68%] xl:w-full ${className}`}
+      className={`flex! flex-row! items-center! gap-[8px]! lg:w-[50%]! xl:max-w-[68%]! xl:w-full! ${className}`}
       role='region'
       aria-label='Category slider'
     >
