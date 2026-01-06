@@ -239,7 +239,7 @@ export const ProductList = () => {
             items={uniqueCategories}
             activeId={activeCategory.productId}
             onSelect={(item) => setActiveCategory(item)}
-            className='hidden lg:flex flex-row shrink-0 overflow-x-auto'
+            className='hidden! lg:flex! lg:visible! flex-row! shrink-0! overflow-x-auto!'
           />
         </div>
 
@@ -247,7 +247,7 @@ export const ProductList = () => {
           items={uniqueCategories}
           activeId={activeCategory.productId}
           onSelect={(item) => setActiveCategory(item)}
-          className='h-[64px] p-[var(--sm-padding)] border-b border-[var(--border)] lg:hidden'
+          className='h-[64px]! p-[var(--sm-padding)]! border-b! border-[var(--border)]! lg:hidden!'
         />
 
         <div
