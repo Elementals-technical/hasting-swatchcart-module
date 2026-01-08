@@ -42,7 +42,7 @@ export const SwatchWrapper = ({
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
       <header className='flex flex-row p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
-        <h2 className='m-0! text-[1.8rem] leading-[1.6] font-medium'>
+        <h2 className='m-0! text-base leading-[1.6] font-medium'>
           Order free swatches
         </h2>
         <button
