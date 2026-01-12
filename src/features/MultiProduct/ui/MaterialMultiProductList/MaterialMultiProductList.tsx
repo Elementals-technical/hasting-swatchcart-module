@@ -250,6 +250,9 @@ export const MaterialMultiProductList = ({
   return (
     <div ref={scrollRef} className={containerStyles}>
       <SwatchLimitModal
+        header="You've reached your maximum number of swatches!"
+        body="If you'd like to add another swatch please remove an existing swatch
+            from your cart"
         isOpen={isShowSwatchLimit}
         onClose={() => setIsShowSwatchLImit(false)}
       />
