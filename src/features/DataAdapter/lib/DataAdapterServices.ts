@@ -122,13 +122,14 @@ export class DataAdapterServices {
 
     // flatten children; inject parentName + groupName
     const allMaterialValues = materialsWithGroup.flatMap((item) => {
-      const { label, groupName } = item;
+      const { label, groupName, optionName } = item;
       const parentName =
         (label.toLocaleLowerCase() === 'color' ? groupName : label) ||
         'without_name';
       return (item.valuesArray ?? []).map((v) => ({
         ...v,
         parentName,
+        optionName: optionName,
         productInformation: selectedProduct || "Product wasn't found",
       }));
     });
@@ -137,7 +138,7 @@ export class DataAdapterServices {
     const seen = new Set<string>();
 
     const productElementOptions = materialsWithGroup
-      .map(({ label, groupName, valuesArray }) => {
+      .map(({ label, groupName, optionName, valuesArray }) => {
         const normalizedLabel =
           label?.toLowerCase() === 'color' ? (groupName ?? label) : label;
 
@@ -145,7 +146,12 @@ export class DataAdapterServices {
           id: normalizedLabel!,
           value: normalizedLabel!,
           label: normalizedLabel!,
-          valuesArray,
+          valuesArray: valuesArray?.length
+            ? valuesArray.map((item) => ({
+                ...item,
+                optionName,
+              }))
+            : [],
         };
       })
       .filter(
