@@ -4,7 +4,7 @@ import { CartPrice } from '../../../../shared/ui/CartPrice/CartPrice';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { IMultiProductCartHandleProps } from '../../model/types';
 import {
   decrementMultiProductItem,
@@ -16,6 +16,7 @@ import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCa
 import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 import { getMultiCartItems } from '../../model/selectors';
+import { SwatchLimitModal } from '../../../../shared/ui/SwatchLimitModal/SwatchLimitModal';
 
 /**
  * Props for {@link MultiProductItemCart}.
@@ -48,6 +49,7 @@ export const MultiProductItemCart = ({
   const dispatch = useAppDispatch();
   const selectedProducts = useAppSelector(getMultiCartItems);
   const selectedMaterials = useAppSelector(getSelectedMaterials);
+  const [isShowLimitMessage, setIsShowLimitMessage] = useState(false);
 
   /**
    * Flattens product groups into a single items list used for totals and pricing.
@@ -87,8 +89,12 @@ export const MultiProductItemCart = ({
     const { parentName, metadata } = item;
     const label = metadata?.label;
 
-    if (assetId && label && parentName) {
-      dispatch(incrementMultiProductItem({ assetId, label, parentName }));
+    if (item.count + 1 === 3) {
+      setIsShowLimitMessage(true);
+    } else {
+      if (assetId && label && parentName) {
+        dispatch(incrementMultiProductItem({ assetId, label, parentName }));
+      }
     }
   };
 
@@ -109,82 +115,91 @@ export const MultiProductItemCart = ({
   const totalCount = useCartCount(allItems);
 
   return (
-    <div className='flex flex-col h-full'>
-      <MultiProductCartHeader totalCount={totalCount} />
+    <>
+      <div className='flex flex-col h-full'>
+        <MultiProductCartHeader totalCount={totalCount} />
 
-      <div className='flex flex-col h-full min-h-0'>
-        <ul className='flex flex-col flex-1 min-h-0 overflow-y-auto'>
-          {selectedProducts.map((product) => {
-            const { items, name, assetId } = product;
+        <div className='flex flex-col h-full min-h-0'>
+          <ul className='flex flex-col flex-1 min-h-0 overflow-y-auto'>
+            {selectedProducts.map((product) => {
+              const { items, name, assetId } = product;
 
-            if (!items.length) return null;
+              if (!items.length) return null;
 
-            return (
-              <>
-                <div
-                  key={product.assetId}
-                  className=' p-[var(--sm-padding)] border-y border-[var(--border)]
+              return (
+                <>
+                  <div
+                    key={product.assetId}
+                    className=' p-[var(--sm-padding)] border-y border-[var(--border)]
                   sm:px-[var(--sm-padding)] text-sm font-medium'
-                >
-                  {name}
-                </div>
+                  >
+                    {name}
+                  </div>
 
-                <ul>
-                  {items?.map((item) => (
-                    <CartListItem
-                      key={`${item.value}/${product.assetId}`}
-                      item={item}
-                      canInc={totalCount < MAX_SLOTS}
-                      onDelete={() => {
-                        if (!assetId) return;
-                        handleDelete({ item, assetId });
-                      }}
-                      onIncrement={() => {
-                        if (!assetId) return;
-                        handleIncrement({ item, assetId });
-                      }}
-                      onDecrement={() => {
-                        if (!assetId) return;
-                        handleDecrement({ item, assetId });
-                      }}
-                    />
-                  ))}
-                </ul>
-              </>
-            );
-          })}
-        </ul>
+                  <ul>
+                    {items?.map((item) => (
+                      <CartListItem
+                        key={`${item.value}/${product.assetId}`}
+                        item={item}
+                        canInc={totalCount < MAX_SLOTS}
+                        onDelete={() => {
+                          if (!assetId) return;
+                          handleDelete({ item, assetId });
+                        }}
+                        onIncrement={() => {
+                          if (!assetId) return;
+                          handleIncrement({ item, assetId });
+                        }}
+                        onDecrement={() => {
+                          if (!assetId) return;
+                          handleDecrement({ item, assetId });
+                        }}
+                      />
+                    ))}
+                  </ul>
+                </>
+              );
+            })}
+          </ul>
 
-        <div
-          className='flex flex-col 
+          <div
+            className='flex flex-col 
           sm:flex-row sm:w-full sm:justify-between sm:items-center
           sm:border-t sm:border-[var(--border)] shadow-[0_-2px_10px_rgba(40,40,40,0.10)]
         '
-        >
-          <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
-            <CartPrice
-              materials={allItems}
-              containerStyles='flex flex-col gap-[8px] text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-[12px] sm:border-none s'
-            />
-          </div>
+          >
+            <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
+              <CartPrice
+                materials={allItems}
+                containerStyles='flex flex-col gap-[8px] text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-[12px] sm:border-none s'
+              />
+            </div>
 
-          <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
-            <div className='sm:w-[50%] text-sm'>
-              <CustomButton
-                onClick={() =>
-                  onSendData &&
-                  onSendData(
-                    selectedProducts.filter((product) => product.items.length),
-                  )
-                }
-                disabled={allItems.length > MAX_SLOTS + 1}
-              >
-                GO TO SHIPPING
-              </CustomButton>
+            <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
+              <div className='sm:w-[50%] text-sm'>
+                <CustomButton
+                  onClick={() =>
+                    onSendData &&
+                    onSendData(
+                      selectedProducts.filter(
+                        (product) => product.items.length,
+                      ),
+                    )
+                  }
+                  disabled={allItems.length > MAX_SLOTS + 1}
+                >
+                  GO TO SHIPPING
+                </CustomButton>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <SwatchLimitModal
+        body='A maximum of two swatches per material may be ordered.'
+        isOpen={isShowLimitMessage}
+        onClose={() => setIsShowLimitMessage(false)}
+      />
+    </>
   );
 };
