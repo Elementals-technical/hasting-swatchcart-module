@@ -12,17 +12,20 @@ import { AttributeValue } from '../../model/types';
 import { setSelectedMaterial } from '../../model/swatchesSlice';
 import { useDispatch } from 'react-redux';
 import { SwatchLimitModal } from '../../../../shared/ui/SwatchLimitModal/SwatchLimitModal';
+import { TOnSelectMaterial } from '../../../DataAdapter/utils/types';
 
 interface IMaterialListProps {
   containerStyles?: string;
   gridStyles?: string;
   desktopColumnsCount?: number;
+  onSelectMaterial?: TOnSelectMaterial<AttributeValue>;
 }
 
 export const MaterialSingleProductList = ({
   containerStyles = 'flex-1 min-h-0 overflow-y-auto p-[var(--sm-padding)]',
   gridStyles = 'grid grid-cols-2 gap-[var(--sm-padding)] sm:grid-cols-3 ',
   desktopColumnsCount = 3,
+  onSelectMaterial,
 }: IMaterialListProps) => {
   const dispatch = useDispatch();
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -108,6 +111,11 @@ export const MaterialSingleProductList = ({
     if (cartCount + 1 > 5 && !isSelected) {
       setIsShowLimitMessage(true);
     }
+
+    if (onSelectMaterial) {
+      onSelectMaterial(item);
+    }
+
     dispatch(
       setSelectedMaterial({
         materialCount: cartCount,

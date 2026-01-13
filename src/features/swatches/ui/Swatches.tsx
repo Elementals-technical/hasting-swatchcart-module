@@ -8,6 +8,7 @@ export const Swatches = ({
   isOpen,
   onToggleSidebar,
   onSendData,
+  onSelectMaterial,
 }: ISwatchesModuleProps) => {
   const [activeTab, setActiveTab] = useState<EActiveTab>(EActiveTab.SWATCH);
 
@@ -22,6 +23,7 @@ export const Swatches = ({
           isOpen={isOpen}
           onToggleSidebar={onToggleSidebar}
           onSetActiveTab={handleSetActiveTab}
+          onSelectMaterial={onSelectMaterial}
         />
       ) : (
         <CartWrapper
