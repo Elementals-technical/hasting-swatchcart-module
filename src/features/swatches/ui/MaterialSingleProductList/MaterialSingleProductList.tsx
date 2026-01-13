@@ -110,9 +110,10 @@ export const MaterialSingleProductList = ({
 
     if (cartCount + 1 > 5 && !isSelected) {
       setIsShowLimitMessage(true);
+      return;
     }
 
-    if (onSelectMaterial) {
+    if (onSelectMaterial && !isSelected) {
       onSelectMaterial(item);
     }
 
