@@ -13,17 +13,21 @@ import { setCartItems } from '../../../Cart/model/cartSlice';
 import { SwatchesSingleProductListWrapper } from '../SwatchesListWrapper/SwatchesListWrapper';
 import { MaterialSingleProductList } from '../MaterialSingleProductList/MaterialSingleProductList';
 import { Loader } from '../../../../shared/ui/Loader/Loader';
+import { AttributeValue } from '../../model/types';
+import { TOnSelectMaterial } from '../../../DataAdapter/utils/types';
 
 interface ISidebarWrapperProps {
   isOpen: boolean;
   onSetActiveTab: (activeTab: EActiveTab) => void;
   onToggleSidebar: () => void;
+  onSelectMaterial?: TOnSelectMaterial<AttributeValue>;
 }
 
 export const SwatchWrapper = ({
   isOpen,
   onToggleSidebar,
   onSetActiveTab,
+  onSelectMaterial,
 }: ISidebarWrapperProps) => {
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials) ?? [];
@@ -64,7 +68,7 @@ export const SwatchWrapper = ({
         <div className='w-full border-b border-b-border'>
           <Filters />
         </div>
-        <MaterialSingleProductList />
+        <MaterialSingleProductList onSelectMaterial={onSelectMaterial} />
         <SwatchesSingleProductListWrapper />
 
         <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0'>
