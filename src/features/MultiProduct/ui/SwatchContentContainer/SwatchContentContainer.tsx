@@ -64,6 +64,7 @@ export const SwatchContentContainer = () => {
       className='flex flex-col border-t border-[var(--border)] shrink-0 shadow-[0_-2px_10px_rgba(40,40,40,0.10)]
       sm:flex-row
     '
+      id='swatch-content-container'
     >
       <SwatchesMultiProductList
         selectedMaterials={allItems}
