@@ -167,10 +167,10 @@ export const ProductList = () => {
             'overflow-hidden transform-gpu transition-[max-height,opacity,transform] duration-500 ease-in-out',
             isScrolling
               ? 'max-h-0 opacity-0 -translate-y-4 pointer-events-none'
-              : 'max-h-40 opacity-100 translate-y-0',
+              : 'max-h-50 opacity-100 translate-y-0',
           )}
         >
-          <div className='h-40'>
+          <div className='h-50'>
             <img
               src={
                 'https://hastings-questionnaie-storage.fra1.digitaloceanspaces.com/static/pic%20big%201%20(1).jpg'
@@ -188,9 +188,12 @@ export const ProductList = () => {
           <div className='flex flex-row justify-center items-center border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
             <span>
               Choose 5 free swatches to curate your perfect design. Plus get{' '}
-              <span className='text-[var(--main-accent-color)] underline'>
+              <a
+                href='https://www.hastingsbathcollection.com/contact/design-strategist'
+                className='text-[var(--main-accent-color)] underline'
+              >
                 free design advice
-              </span>{' '}
+              </a>{' '}
               from our experts
             </span>
           </div>
