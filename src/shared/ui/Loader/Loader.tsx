@@ -26,7 +26,7 @@ export const Loader: React.FC<ILoaderProps> = ({
       <span
         role='status'
         aria-label='Loading'
-        className={className}
+        className={className + ' absolute top-[20rem]'}
         style={{ width: size, height: size }}
       >
         <svg
