@@ -4,7 +4,7 @@ import { CartPrice } from '../../../../shared/ui/CartPrice/CartPrice';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import type { IMultiProductCartHandleProps } from '../../model/types';
 import {
   decrementMultiProductItem,
@@ -127,11 +127,10 @@ export const MultiProductItemCart = ({
               if (!items.length) return null;
 
               return (
-                <>
+                <Fragment key={product.assetId}>
                   <div
-                    key={product.assetId}
                     className=' p-[var(--sm-padding)] border-y border-[var(--border)]
-                  sm:px-[var(--sm-padding)] text-sm font-medium'
+                    sm:px-[var(--sm-padding)] text-sm font-medium'
                   >
                     {name}
                   </div>
@@ -157,7 +156,7 @@ export const MultiProductItemCart = ({
                       />
                     ))}
                   </ul>
-                </>
+                </Fragment>
               );
             })}
           </ul>
