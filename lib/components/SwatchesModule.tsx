@@ -1,6 +1,12 @@
-import { EDataInputType } from '../../src/features/DataAdapter/utils/types';
+import {
+  EDataInputType,
+  TOnSelectMaterial,
+} from '../../src/features/DataAdapter/utils/types';
 import { MultiProductWrapper } from '../../src/features/MultiProduct/ui/MultiProductWrapper/MultiProductWrapper';
-import { IAttributeAsset } from '../../src/features/swatches/model/types';
+import {
+  AttributeValue,
+  IAttributeAsset,
+} from '../../src/features/swatches/model/types';
 import { Swatches } from '../../src/features/swatches/ui/Swatches';
 import { LibraryProvider } from '../store/LibraryProvider';
 import '../assets/styles/index.css';
@@ -21,6 +27,7 @@ export interface ISwatchesModuleProps {
   data?: IAttributeAsset[] | any[];
   onToggleSidebar: () => void;
   onSendData: (data: unknown) => void;
+  onSelectMaterial?: TOnSelectMaterial<AttributeValue>;
 }
 
 export const SwatchModule = ({
@@ -30,6 +37,7 @@ export const SwatchModule = ({
   assetId,
   onToggleSidebar,
   onSendData,
+  onSelectMaterial,
 }: ISwatchesModuleProps) => {
   const SINGLE_PRODUCT_DATA: ReadonlyArray<EDataInputType> = [
     EDataInputType.UI,
@@ -112,6 +120,7 @@ export const SwatchModule = ({
                 assetId={assetId}
                 onToggleSidebar={onToggleSidebar}
                 onSendData={onSendData}
+                onSelectMaterial={onSelectMaterial}
               />
             ) : null}
           </>

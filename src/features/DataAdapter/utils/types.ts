@@ -13,3 +13,5 @@ export interface IMapUIData {
   allMaterialValues: AttributeValue[];
   productElementOptions: any[];
 }
+
+export type TOnSelectMaterial<T> = (item: T) => void;

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { SwatchModule } from '../../lib/main'; // lib
 import { EDataInputType } from '../features/DataAdapter/utils/types';
 import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
+// import { AttributeValue } from '../features/swatches/model/types';
 // import { MOCK_ROW_PROPS_ATTRIBUTES } from '../shared/constants/props';
 
 /**
@@ -49,6 +50,10 @@ function App() {
 
     setMockDataMode(newMode);
   };
+
+  // const handleSelectMaterial = (item: AttributeValue) => {
+  //   console.log("Select material", item);
+  // }
 
   return (
     <div className='swatch-module-root'>
@@ -108,6 +113,7 @@ function App() {
           assetId='9aa4a6cc-05a2-4de0-b376-ef3ef2271bfe'
           onToggleSidebar={handleOpenSidebar}
           onSendData={handleSetData}
+          // onSelectMaterial={handleSelectMaterial}
         />
       </div>
     </div>
