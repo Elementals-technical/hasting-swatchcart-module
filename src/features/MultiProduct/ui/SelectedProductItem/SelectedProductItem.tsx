@@ -3,6 +3,7 @@ import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 // import { CloseIconSVG } from '../../../../app/assets/svg/CloseIconSVG';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { getSelectedProduct } from '../../../swatches/model/selectors';
+import { scrollToTop } from '../../../../shared/utils/scrollToTop';
 import {
   clearAllMaterialFilters,
   deleteSelectedProduct,
@@ -27,6 +28,7 @@ export const SelectedProductItem = () => {
 
   const handleGoBack = () => {
     dispatch(deleteSelectedProduct());
+    scrollToTop();
   };
 
   return (

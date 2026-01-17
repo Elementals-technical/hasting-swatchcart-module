@@ -1,4 +1,5 @@
 import { useAppDispatch } from '../../../../app/store/store';
+import { scrollToTop } from '../../../../shared/utils/scrollToTop';
 import { showErrorToast } from '../../../../shared/utils/toast';
 import { DataAdapterServices } from '../../../DataAdapter/lib/DataAdapterServices';
 import { EDataInputType } from '../../../DataAdapter/utils/types';
@@ -37,6 +38,7 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
           data: productData,
         });
         dispatch(setAllMaterialsOptions(fetchProductData));
+        scrollToTop();
       } else {
         showErrorToast('Failed to load product');
       }

@@ -1,5 +1,6 @@
 import { ArrowIconSVG } from '../../../../app/assets/svg/ArrowIconSVG';
 import { useAppDispatch } from '../../../../app/store/store';
+import { scrollToTop } from '../../../../shared/utils/scrollToTop';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { MAX_SLOTS } from '../../../../shared/constants/selectedMaterials';
 
@@ -14,6 +15,7 @@ export const MultiProductCartHeader = ({
 
   const handleGoBack = () => {
     dispatch(setIsOpenMultiProductCart(false));
+    scrollToTop();
   };
   return (
     <header className='flex flex-row p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>

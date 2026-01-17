@@ -15,6 +15,7 @@ import { MaterialSingleProductList } from '../MaterialSingleProductList/Material
 import { Loader } from '../../../../shared/ui/Loader/Loader';
 import { AttributeValue } from '../../model/types';
 import { TOnSelectMaterial } from '../../../DataAdapter/utils/types';
+import { scrollToTop } from '../../../../shared/utils/scrollToTop';
 
 interface ISidebarWrapperProps {
   isOpen: boolean;
@@ -41,6 +42,7 @@ export const SwatchWrapper = ({
       dispatch(setCartItems(cartData));
     }
     onSetActiveTab(EActiveTab.CART);
+    scrollToTop();
   };
 
   return (
