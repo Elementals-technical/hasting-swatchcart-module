@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/store/store';
 import { CustomButton } from '../../../../shared/ui/CustomButton/CustomButton';
+import { scrollToTop } from '../../../../shared/utils/scrollToTop';
 import { setIsOpenMultiProductCart } from '../../../swatches/model/swatchesSlice';
 import { getMultiCartItems } from '../../model/selectors';
 import { SwatchesMultiProductList } from '../SwatchesMultiProductList/SwatchesMultiProductList';
@@ -56,6 +57,7 @@ export const SwatchContentContainer = () => {
   const handleOpenMultiCart = (): void => {
     if (allItems.length) {
       dispatch(setIsOpenMultiProductCart(true));
+      scrollToTop();
     }
   };
 
