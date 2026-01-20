@@ -43,7 +43,7 @@ export const PopoverTooltip = ({
       </PopoverTrigger>
 
       <PopoverContent
-        className='bg-[#000] text-white text-[1.1rem] leading-[1.45] w-auto max-w-[300px]'
+        className='bg-[#000] text-white text-[17.6px] leading-[1.45] w-auto max-w-[300px]'
         side='top'
       >
         <MDWithAccordion openFirst={openFirst}>{tooltipData}</MDWithAccordion>

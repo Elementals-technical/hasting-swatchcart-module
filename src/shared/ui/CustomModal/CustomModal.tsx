@@ -53,7 +53,7 @@ export const CustomModal: FC<ModalProps> = ({
         }}
       >
         <div className='flex flex-row items-center justify-between p-[var(--sm-padding)] border-b border-[var(--border)]'>
-          <span className='text-base font-semibold text-[var(--text)]'>
+          <span className='text-[16px] font-semibold text-[var(--text)]'>
             {title}
           </span>
 

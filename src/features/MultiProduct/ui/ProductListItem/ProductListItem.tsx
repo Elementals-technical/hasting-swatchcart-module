@@ -45,7 +45,7 @@ export const ProductListItem = ({ productListItem }: IProductListItemProps) => {
 
   return (
     <li
-      className='min-w-0 cursor-pointer text-xs'
+      className='min-w-0 cursor-pointer text-[12px]'
       tabIndex={0}
       onClick={handleSetSelectedItem}
     >

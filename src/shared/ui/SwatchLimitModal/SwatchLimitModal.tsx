@@ -21,7 +21,7 @@ export const SwatchLimitModal = ({
       title='Swatch Limit'
     >
       <div>
-        <div className='text-sm font-medium p-[var(--sm-padding)] border-b border-[var(--border)] leading-[20px]'>
+        <div className='text-[14px] font-medium p-[var(--sm-padding)] border-b border-[var(--border)] leading-[20px]'>
           {header ? <p className='mb-4'>{header}</p> : null}
 
           <p>{body}</p>

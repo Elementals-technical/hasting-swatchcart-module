@@ -9,9 +9,9 @@ export const FiltersSelectedProductItem = () => {
     '
     >
       <ProductElement
-        containerStyles='flex flex-row justify-between items-center gap-[8px] p-[var(--sm-padding)] w-full text-xs
+        containerStyles='flex flex-row justify-between items-center gap-[8px] p-[var(--sm-padding)] w-full text-[12px]
         border-b border-[var(--border)]
-        sm:max-w-[360px] sm:text-sm sm:border-none
+        sm:max-w-[360px] sm:text-[14px] sm:border-none
         '
         selectStyles='min-w-[auto] max-w-[154px] sm:max-w-[auto] sm:min-w-[180px] font-normal'
       />

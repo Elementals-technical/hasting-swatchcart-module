@@ -58,14 +58,14 @@ export const CartHeader = ({
             <ArrowIconSVG />
           </button>
 
-          <h2 className='m-0! text-base leading-[1.6] font-medium '>
+          <h2 className='m-0! text-[16px] leading-[1.6] font-medium '>
             Your cart
           </h2>
         </div>
 
         {totalCount >= MAX_SLOTS ? (
           <>
-            <span className='text-[var(--main-accent-color)] hidden! text-xs sm:block!'>
+            <span className='text-[var(--main-accent-color)] hidden! text-[12px] sm:block!'>
               ({MAX_SLOTS}) You reached maximum amount of swatches
             </span>
             <span className='text-[var(--main-accent-color)] block! sm:hidden!'>

@@ -111,7 +111,7 @@ const MultiSelect = React.forwardRef<
               flex-none flex flex-row justify-center items-center
               w-[20px] h-5 rounded-full
               bg-[var(--main-accent-color)] text-white
-              text-[1rem] leading-none
+              text-[16px] leading-none
               select-none pointer-events-none
               overflow-hidden
             '
@@ -132,7 +132,7 @@ const MultiSelect = React.forwardRef<
             className,
           )}
         >
-          <div className='w-full text-xs truncate text-left leading-[20px] sm:text-sm'>
+          <div className='w-full text-[12px] truncate text-left leading-[20px] sm:text-[14px]'>
             {displayContent}
           </div>
           <ChevronDownIcon
@@ -146,7 +146,7 @@ const MultiSelect = React.forwardRef<
         <PopoverPrimitive.Content
           ref={popoverContentRef}
           className={cn(
-            'bg-white border rounded-lg shadow-lg z-50 max-h-75 text-sm overflow-y-auto overscroll-behavior-y-contain touch-pan-y p-2',
+            'bg-white border rounded-lg shadow-lg z-50 max-h-75 text-[14px] overflow-y-auto overscroll-behavior-y-contain touch-pan-y p-2',
             dropdownWidth
               ? dropdownWidth
               : 'w-[var(--radix-popover-trigger-width)]',
@@ -171,7 +171,7 @@ const MultiSelect = React.forwardRef<
             <div className='flex flex-row gap-[8px] items-center justify-between px-2 py-1 mb-2 border-b'>
               <button
                 onClick={handleClearAll}
-                className='text-sm text-black hover:text-primary transition-color cursor-pointer duration-200 flex flex-row items-center gap-[4px]'
+                className='text-[14px] text-black hover:text-primary transition-color cursor-pointer duration-200 flex flex-row items-center gap-[4px]'
               >
                 <XIcon className='h-3 w-[12px]' />
                 Clear all
@@ -197,7 +197,7 @@ const MultiSelect = React.forwardRef<
                   />
                   <div className='flex-1 flex flex-row items-center justify-between'>
                     <div className='flex flex-row items-center gap-[8px]'>
-                      <span className='text-sm'>{option.label}</span>
+                      <span className='text-[14px]'>{option.label}</span>
                       {(() => {
                         if (!getTooltipByMaterialAndSection || !sectionName)
                           return null;
@@ -214,7 +214,7 @@ const MultiSelect = React.forwardRef<
                       })()}
                     </div>
                     {option.count !== undefined && (
-                      <span className='text-sm text-gray-800 bg-gray-100 px-2 py-0.5 ml-2 rounded-full whitespace-nowrap'>
+                      <span className='text-[14px] text-gray-800 bg-gray-100 px-2 py-0.5 ml-2 rounded-full whitespace-nowrap'>
                         {option.count}
                       </span>
                     )}

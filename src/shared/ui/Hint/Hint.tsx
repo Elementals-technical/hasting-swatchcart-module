@@ -172,7 +172,7 @@ export const Hint: React.FC<HintProps> = ({
         className='
           absolute
           rounded-2xl
-          text-white text-sm leading-6 font-medium
+          text-white text-[14px] leading-6 font-medium
           pointer-events-auto
         '
         style={{
