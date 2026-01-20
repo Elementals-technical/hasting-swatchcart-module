@@ -123,7 +123,7 @@ export const ProductElement = ({
 
   return (
     <div className={containerStyles}>
-      <span className='text-sm'>Product element</span>
+      <span className='text-[14px]'>Product element</span>
 
       <MultiSelect
         options={productOptions}

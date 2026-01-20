@@ -130,7 +130,7 @@ export const MultiProductItemCart = ({
                 <Fragment key={product.assetId}>
                   <div
                     className=' p-[var(--sm-padding)] border-y border-[var(--border)]
-                    sm:px-[var(--sm-padding)] text-sm font-medium'
+                    sm:px-[var(--sm-padding)] text-[14px] font-medium'
                   >
                     {name}
                   </div>
@@ -170,12 +170,12 @@ export const MultiProductItemCart = ({
             <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
               <CartPrice
                 materials={allItems}
-                containerStyles='flex flex-col gap-[8px] text-xs/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-[12px] sm:border-none s'
+                containerStyles='flex flex-col gap-[8px] text-[12px]/snug p-[var(--sm-padding)] border-t border-solid border-[var(--border)]  sm:gap-[12px] sm:border-none s'
               />
             </div>
 
             <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0 sm:w-[50%] sm:border-none sm:flex flex-row sm:justify-end sm:items-end sm:h-full'>
-              <div className='sm:w-[50%] text-sm'>
+              <div className='sm:w-[50%] text-[14px]'>
                 <CustomButton
                   onClick={() =>
                     onSendData &&

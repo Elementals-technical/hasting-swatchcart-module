@@ -181,11 +181,11 @@ export const ProductList = () => {
         </div>
 
         <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
-          <h1 className='m-0! p-[var(--sm-padding)] text-base font-medium'>
+          <h1 className='m-0! p-[var(--sm-padding)] text-[16px] font-medium'>
             Swatches store
           </h1>
 
-          <div className='flex flex-row justify-center items-center border-t border-[var(--border)] p-[var(--sm-padding)] text-xs font-medium leading-[24px] lg:border-none'>
+          <div className='flex flex-row justify-center items-center border-t border-[var(--border)] p-[var(--sm-padding)] text-[12px] font-medium leading-[24px] lg:border-none'>
             <span>
               Choose 5 free swatches to curate your perfect design. Plus get{' '}
               <a
@@ -213,7 +213,7 @@ export const ProductList = () => {
                 onChange={(e) => setSearch(e.target.value)}
                 className='
                   h-full w-full rounded-2xl border border-[var(--border)] bg-[var(--background)]
-                  px-4 pr-8 text-sm text-black placeholder-[var(--text-muted)]
+                  px-4 pr-8 text-[14px] text-black placeholder-[var(--text-muted)]
                   transition focus:border-[var(--main-accent-color)] focus:outline-none
                 '
               />

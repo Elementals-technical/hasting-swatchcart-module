@@ -81,7 +81,7 @@ const SingleSelect = React.forwardRef<
           aria-expanded={isOpen}
           className={cn(
             'inline-flex flex-row items-center justify-between gap-[8px] rounded-full bg-[var(--label-bg, #f5f5f5)] ' +
-              'px-[8px] py-[8px] text-xs font-medium h-[36px] text-black' +
+              'px-[8px] py-[8px] text-[12px] font-medium h-[36px] text-black' +
               'border border-transparent hover:bg-gray-100 ' +
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--main-accent-color)]' +
               'sm:w-[102px]',
@@ -89,7 +89,9 @@ const SingleSelect = React.forwardRef<
           )}
         >
           <span
-            className={cn(!selected && 'text-xs  text-gray-700 ms:text-sm')}
+            className={cn(
+              !selected && 'text-[12px]  text-gray-700 ms:text-[14px]',
+            )}
           >
             {selected?.label ?? placeholder}
           </span>
@@ -122,7 +124,7 @@ const SingleSelect = React.forwardRef<
           onWheel={(e) => e.stopPropagation()}
         >
           {(title ?? placeholder) && (
-            <div className='px-4 pt-3 pb-2 text-[1rem] font-regular'>
+            <div className='px-4 pt-3 pb-2 text-[16px] font-regular'>
               {title ?? placeholder}
             </div>
           )}
@@ -131,7 +133,7 @@ const SingleSelect = React.forwardRef<
             <div className='px-4 py-2 border-b'>
               <button
                 onClick={handleClear}
-                className='inline-flex flex-row items-center gap-[4px] text-[0.95rem] text-black hover:text-[var(--main-accent-color)] transition-colors'
+                className='inline-flex flex-row items-center gap-[4px] text-[15.2px] text-black hover:text-[var(--main-accent-color)] transition-colors'
               >
                 <XIcon className='h-3.5 w-[12px].5' />
                 Clear
@@ -168,7 +170,7 @@ const SingleSelect = React.forwardRef<
                   }}
                 >
                   <div className='flex flex-row items-center gap-[8px]'>
-                    <span className='text-[1.05rem]'>{opt.label}</span>
+                    <span className='text-[16.8px]'>{opt.label}</span>
                     {(() => {
                       if (!getTooltipByMaterialAndSection || !sectionName)
                         return null;
