@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Build library 🔧
-        run: npm run build:lib
+        run: npm run build:all
 
       - name: Configure git user
         run: |

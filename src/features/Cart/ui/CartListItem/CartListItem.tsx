@@ -47,7 +47,7 @@ export const CartListItem = ({
             onDelete={onDelete}
           />
         </div>
-        <div className=' absolute text-[12px] top-0 right-0 font-bold'>
+        <div className=' absolute text-[12px] top-0 right-0 font-medium'>
           ${item.count * MATERIAL_PRICE}
         </div>
       </div>
