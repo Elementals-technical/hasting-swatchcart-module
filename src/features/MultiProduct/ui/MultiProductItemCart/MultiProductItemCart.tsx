@@ -166,6 +166,7 @@ export const MultiProductItemCart = ({
           sm:flex-row sm:w-full sm:justify-between sm:items-center
           sm:border-t sm:border-[var(--border)] shadow-[0_-2px_10px_rgba(40,40,40,0.10)]
         '
+            // id="swatch-content-container" // uncomment this code for a multi product cart page if it needs
           >
             <div className='sm:w-[50%] sm:border-r sm:border-solid sm:border-[var(--border)]'>
               <CartPrice
