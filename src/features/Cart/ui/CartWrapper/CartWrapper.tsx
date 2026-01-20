@@ -32,7 +32,7 @@ export const CartWrapper = ({
         <CartPrice materials={selectedMaterials} />
         <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
-            className='w-full bg-[var(--main-accent-color)] p-[1.25rem] hover:bg-secondary transition-all duration-200 text-white text-sm rounded-full font-bold cursor-pointer'
+            className='w-full bg-[var(--main-accent-color)] p-[1.25rem] hover:bg-secondary transition-all duration-200 text-white text-[14px] rounded-full font-bold cursor-pointer'
             onClick={() => onSendData(selectedMaterials)}
           >
             GO TO SHIPPING

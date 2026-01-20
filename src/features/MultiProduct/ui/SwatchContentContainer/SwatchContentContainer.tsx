@@ -71,7 +71,7 @@ export const SwatchContentContainer = () => {
       />
 
       <div className='flex flex-row w-full p-[var(--sm-padding)] border-t border-[var(--border)] sm:border-none lg:w-[50%] sm:justify-center sm:items-center lg:justify-end lg:items-end'>
-        <div className='w-full lg:w-[50%] text-sm'>
+        <div className='w-full lg:w-[50%] text-[14px]'>
           <CustomButton onClick={handleOpenMultiCart}>
             ADD SWATCHES TO CART
           </CustomButton>

@@ -77,12 +77,12 @@ export const SwatchesList = ({
     <div className={containerStyles}>
       <div className='flex flex-row justify-between items-center mb-[12px]'>
         <div className='relative'>
-          <div className='text-xs'>Swatches list</div>
+          <div className='text-[12px]'>Swatches list</div>
           <span className='absolute top-0 right-[-20px] font-medium text-[var(--main-accent-color)] text-[8px] leading-none'>
             Free
           </span>
         </div>
-        <div className='text-xs'>
+        <div className='text-[12px]'>
           {cartCount}/{MAX_SLOTS} Selected
         </div>
       </div>

@@ -26,7 +26,7 @@ export const Label = ({ text, isActive = false, onClick }: ILabelProps) => {
       onKeyDown={handleKeyDown}
       className={`
         flex flex-row justify-center items-center max-w-max px-4 py-2 capitalize rounded-full
-        font-medium text-sm cursor-pointer transition-all duration-[400ms] ease-in-out
+        font-medium text-[14px] cursor-pointer transition-all duration-[400ms] ease-in-out
         outline-none focus:ring-2 focus:ring-[var(--main-accent-color)] focus:ring-offset-2
         ${
           isActive

@@ -46,7 +46,7 @@ export const SwatchWrapper = ({
   return (
     <CustomSidebar isOpen={isOpen} setIsOpen={onToggleSidebar}>
       <header className='flex flex-row p-[var(--sm-padding)] justify-between items-center border-b border-solid border-[var(--border)]'>
-        <h2 className='m-0! text-base leading-[1.6] font-medium'>
+        <h2 className='m-0! text-[16px] leading-[1.6] font-medium'>
           Order free swatches
         </h2>
         <button
@@ -73,7 +73,7 @@ export const SwatchWrapper = ({
 
         <div className='p-[var(--sm-padding)] border-t border-solid border-[var(--border)] shrink-0'>
           <button
-            className='w-full bg-[var(--main-accent-color)] p-[1.25rem] hover:bg-secondary transition-all duration-200 text-white rounded-full font-bold cursor-pointer text-sm'
+            className='w-full bg-[var(--main-accent-color)] p-[1.25rem] hover:bg-secondary transition-all duration-200 text-white rounded-full font-bold cursor-pointer text-[14px]'
             onClick={handleOpenCart}
           >
             ADD SWATCHES TO CART

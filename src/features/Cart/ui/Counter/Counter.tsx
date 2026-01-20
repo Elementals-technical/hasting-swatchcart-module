@@ -19,7 +19,7 @@ export const Counter = ({
 }: ICounterProps) => {
   const showTrash = value <= 1;
   return (
-    <div className='flex flex-row items-center gap-[8px] text-sm'>
+    <div className='flex flex-row items-center gap-[8px] text-[14px]'>
       {showTrash ? (
         <button
           aria-label='Remove item'
