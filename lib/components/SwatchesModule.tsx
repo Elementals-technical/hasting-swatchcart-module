@@ -19,6 +19,7 @@ import {
   getSelectedProductThunk,
 } from '../../src/features/swatches/model/thunks';
 import { getProductListThunk } from '../../src/features/MultiProduct/model/thunk';
+import { APP_VERSION } from '../../src/shared/utils/version';
 
 export interface ISwatchesModuleProps {
   isOpen: boolean;
@@ -96,6 +97,8 @@ export const SwatchModule = ({
       fetchProductDetails();
     }
   }, [uiDataType, data, assetId]);
+
+  console.log('✅ CURRENT VERSION OF THE SWATCHES MODULE: ', APP_VERSION);
 
   return (
     <div

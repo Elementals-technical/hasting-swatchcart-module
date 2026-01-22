@@ -4,8 +4,12 @@ import dts from 'vite-plugin-dts';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
 import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
+import pkg from './package.json';
 
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+  },
   plugins: [
     react(),
     tailwindcss(),
