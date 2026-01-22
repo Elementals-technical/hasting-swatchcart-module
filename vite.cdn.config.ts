@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 import tailwindcss from '@tailwindcss/vite';
+import pkg from './package.json';
 
 export default defineConfig({
   base: './',
@@ -19,6 +20,7 @@ export default defineConfig({
   define: {
     global: 'window',
     'process.env.NODE_ENV': JSON.stringify('production'),
+    __APP_VERSION__: JSON.stringify(pkg.version),
   },
 
   build: {
