@@ -167,10 +167,10 @@ export const ProductList = () => {
             'overflow-hidden transform-gpu transition-[max-height,opacity,transform] duration-500 ease-in-out',
             isScrolling
               ? 'max-h-0 opacity-0 -translate-y-4 pointer-events-none'
-              : 'max-h-50 opacity-100 translate-y-0',
+              : 'max-h-[200px] opacity-100 translate-y-0',
           )}
         >
-          <div className='h-50'>
+          <div className='h-[200px]'>
             <img
               src={
                 'https://hastings-questionnaie-storage.fra1.digitaloceanspaces.com/static/pic%20big%201%20(1).jpg'
