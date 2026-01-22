@@ -74,7 +74,7 @@ const SwatchListItem: React.FC<ISwatchesListItemProps> = ({
         }}
         className='
           bg-[var(--background-grey)] relative w-[40px] h-[40px] border border-solid border-[var(--border)]
-          rounded-md aspect-square overflow-hidden transition sm:w-[64px] sm:h-[64px]
+          rounded-md aspect-square overflow-hidden transition sm:w-[62px] sm:h-[62px]
           select-none
         '
         aria-label={`Selected swatch ${val.name ?? val.assetId}`}

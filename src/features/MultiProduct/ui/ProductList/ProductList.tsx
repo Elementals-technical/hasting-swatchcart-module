@@ -260,7 +260,9 @@ export const ProductList = () => {
           <div className='mb-4'>Select Product</div>
 
           {filteredProductList.length ? (
-            <ul className='grid grid-cols-2 gap-[16px] sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9'>
+            <ul
+              className={`grid grid-cols-2 gap-[16px] sm:grid-cols-4 ${totalItemsLength && 'sm:pb-[130px]'} lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-9`}
+            >
               {filteredProductList.map((productListItem: any) => (
                 <ProductListItem
                   key={productListItem.name}
