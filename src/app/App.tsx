@@ -102,7 +102,8 @@ function App() {
       <div
         className={`${
           mockDataMode === EDataInputType.FETCH_DATA_ALL
-            ? 'h-[768px] min-h-0 overflow-hidden flex flex-col border border-[var(--border)]'
+            ? // ? 'min-h-0 overflow-hidden flex flex-col border border-[var(--border)]'
+              'h-[768px] min-h-0 overflow-hidden flex flex-col border border-[var(--border)]'
             : ''
         }`}
       >
