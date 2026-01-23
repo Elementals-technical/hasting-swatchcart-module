@@ -52,7 +52,8 @@ export const SelectedProductItem = () => {
         </div>
 
         <MaterialMultiProductList
-          containerStyles='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'
+          // containerStyles='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]' // old scroll
+          containerStyles='flex-1 min-h-0  p-[var(--sm-padding)]' // global scroll solution
           // gridStyles='grid grid-cols-2 gap-[16px] sm:grid-cols-4 sm:pb-[130px] lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9'
           gridStyles='grid grid-cols-2 gap-[16px] sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-9'
           desktopColumnsCount={6}
