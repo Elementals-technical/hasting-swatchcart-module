@@ -103,7 +103,8 @@ export const SwatchModule = ({
   return (
     <div
       id='root-container'
-      className={`${isOpen ? 'flex' : 'hidden'} relative flex-col h-full min-h-0 w-full`}
+      // className={`${isOpen ? 'flex' : 'hidden'} relative flex-col h-full min-h-0 w-full`}
+      className={`${isOpen ? 'flex' : 'hidden'} relative flex-col h-[100dvh] min-h-0 w-full`}
     >
       <LibraryProvider>
         {isOpen ? (
