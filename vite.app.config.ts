@@ -7,7 +7,16 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    {
+      name: 'inject-app-version',
+      transformIndexHtml(html) {
+        return html.replace(/%APP_VERSION%/g, pkg.version);
+      },
+    },
+  ],
   // no build.lib here — this is an APP build (emits index.html)
   build: {
     assetsInlineLimit: 0,
