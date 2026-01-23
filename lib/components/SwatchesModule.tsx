@@ -98,7 +98,7 @@ export const SwatchModule = ({
     }
   }, [uiDataType, data, assetId]);
 
-  console.log('✅ CURRENT VERSION OF THE SWATCHES MODULE: ', APP_VERSION);
+  console.log('✅ CURRENT VERSION OF THE SWATCHES MODULE IS: ', APP_VERSION);
 
   return (
     <div
