@@ -255,7 +255,8 @@ export const ProductList = () => {
 
         <div
           ref={scrollRef}
-          className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]'
+          // className='flex-1 min-h-0 overflow-y-auto overscroll-contain p-[var(--sm-padding)]' // old scroll
+          className='flex-1 min-h-0 p-[var(--sm-padding)]' // new scroll
         >
           <div className='mb-4'>Select Product</div>
 
