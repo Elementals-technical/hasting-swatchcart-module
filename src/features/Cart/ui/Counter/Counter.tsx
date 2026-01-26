@@ -24,7 +24,7 @@ export const Counter = ({
         <button
           aria-label='Remove item'
           onClick={onDelete}
-          className='[&_svg_path]:stroke-[var(--main-accent-color)]'
+          className='[&_svg_path]:stroke-[var(--main-accent-color)] cursor-pointer'
         >
           <TrashIconSVG />
         </button>
@@ -32,7 +32,7 @@ export const Counter = ({
         <button
           aria-label='Decrease'
           onClick={onDecrement}
-          className='[&_svg_path]:stroke-[var(--svg-dark)]'
+          className='[&_svg_path]:stroke-[var(--svg-dark)] cursor-pointer'
         >
           <MinusIconSVG />
         </button>
@@ -42,7 +42,7 @@ export const Counter = ({
         aria-label='Increase'
         onClick={onIncrement}
         disabled={!canIncrement}
-        className='[&_svg_path]:stroke-[var(--svg-dark)] disabled:opacity-40'
+        className='[&_svg_path]:stroke-[var(--svg-dark)] disabled:opacity-40 cursor-pointer'
       >
         <PlusIconSVG />
       </button>
