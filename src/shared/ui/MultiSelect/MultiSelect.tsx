@@ -109,7 +109,7 @@ const MultiSelect = React.forwardRef<
           <span
             className='
               flex-none flex flex-row justify-center items-center
-              w-[20px] h-5 rounded-full
+              w-[20px] h-[20px] rounded-full
               bg-[var(--main-accent-color)] text-white
               text-[16px] leading-none
               select-none pointer-events-none
