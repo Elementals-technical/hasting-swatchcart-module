@@ -67,8 +67,8 @@ export const SwatchesList = ({
     dispatch(
       setSelectedMaterial({
         selectedMaterial: item,
-        materialCount: cartCount,
-        selectedMaterials,
+        // materialCount: cartCount,
+        // selectedMaterials,
       }),
     );
   };

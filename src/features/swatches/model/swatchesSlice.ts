@@ -79,28 +79,57 @@ export const swatchesSlice = createSlice({
         state.productElementOptions = productElementOptions;
       }
     },
+    // setSelectedMaterial(
+    //   state,
+    //   action: PayloadAction<{
+    //     materialCount: number;
+    //     selectedMaterial: AttributeValue;
+    //     selectedMaterials: AttributeValue[];
+    //   }>,
+    // ) {
+    //   const { materialCount, selectedMaterial, selectedMaterials } =
+    //     action.payload;
+    //   if (!selectedMaterial) return;
+    //   console.log('setSelectedMaterial', {
+    //     materialCount,
+    //     selectedMaterial,
+    //     selectedMaterials,
+    //   });
+
+    //   const isSame = (i: AttributeValue) =>
+    //     i.metadata?.label === selectedMaterial.metadata?.label &&
+    //     i.parentName === selectedMaterial.parentName;
+
+    //   const exists = selectedMaterials?.some(isSame);
+    //   // debugger;
+    //   if (exists) {
+    //     state.selectedMaterials = selectedMaterials.filter((i) => !isSame(i));
+    //   } else if (materialCount < 5) {
+    //     state.selectedMaterials = [...selectedMaterials, selectedMaterial];
+    //   }
+    // },
     setSelectedMaterial(
       state,
-      action: PayloadAction<{
-        materialCount: number;
-        selectedMaterial: AttributeValue;
-        selectedMaterials: AttributeValue[];
-      }>,
+      action: PayloadAction<{ selectedMaterial: AttributeValue }>,
     ) {
-      const { materialCount, selectedMaterial, selectedMaterials } =
-        action.payload;
+      const { selectedMaterial } = action.payload;
       if (!selectedMaterial) return;
 
       const isSame = (i: AttributeValue) =>
         i.metadata?.label === selectedMaterial.metadata?.label &&
         i.parentName === selectedMaterial.parentName;
 
-      const exists = selectedMaterials?.some(isSame);
+      const exists = state.selectedMaterials.some(isSame);
 
       if (exists) {
-        state.selectedMaterials = selectedMaterials.filter((i) => !isSame(i));
-      } else if (materialCount < 5) {
-        state.selectedMaterials = [...selectedMaterials, selectedMaterial];
+        state.selectedMaterials = state.selectedMaterials.filter(
+          (i) => !isSame(i),
+        );
+        return;
+      }
+
+      if (state.selectedMaterials.length < 5) {
+        state.selectedMaterials.push(selectedMaterial);
       }
     },
     resetSelectedMaterials(state) {

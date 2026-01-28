@@ -27,8 +27,8 @@ export const CartList = () => {
     dispatch(
       setSelectedMaterial({
         selectedMaterial: item,
-        materialCount: 1,
-        selectedMaterials,
+        // materialCount: 1,
+        // selectedMaterials,
       }),
     );
   };
