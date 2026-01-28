@@ -176,14 +176,15 @@ export interface IAttributeAsset {
 
 ### Fetch product
 
-| Prop             | Type                                                   | Required | Description                                                                                    |
-| ---------------- | ------------------------------------------------------ | -------- | ---------------------------------------------------------------------------------------------- |
-| isOpen           | boolean                                                | Yes      | Controls visibility of the module (module state). true → module is visible.                    |
-| uiDataType       | 'FETCH_DATA_PRODUCT'                                   | Yes      | Defines type data mode. Rendered data depends on this parameter                                |
-| assetId          | string                                                 | Yes      | Defined an object for getting it`s attributes                                                  |
-| onToggleSidebar  | void                                                   | Yes      | This method uses for open/close this module.                                                   |
-| onSendData       | (data) => data is selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application.         |
-| onSelectMaterial | (item) => returns selected the selected material       | No       | Callback that returns selected material from the material list back to the parent Application. |
+| Prop              | Type                                                   | Required | Description                                                                                    |
+| ----------------- | ------------------------------------------------------ | -------- | ---------------------------------------------------------------------------------------------- |
+| isOpen            | boolean                                                | Yes      | Controls visibility of the module (module state). true → module is visible.                    |
+| uiDataType        | 'FETCH_DATA_PRODUCT'                                   | Yes      | Defines type data mode. Rendered data depends on this parameter                                |
+| assetId           | string                                                 | Yes      | Defined an object for getting it`s attributes                                                  |
+| configurationData | any[]                                                  | Yes      | Takes data from the scene and sets it to the our module                                        |
+| onToggleSidebar   | void                                                   | Yes      | This method uses for open/close this module.                                                   |
+| onSendData        | (data) => data is selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application.         |
+| onSelectMaterial  | (item) => returns selected the selected material       | No       | Callback that returns selected material from the material list back to the parent Application. |
 
 ### Fetch all product
 

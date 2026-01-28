@@ -10,22 +10,27 @@ import {
 import { Swatches } from '../../src/features/swatches/ui/Swatches';
 import { LibraryProvider } from '../store/LibraryProvider';
 import '../assets/styles/index.css';
-import { useAppDispatch } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
 import { useEffect } from 'react';
 import { DataAdapterServices } from '../../src/features/DataAdapter/lib/DataAdapterServices';
-import { setAllMaterialsOptions } from '../../src/features/swatches/model/swatchesSlice';
+import {
+  setAllMaterialsOptions,
+  setSelectedMaterial,
+} from '../../src/features/swatches/model/swatchesSlice';
 import {
   getSelectedProductInformationThunk,
   getSelectedProductThunk,
 } from '../../src/features/swatches/model/thunks';
 import { getProductListThunk } from '../../src/features/MultiProduct/model/thunk';
 import { APP_VERSION } from '../../src/shared/utils/version';
+import { getSelectedMaterials } from '../../src/features/swatches/model/selectors';
 
 export interface ISwatchesModuleProps {
   isOpen: boolean;
   uiDataType: EDataInputType;
   assetId?: string;
   data?: IAttributeAsset[] | any[];
+  configurationData?: any[];
   onToggleSidebar: () => void;
   onSendData: (data: unknown) => void;
   onSelectMaterial?: TOnSelectMaterial<AttributeValue>;
@@ -36,6 +41,7 @@ export const SwatchModule = ({
   uiDataType,
   data,
   assetId,
+  configurationData,
   onToggleSidebar,
   onSendData,
   onSelectMaterial,
@@ -45,9 +51,11 @@ export const SwatchModule = ({
     EDataInputType.FETCH_DATA_PRODUCT,
   ];
   const dispatch = useAppDispatch();
-
+  const selectedMaterials = useAppSelector(getSelectedMaterials);
   const isSingleProduct = SINGLE_PRODUCT_DATA.includes(uiDataType);
-
+  // const cartCount = useMemo(() => {
+  //   return selectedMaterials.reduce((sum, item) => sum + (item.count ?? 0), 0);
+  // }, [selectedMaterials]);
   useEffect(() => {
     // if (!data && uiDataType === EDataInputType.UI) {
     //   throw new Error(`SwatchCart-module: Attributes are important`);
@@ -72,7 +80,7 @@ export const SwatchModule = ({
           const selectedProduct = await dispatch(
             getSelectedProductInformationThunk({ assetId }),
           ).unwrap();
-          if (!selectedProduct) return;
+          if (!selectedProduct || !productData) return;
 
           const fetchProductData = DataAdapterServices.getTransformedData({
             dataType: EDataInputType.FETCH_DATA_PRODUCT,
@@ -81,6 +89,44 @@ export const SwatchModule = ({
           });
 
           dispatch(setAllMaterialsOptions(fetchProductData));
+
+          // This block sets selected data from the scene to single swatch module
+          if (configurationData?.length) {
+            // Find all material keys
+            const materialsKeys = productData.materials.map(
+              (item) => item.optionName,
+            );
+
+            // Transform selected data according to the swatch module cart data.
+            const filteredConfigData = configurationData
+              ?.filter((item) => materialsKeys.includes(item.name))
+              .map((option) => ({
+                label: option.valueMetadata.label,
+                value: option.valueMetadata.value,
+                metadata: option.valueMetadata,
+                optionName: option.name,
+                parentName: option.metadata.Name,
+                productInformation: selectedProduct.rows[0],
+                count: 1,
+              }));
+
+            // Set data to the store
+            filteredConfigData?.forEach((item, index) => {
+              console.log(item);
+              const isExist = (i: any) =>
+                i.metadata?.label === item.metadata?.label &&
+                i.parentName === item.parentName;
+              console.log(`item ${item} - index ${index}`);
+
+              const exists = selectedMaterials.some(isExist);
+              if (exists) return;
+              dispatch(
+                setSelectedMaterial({
+                  selectedMaterial: { ...item, count: 1 },
+                }),
+              );
+            });
+          }
         } catch (error) {
           console.error('Failed to load product', error);
         }

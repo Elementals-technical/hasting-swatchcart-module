@@ -177,8 +177,6 @@ export const MaterialSingleProductList = ({
 
     dispatch(
       setSelectedMaterial({
-        materialCount: cartCount,
-        selectedMaterials,
         selectedMaterial: { ...item, count: 1 },
       }),
     );
