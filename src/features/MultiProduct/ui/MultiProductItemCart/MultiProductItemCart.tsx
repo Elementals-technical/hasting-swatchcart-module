@@ -13,7 +13,7 @@ import {
 } from '../../model/multiProductCartSlice';
 import { CartListItem } from '../../../Cart/ui/CartListItem/CartListItem';
 import { MultiProductCartHeader } from '../MultiProductCartHeader/MultiProductCartHeader';
-import { getSelectedMaterials } from '../../../swatches/model/selectors';
+// import { getSelectedMaterials } from '../../../swatches/model/selectors';
 import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 import { getMultiCartItems } from '../../model/selectors';
 import { SwatchLimitModal } from '../../../../shared/ui/SwatchLimitModal/SwatchLimitModal';
@@ -48,7 +48,7 @@ export const MultiProductItemCart = ({
 }: IMultiProductItemCartProps) => {
   const dispatch = useAppDispatch();
   const selectedProducts = useAppSelector(getMultiCartItems);
-  const selectedMaterials = useAppSelector(getSelectedMaterials);
+  // const selectedMaterials = useAppSelector(getSelectedMaterials);
   const [isShowLimitMessage, setIsShowLimitMessage] = useState(false);
 
   /**
@@ -73,8 +73,8 @@ export const MultiProductItemCart = ({
       dispatch(
         setSelectedMaterial({
           selectedMaterial: item,
-          materialCount: 1,
-          selectedMaterials,
+          // materialCount: 1,
+          // selectedMaterials,
         }),
       );
     }
