@@ -182,7 +182,7 @@ export const ProductList = () => {
 
         <header className='flex flex-col border-b border-[var(--border)] lg:flex-row lg:justify-between'>
           <h1 className='m-0! p-[var(--sm-padding)] text-[16px] font-medium'>
-            Swatches store
+            Swatch Store
           </h1>
 
           <div className='flex flex-row justify-center items-center border-t border-[var(--border)] p-[var(--sm-padding)] text-[12px] font-medium leading-[24px] lg:border-none'>
