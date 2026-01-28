@@ -57,92 +57,108 @@ export const SwatchModule = ({
   //   return selectedMaterials.reduce((sum, item) => sum + (item.count ?? 0), 0);
   // }, [selectedMaterials]);
   useEffect(() => {
-    // if (!data && uiDataType === EDataInputType.UI) {
-    //   throw new Error(`SwatchCart-module: Attributes are important`);
-    // } else {
-    if (uiDataType === EDataInputType.UI) {
-      if (!data) throw new Error(`SwatchCart-module: Attributes are important`);
+    let filteredConfigData: AttributeValue[];
+    if (isOpen) {
+      // if (!data && uiDataType === EDataInputType.UI) {
+      //   throw new Error(`SwatchCart-module: Attributes are important`);
+      // } else {
+      if (uiDataType === EDataInputType.UI) {
+        if (!data)
+          throw new Error(`SwatchCart-module: Attributes are important`);
 
-      const uiData = DataAdapterServices.getTransformedData({
-        dataType: EDataInputType.UI,
-        data,
-      });
+        const uiData = DataAdapterServices.getTransformedData({
+          dataType: EDataInputType.UI,
+          data,
+        });
 
-      if (uiData) {
-        dispatch(setAllMaterialsOptions(uiData));
-      }
-    } else if (uiDataType === EDataInputType.FETCH_DATA_PRODUCT && assetId) {
-      const fetchProductDetails = async () => {
-        try {
-          const productData = await dispatch(
-            getSelectedProductThunk({ assetId }),
-          ).unwrap();
-          const selectedProduct = await dispatch(
-            getSelectedProductInformationThunk({ assetId }),
-          ).unwrap();
-          if (!selectedProduct || !productData) return;
+        if (uiData) {
+          dispatch(setAllMaterialsOptions(uiData));
+        }
+      } else if (uiDataType === EDataInputType.FETCH_DATA_PRODUCT && assetId) {
+        const fetchProductDetails = async () => {
+          try {
+            const productData = await dispatch(
+              getSelectedProductThunk({ assetId }),
+            ).unwrap();
+            const selectedProduct = await dispatch(
+              getSelectedProductInformationThunk({ assetId }),
+            ).unwrap();
+            if (!selectedProduct || !productData) return;
 
-          const fetchProductData = DataAdapterServices.getTransformedData({
-            dataType: EDataInputType.FETCH_DATA_PRODUCT,
-            data: productData,
-            selectedProduct: selectedProduct.rows[0],
-          });
-
-          dispatch(setAllMaterialsOptions(fetchProductData));
-
-          // This block sets selected data from the scene to single swatch module
-          if (configurationData?.length) {
-            // Find all material keys
-            const materialsKeys = productData.materials.map(
-              (item) => item.optionName,
-            );
-
-            // Transform selected data according to the swatch module cart data.
-            const filteredConfigData = configurationData
-              ?.filter((item) => materialsKeys.includes(item.name))
-              .map((option) => ({
-                label: option.valueMetadata.label,
-                value: option.valueMetadata.value,
-                metadata: option.valueMetadata,
-                optionName: option.name,
-                parentName: option.metadata.Name,
-                productInformation: selectedProduct.rows[0],
-                count: 1,
-              }));
-
-            // Set data to the store
-            filteredConfigData?.forEach((item, index) => {
-              console.log(item);
-              const isExist = (i: any) =>
-                i.metadata?.label === item.metadata?.label &&
-                i.parentName === item.parentName;
-              console.log(`item ${item} - index ${index}`);
-
-              const exists = selectedMaterials.some(isExist);
-              if (exists) return;
-              dispatch(
-                setSelectedMaterial({
-                  selectedMaterial: { ...item, count: 1 },
-                }),
-              );
+            const fetchProductData = DataAdapterServices.getTransformedData({
+              dataType: EDataInputType.FETCH_DATA_PRODUCT,
+              data: productData,
+              selectedProduct: selectedProduct.rows[0],
             });
+
+            dispatch(setAllMaterialsOptions(fetchProductData));
+
+            // This block sets selected data from the scene to single swatch module
+            if (configurationData?.length) {
+              // Find all material keys
+              const materialsKeys = productData.materials.map(
+                (item) => item.optionName,
+              );
+
+              // Transform selected data according to the swatch module cart data.
+              filteredConfigData = configurationData
+                ?.filter((item) => materialsKeys.includes(item.name))
+                .map((option) => ({
+                  label: option.valueMetadata.label,
+                  value: option.valueMetadata.value,
+                  metadata: option.valueMetadata,
+                  optionName: option.name,
+                  parentName: option.metadata.Name,
+                  productInformation: selectedProduct.rows[0],
+                  count: 1,
+                }));
+
+              // Set data to the store
+              filteredConfigData?.forEach((item) => {
+                console.log(item);
+                const isExist = (i: any) =>
+                  i.metadata?.label === item.metadata?.label &&
+                  i.parentName === item.parentName;
+                // console.log(`item ${item} - index ${index}`);
+
+                const exists = selectedMaterials.some(isExist);
+                if (exists) return;
+                dispatch(
+                  setSelectedMaterial({
+                    selectedMaterial: { ...item, count: 1 },
+                  }),
+                );
+              });
+            }
+          } catch (error) {
+            console.error('Failed to load product', error);
           }
-        } catch (error) {
-          console.error('Failed to load product', error);
-        }
-      };
-      fetchProductDetails();
-    } else if (uiDataType === EDataInputType.FETCH_DATA_ALL) {
-      const fetchProductDetails = async () => {
-        try {
-          dispatch(getProductListThunk()).unwrap();
-        } catch (error) {
-          console.error('Failed to load product', error);
-        }
-      };
-      fetchProductDetails();
+        };
+        fetchProductDetails();
+      } else if (uiDataType === EDataInputType.FETCH_DATA_ALL) {
+        const fetchProductDetails = async () => {
+          try {
+            dispatch(getProductListThunk()).unwrap();
+          } catch (error) {
+            console.error('Failed to load product', error);
+          }
+        };
+        fetchProductDetails();
+      }
     }
-  }, [uiDataType, data, assetId]);
+
+    return () => {
+      // Reset pre-configured store data
+      console.log('configurationData filteredConfigData', filteredConfigData);
+      filteredConfigData?.forEach((item) => {
+        dispatch(
+          setSelectedMaterial({
+            selectedMaterial: { ...item, count: 1 },
+          }),
+        );
+      });
+    };
+  }, [uiDataType, data, assetId, isOpen]);
 
   console.log('✅ CURRENT VERSION OF THE SWATCHES MODULE IS: ', APP_VERSION);
 
