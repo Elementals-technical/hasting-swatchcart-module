@@ -138,7 +138,7 @@ export const MultiProductItemCart = ({
                   <ul>
                     {items?.map((item) => (
                       <CartListItem
-                        key={`${item.value}/${product.assetId}`}
+                        key={`${item.id}/${product.assetId}`}
                         item={item}
                         canInc={totalCount < MAX_SLOTS}
                         onDelete={() => {

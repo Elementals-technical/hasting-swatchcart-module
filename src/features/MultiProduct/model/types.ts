@@ -18,7 +18,7 @@ export interface IProductCart {
   items: ICartItem[];
   value?: string;
   name: string;
-  assetId?: string;
+  assetId: string;
   productId?: number;
   productInformation?: IProductListItem | null;
 }
