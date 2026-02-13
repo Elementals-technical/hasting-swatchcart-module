@@ -104,6 +104,7 @@ export const SwatchModule = ({
               filteredConfigData = configurationData
                 ?.filter((item) => materialsKeys.includes(item.name))
                 .map((option) => ({
+                  ...option,
                   label: option.valueMetadata.label,
                   value: option.valueMetadata.value,
                   metadata: option.valueMetadata,

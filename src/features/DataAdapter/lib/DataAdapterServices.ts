@@ -7,6 +7,7 @@ import {
   type ISection,
 } from '../../swatches/model/types';
 import { EDataInputType, type IMapUIData } from '../utils/types';
+import { v4 as uuidv4 } from 'uuid';
 
 const GROUPING_KEY = 'UIGrouping';
 
@@ -131,35 +132,29 @@ export class DataAdapterServices {
         parentName,
         optionName: optionName,
         productInformation: selectedProduct || "Product wasn't found",
+        id: uuidv4(),
       }));
     });
 
-    // build select options (unique, sorted by label)
-    const seen = new Set<string>();
-
-    const productElementOptions = materialsWithGroup
-      .map(({ label, groupName, optionName, valuesArray }) => {
+    const productElementOptions = materialsWithGroup.map(
+      ({ label, groupName, optionName, valuesArray }) => {
         const normalizedLabel =
           label?.toLowerCase() === 'color' ? (groupName ?? label) : label;
 
         return {
-          id: normalizedLabel!,
+          id: uuidv4(),
           value: normalizedLabel!,
           label: normalizedLabel!,
           valuesArray: valuesArray?.length
             ? valuesArray.map((item) => ({
                 ...item,
                 optionName,
+                id: uuidv4(),
               }))
             : [],
         };
-      })
-      .filter(
-        (option) =>
-          option.label &&
-          (seen.has(option.label) ? false : (seen.add(option.label), true)),
-      )
-      .sort((a, b) => a.label.localeCompare(b.label));
+      },
+    );
 
     return {
       allMaterialValues,
