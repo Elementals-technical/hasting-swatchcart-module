@@ -7,7 +7,6 @@ import {
   decrement,
   increment,
   removeItem,
-  setSelectedMaterial,
 } from '../../../swatches/model/swatchesSlice';
 import { useCartCount } from '../../../swatches/utils/hooks/useCartCount';
 import type { ICartItem } from '../../model/types';
@@ -21,16 +20,7 @@ export const CartList = () => {
   const [isShowLimitMessage, setIsShowLimitMessage] = useState(false);
 
   const handleDelete = (item: ICartItem) => {
-    // DeleteSelected material from the Cart
     dispatch(removeItem({ selectedMaterial: item }));
-    // DeleteSelected material from the  SwatchesList
-    dispatch(
-      setSelectedMaterial({
-        selectedMaterial: item,
-        // materialCount: 1,
-        // selectedMaterials,
-      }),
-    );
   };
 
   const handleIncrement = (item: ICartItem) => {
