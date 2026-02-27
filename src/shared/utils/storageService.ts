@@ -4,6 +4,7 @@ import type { IProductCart } from '../../features/MultiProduct/model/types';
 const STORAGE_KEYS = {
   SELECTED_MATERIALS: 'swatchcart_selected_materials',
   MULTI_PRODUCT_ITEMS: 'swatchcart_multi_product_items',
+  CURRENT_ASSET_ID: 'swatchcart_current_asset_id',
 } as const;
 
 const STORAGE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
@@ -121,6 +122,29 @@ export const StorageService = {
       localStorage.removeItem(STORAGE_KEYS.MULTI_PRODUCT_ITEMS);
     } catch (error) {
       console.warn('Failed to clear multi-product items:', error);
+    }
+  },
+
+  /**
+   * Stores the current product assetId.
+   */
+  setCurrentAssetId(assetId: string): void {
+    try {
+      localStorage.setItem(STORAGE_KEYS.CURRENT_ASSET_ID, assetId);
+    } catch (error) {
+      console.warn('Failed to persist current assetId:', error);
+    }
+  },
+
+  /**
+   * Retrieves the stored product assetId.
+   */
+  getCurrentAssetId(): string | null {
+    try {
+      return localStorage.getItem(STORAGE_KEYS.CURRENT_ASSET_ID);
+    } catch (error) {
+      console.warn('Failed to retrieve current assetId:', error);
+      return null;
     }
   },
 

@@ -16,7 +16,9 @@ import { DataAdapterServices } from '../../src/features/DataAdapter/lib/DataAdap
 import {
   setAllMaterialsOptions,
   setSelectedMaterial,
+  resetSelectedMaterials,
 } from '../../src/features/swatches/model/swatchesSlice';
+import { StorageService } from '../../src/shared/utils/storageService';
 import {
   getSelectedProductInformationThunk,
   getSelectedProductThunk,
@@ -56,6 +58,17 @@ export const SwatchModule = ({
   // const cartCount = useMemo(() => {
   //   return selectedMaterials.reduce((sum, item) => sum + (item.count ?? 0), 0);
   // }, [selectedMaterials]);
+  // Clear selectedMaterials when switching to a different product (assetId)
+  useEffect(() => {
+    if (assetId && isSingleProduct) {
+      const storedAssetId = StorageService.getCurrentAssetId();
+      if (storedAssetId && storedAssetId !== assetId) {
+        dispatch(resetSelectedMaterials());
+      }
+      StorageService.setCurrentAssetId(assetId);
+    }
+  }, [assetId, isSingleProduct, dispatch]);
+
   useEffect(() => {
     let filteredConfigData: AttributeValue[];
     if (isOpen) {
