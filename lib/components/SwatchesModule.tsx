@@ -11,7 +11,7 @@ import { Swatches } from '../../src/features/swatches/ui/Swatches';
 import { LibraryProvider } from '../store/LibraryProvider';
 import '../assets/styles/index.css';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { DataAdapterServices } from '../../src/features/DataAdapter/lib/DataAdapterServices';
 import {
   setAllMaterialsOptions,
@@ -55,16 +55,18 @@ export const SwatchModule = ({
   const dispatch = useAppDispatch();
   const selectedMaterials = useAppSelector(getSelectedMaterials);
   const isSingleProduct = SINGLE_PRODUCT_DATA.includes(uiDataType);
+  const prevAssetIdRef = useRef<string | null>(null);
   // const cartCount = useMemo(() => {
   //   return selectedMaterials.reduce((sum, item) => sum + (item.count ?? 0), 0);
   // }, [selectedMaterials]);
   // Clear selectedMaterials when switching to a different product (assetId)
   useEffect(() => {
     if (assetId && isSingleProduct) {
-      const storedAssetId = StorageService.getCurrentAssetId();
-      if (storedAssetId && storedAssetId !== assetId) {
+      if (prevAssetIdRef.current && prevAssetIdRef.current !== assetId) {
         dispatch(resetSelectedMaterials());
+        StorageService.clearSelectedMaterials();
       }
+      prevAssetIdRef.current = assetId;
       StorageService.setCurrentAssetId(assetId);
     }
   }, [assetId, isSingleProduct, dispatch]);
