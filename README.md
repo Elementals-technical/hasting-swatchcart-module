@@ -195,6 +195,187 @@ export interface IAttributeAsset {
 | onToggleSidebar | void                                                   | Yes      | This method uses for open/close this module.                                           |
 | onSendData      | (data) => data is selected materials array from a cart | Yes      | Callback that returns selected materials from the cart back to the parent Application. |
 
+## Implementation Details
+
+### How `FETCH_DATA_PRODUCT` works (Single Product mode)
+
+This mode fetches material data for a **single product** by its `assetId` and renders a swatch picker with a cart.
+
+#### Data flow
+
+```
+SwatchesModule (lib/components/SwatchesModule.tsx)
+  │
+  ├─ useEffect (on isOpen + uiDataType === FETCH_DATA_PRODUCT)
+  │     │
+  │     ├─ 1. dispatch(getSelectedProductThunk({ assetId }))
+  │     │      → calls GET /products/{assetId}
+  │     │      → returns IFetchProductData (materials[], structure[])
+  │     │
+  │     ├─ 2. dispatch(getSelectedProductInformationThunk({ assetId }))
+  │     │      → calls GET /products?assetId[]={assetId}
+  │     │      → returns IProductInformationResponse (product metadata rows)
+  │     │
+  │     ├─ 3. DataAdapterServices.getTransformedData({
+  │     │        dataType: FETCH_DATA_PRODUCT,
+  │     │        data: productData,
+  │     │        selectedProduct: selectedProduct.rows[0]
+  │     │      })
+  │     │      → getTransformedFetchProductData():
+  │     │         - iterates structure → groups → options
+  │     │         - filters only options with typeComponent === MATERIAL
+  │     │         - maps optionName → groupName
+  │     │         - flattens material valuesArray into individual swatch items
+  │     │         - attaches parentName, optionName, productInformation to each item
+  │     │
+  │     ├─ 4. dispatch(setAllMaterialsOptions(fetchProductData))
+  │     │      → writes transformed materials into the Redux store
+  │     │
+  │     └─ 5. (optional) if configurationData[] is provided:
+  │            - filters configurationData by known material keys
+  │            - maps each entry into the cart item shape
+  │            - dispatches setSelectedMaterial() for each item
+  │              (pre-populates the cart from the scene configuration)
+  │
+  └─ Renders:
+       SwatchModule (ui/SwatchModule.tsx)
+         └─ <Swatches /> (single product swatch view)
+               ├─ SwatchWrapper  → material grid with filters
+               └─ CartWrapper    → selected materials cart
+```
+
+#### Key files
+
+| File                                                  | Responsibility                                                                             |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `lib/components/SwatchesModule.tsx`                   | Entry point; orchestrates fetch & data transformation                                      |
+| `src/features/swatches/model/thunks.ts`               | `getSelectedProductThunk`, `getSelectedProductInformationThunk`                            |
+| `src/features/MultiProduct/model/API/api.ts`          | `getSelectedProductAPI`, `getSelectedProductListInformationAPI`                            |
+| `src/features/MultiProduct/model/API/routes.ts`       | API route definitions (`/products/{assetId}`, `/products?assetId[]={assetId}`)             |
+| `src/features/DataAdapter/lib/DataAdapterServices.ts` | `getTransformedFetchProductData()` — transforms raw API response into swatch-module format |
+| `src/features/swatches/ui/Swatches.tsx`               | Renders `SwatchWrapper` (material grid) or `CartWrapper` (cart) based on active tab        |
+
+#### API endpoints used
+
+| Method | URL                             | Description                           |
+| ------ | ------------------------------- | ------------------------------------- |
+| GET    | `/products/{assetId}`           | Fetches product materials & structure |
+| GET    | `/products?assetId[]={assetId}` | Fetches product metadata/information  |
+
+#### Asset ID tracking
+
+When `assetId` changes, the module automatically:
+
+1. Resets `selectedMaterials` in Redux store
+2. Clears persisted selected materials via `StorageService.clearSelectedMaterials()`
+3. Stores the new asset ID via `StorageService.setCurrentAssetId(assetId)`
+
+---
+
+### How `FETCH_DATA_PRODUCT_All` (`FETCH_DATA_ALL`) works (Multi Product mode)
+
+This mode fetches the **entire product catalog** and renders a multi-product browsing experience with a shared cart.
+
+> **Note:** In the codebase the enum value is `EDataInputType.FETCH_DATA_ALL`. The prop string `'FETCH_DATA_PRODUCT_All'` used in some examples maps to this same value.
+
+#### Data flow
+
+```
+SwatchesModule (lib/components/SwatchesModule.tsx)
+  │
+  ├─ useEffect (on isOpen + uiDataType === FETCH_DATA_ALL)
+  │     │
+  │     └─ dispatch(getProductListThunk())
+  │            → calls GET /products?pageSize=500
+  │            → returns IProductListResponse (array of products)
+  │            → stored in multiProductCart Redux slice
+  │
+  └─ Renders:
+       SwatchModule (ui/SwatchModule.tsx)
+         └─ <MultiProductWrapper />
+               │
+               ├─ State A: No product selected → <ProductList />
+               │     - Displays full product catalog in a grid
+               │     - Category slider filter (unique categories)
+               │     - Debounced search input
+               │     - A–Z / Z–A sorting via SingleSelect
+               │     - Animated header image (hides on scroll)
+               │     - <SwatchContentContainer /> (floating cart summary)
+               │
+               ├─ State B: Product selected → <SelectedProductItem />
+               │     │
+               │     ├─ On ProductListItem click:
+               │     │     1. dispatch(getSelectedProductThunk({ assetId }))
+               │     │        → GET /products/{assetId}
+               │     │     2. DataAdapterServices.getTransformedData({
+               │     │          dataType: FETCH_DATA_PRODUCT, data: productData
+               │     │        })
+               │     │     3. dispatch(setAllMaterialsOptions(fetchProductData))
+               │     │     4. dispatch(setSelectedProduct(productListItem))
+               │     │
+               │     ├─ <FiltersSelectedProductItem /> → material filters
+               │     ├─ <MaterialMultiProductList />   → material swatch grid
+               │     └─ <SwatchContentContainer />     → floating cart summary
+               │
+               └─ State C: Cart opened → <MultiProductItemCart />
+                     - Groups selected items by product
+                     - Increment / Decrement / Delete actions
+                     - Syncs deletion with swatches selectedMaterials
+                     - CartPrice + "Go to shipping" button
+                     - SwatchLimitModal (max swatch count guard)
+```
+
+#### Key files
+
+| File                                                                         | Responsibility                                                           |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `lib/components/SwatchesModule.tsx`                                          | Entry point; dispatches `getProductListThunk`                            |
+| `src/features/MultiProduct/model/thunk.ts`                                   | `getProductListThunk` — fetches full product list                        |
+| `src/features/MultiProduct/model/API/api.ts`                                 | `getProductListAPI` — HTTP call to `/products?pageSize=500`              |
+| `src/features/MultiProduct/model/API/routes.ts`                              | Route definitions                                                        |
+| `src/features/MultiProduct/ui/MultiProductWrapper/MultiProductWrapper.tsx`   | Routing between ProductList / SelectedProductItem / MultiProductItemCart |
+| `src/features/MultiProduct/ui/ProductList/ProductList.tsx`                   | Product catalog grid with search, sort, category filter                  |
+| `src/features/MultiProduct/ui/ProductListItem/ProductListItem.tsx`           | Single product card; on click fetches product details & transforms data  |
+| `src/features/MultiProduct/ui/SelectedProductItem/SelectedProductItem.tsx`   | Selected product material view with filters                              |
+| `src/features/MultiProduct/ui/MultiProductItemCart/MultiProductItemCart.tsx` | Multi-product cart: grouped items, quantity controls, totals             |
+| `src/features/DataAdapter/lib/DataAdapterServices.ts`                        | `getTransformedFetchProductData()` — shared data transformer             |
+| `src/features/MultiProduct/lib/MultiProductCartServices.ts`                  | `getUniqueCategories()` — extracts category list for slider              |
+
+#### API endpoints used
+
+| Method | URL                      | Description                                                      |
+| ------ | ------------------------ | ---------------------------------------------------------------- |
+| GET    | `/products?pageSize=500` | Fetches entire product catalog                                   |
+| GET    | `/products/{assetId}`    | Fetches product details when a product is selected from the list |
+
+#### UI states
+
+| State          | Condition                                | Component                  |
+| -------------- | ---------------------------------------- | -------------------------- |
+| Product list   | No product selected, cart closed         | `<ProductList />`          |
+| Product detail | Product selected, cart closed            | `<SelectedProductItem />`  |
+| Cart           | Cart opened (`isOpenMultiCart === true`) | `<MultiProductItemCart />` |
+
+---
+
+### `EDataInputType` enum
+
+Defined in `src/features/DataAdapter/utils/types.ts`:
+
+```ts
+export const EDataInputType = {
+  UI: 'UI',
+  FETCH_DATA_PRODUCT: 'FETCH_DATA_PRODUCT',
+  FETCH_DATA_ALL: 'FETCH_DATA_ALL',
+} as const;
+```
+
+| Value                | Mode                         | Description                                   |
+| -------------------- | ---------------------------- | --------------------------------------------- |
+| `UI`                 | Single product (local data)  | Data is passed via `data` prop — no API calls |
+| `FETCH_DATA_PRODUCT` | Single product (remote data) | Fetches one product by `assetId` from the API |
+| `FETCH_DATA_ALL`     | Multi product (remote data)  | Fetches entire product catalog from the API   |
+
 ## Development
 
 ```bash
