@@ -130,6 +130,10 @@ export const StorageService = {
    */
   setCurrentAssetId(assetId: string): void {
     try {
+      const prevAssetId = this.getCurrentAssetId();
+
+      if (prevAssetId && prevAssetId !== assetId) this.clearSelectedMaterials();
+
       localStorage.setItem(STORAGE_KEYS.CURRENT_ASSET_ID, assetId);
     } catch (error) {
       console.warn('Failed to persist current assetId:', error);

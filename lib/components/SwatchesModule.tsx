@@ -62,7 +62,10 @@ export const SwatchModule = ({
   // Clear selectedMaterials when switching to a different product (assetId)
   useEffect(() => {
     if (assetId && isSingleProduct) {
-      if (prevAssetIdRef.current && prevAssetIdRef.current !== assetId) {
+      const prevAssetId =
+        StorageService.getCurrentAssetId?.() ?? prevAssetIdRef.current;
+
+      if (!!prevAssetId && prevAssetId !== assetId) {
         dispatch(resetSelectedMaterials());
         StorageService.clearSelectedMaterials();
       }

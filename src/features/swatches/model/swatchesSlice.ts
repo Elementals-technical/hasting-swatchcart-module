@@ -137,6 +137,7 @@ export const swatchesSlice = createSlice({
     },
     setSelectedProduct(state, action: PayloadAction<IProductListItem>) {
       state.selectedProduct = action.payload;
+      state.selectedMaterials = [];
     },
     deleteSelectedProduct(state) {
       state.selectedProduct = null;
