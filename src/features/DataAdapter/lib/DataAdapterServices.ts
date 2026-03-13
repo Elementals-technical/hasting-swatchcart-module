@@ -99,6 +99,7 @@ export class DataAdapterServices {
 
     // optionName -> groupName (only MATERIAL)
     const optionToGroup = new Map<string, string>();
+    const optionToSection = new Map<string, string>();
     for (const section of structure) {
       for (const group of section.groups ?? []) {
         for (const opt of group.options ?? []) {
@@ -107,6 +108,11 @@ export class DataAdapterServices {
             opt?.optionName
           ) {
             optionToGroup.set(opt.optionName, group.groupName);
+            // added section name without "Select " prefix if exists
+            optionToSection.set(
+              opt.optionName,
+              section.section.replace(/^Select\s+/i, '').trim(),
+            );
           }
         }
       }
@@ -119,14 +125,18 @@ export class DataAdapterServices {
     const materialsWithGroup = materialsValues.map((m) => ({
       ...m,
       groupName: m.optionName ? optionToGroup.get(m.optionName) : undefined,
+      sectionName: m.optionName ? optionToSection.get(m.optionName) : undefined,
     }));
 
     // flatten children; inject parentName + groupName
     const allMaterialValues = materialsWithGroup.flatMap((item) => {
-      const { label, groupName, optionName } = item;
+      const { label, groupName, sectionName, optionName } = item;
+
       const parentName =
-        (label.toLocaleLowerCase() === 'color' ? groupName : label) ||
-        'without_name';
+        (label.toLocaleLowerCase() === 'color'
+          ? (sectionName ?? groupName)
+          : label) || 'without_name';
+
       return (item.valuesArray ?? []).map((v) => ({
         ...v,
         parentName,
@@ -137,9 +147,11 @@ export class DataAdapterServices {
     });
 
     const productElementOptions = materialsWithGroup.map(
-      ({ label, groupName, optionName, valuesArray }) => {
+      ({ label, groupName, sectionName, optionName, valuesArray }) => {
         const normalizedLabel =
-          label?.toLowerCase() === 'color' ? (groupName ?? label) : label;
+          label?.toLowerCase() === 'color'
+            ? (sectionName ?? groupName ?? label)
+            : label;
 
         return {
           id: uuidv4(),
