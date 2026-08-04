@@ -1,6 +1,6 @@
 {
   "name": "hasting-swatchcart-module",
-  "version": "1.0.71",
+  "version": "1.0.72",
   "type": "module",
   "files": [
     "dist"
