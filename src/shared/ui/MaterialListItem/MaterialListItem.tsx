@@ -52,7 +52,7 @@ export const MaterialListItem = ({
 
       <div className='mb-[12px] flex flex-col'>
         <span className='mb-[4px] text-[14px] font-semibold leading-[16px]'>
-          {val.metadata?.label || val.label}{' '}
+          {val.label || val.metadata?.label}{' '}
         </span>
         <span className='text-[12px] font-medium leading-[14px]'>
           {val.parentName}{' '}
