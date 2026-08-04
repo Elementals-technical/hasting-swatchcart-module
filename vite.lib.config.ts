@@ -6,6 +6,29 @@ import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
 import pkg from './package.json';
 
+const externalPackages = [
+  '@reduxjs/toolkit',
+  '@radix-ui/react-accordion',
+  '@radix-ui/react-checkbox',
+  '@radix-ui/react-dialog',
+  '@radix-ui/react-label',
+  '@radix-ui/react-popover',
+  '@radix-ui/react-slider',
+  '@radix-ui/react-slot',
+  '@radix-ui/react-tooltip',
+  'clsx',
+  'lucide-react',
+  'react',
+  'react-dom',
+  'react-markdown',
+  'react-redux',
+  'rehype-raw',
+  'tailwind-merge',
+];
+
+const isExternal = (id: string) =>
+  externalPackages.some((pkg) => id === pkg || id.startsWith(`${pkg}/`));
+
 export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(pkg.version),
@@ -32,13 +55,7 @@ export default defineConfig({
       fileName: (format) => (format === 'cjs' ? 'main.cjs' : 'main.js'),
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        'react-redux',
-        '@reduxjs/toolkit',
-        'react/jsx-runtime',
-      ],
+      external: isExternal,
       output: {
         assetFileNames: (assetInfo) => {
           if (assetInfo.name && assetInfo.name.endsWith('.css')) {
